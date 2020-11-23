@@ -32,6 +32,7 @@ public class Worker implements Runnable{
             {
                 s = in.readLine();
                 System.out.println("Server received: " + s + " from " + socket.toString());
+                out.write(s);
                 out.flush();  
                 
                 if(s.equals("bye"))
