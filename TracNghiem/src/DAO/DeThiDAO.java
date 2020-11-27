@@ -25,7 +25,7 @@ public class DeThiDAO {
     public DeThiDAO()
     {
         MyConnection connectiondatabase = new MyConnection();
-        conn=connectiondatabase.getConnecDB();
+        conn=(Connection) connectiondatabase.getConnecDB();
         
     }
     public ArrayList docDSDT()
