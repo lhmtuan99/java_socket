@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+import javafx.scene.input.KeyCode;
 
 /**
  *
@@ -21,23 +23,34 @@ public class Client {
 	public static void main(String args[]) throws UnknownHostException, IOException 
 	{ 
             Socket socket = null;
+            int check;
+            boolean isExistThreadWaitServer = false;
             try {
                 socket = new Socket("127.0.0.1",1234);
                 System.out.println("Client connected");
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+                Scanner sc = new Scanner(System.in);
                 String input;
                 while(true){
-                    System.out.println("Client sent: ");
-                    input = stdIn.readLine();
+                    if(!isExistThreadWaitServer){
+                        ThreadClientWaitServerSendData t1 = new ThreadClientWaitServerSendData(socket);
+                        t1.start();
+                        isExistThreadWaitServer=true;
+                    }
+                    System.out.print("input : ");
+                    input = sc.nextLine();
+                    System.out.println("send "+input+" to server");
                     out.write(input + '\n');
                     out.flush();
 
                     if(input.equals("bye"))
                         break;
-                    String res = in.readLine();
-                    System.out.println("Client received: "+ res);
+                    
+//                    String res = in.readLine();
+//                   
+//                    System.out.println("Client received: "+ res);
                 }
                 
             } catch (IOException e){
