@@ -5,14 +5,25 @@
  */
 package GUI;
 
+import BUS.otpBUS;
+import DTO.otpDTO;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Admin
  */
 public class DangKyAccount extends javax.swing.JFrame {
-
+    ArrayList<otpDTO> dsotp = new ArrayList<>();
+    DefaultTableModel model = new DefaultTableModel();
+    Timer t;
     /**
      * Creates new form DangKyAccount
      */
@@ -33,10 +44,10 @@ public class DangKyAccount extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtgmail = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        sendOTP = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jPasswordField2 = new javax.swing.JPasswordField();
@@ -68,15 +79,15 @@ public class DangKyAccount extends javax.swing.JFrame {
             }
         });
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField2.setText("Gmail");
-        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtgmail.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        txtgmail.setForeground(new java.awt.Color(153, 153, 153));
+        txtgmail.setText("Gmail");
+        txtgmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField2FocusGained(evt);
+                txtgmailFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField2FocusLost(evt);
+                txtgmailFocusLost(evt);
             }
         });
 
@@ -100,8 +111,13 @@ public class DangKyAccount extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jButton2.setText("Gửi Mã");
+        sendOTP.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        sendOTP.setText("Gửi Mã");
+        sendOTP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sendOTPMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setText("@gmail.com");
@@ -149,7 +165,7 @@ public class DangKyAccount extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtgmail, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
@@ -159,7 +175,7 @@ public class DangKyAccount extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sendOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField5))
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -180,7 +196,7 @@ public class DangKyAccount extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(txtgmail, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
@@ -193,7 +209,7 @@ public class DangKyAccount extends javax.swing.JFrame {
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sendOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,24 +257,24 @@ public class DangKyAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1FocusGained
 
-    private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
-        if(jTextField2.getText().trim().equals("Gmail"))
+    private void txtgmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgmailFocusGained
+        if(txtgmail.getText().trim().equals("Gmail"))
         {
-            jTextField2.setText("");
+            txtgmail.setText("");
         }
-        jTextField2.setForeground(Color.black);
+        txtgmail.setForeground(Color.black);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2FocusGained
+    }//GEN-LAST:event_txtgmailFocusGained
 
-    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
-    if (jTextField2.getText().trim().equals(""))
+    private void txtgmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgmailFocusLost
+    if (txtgmail.getText().trim().equals(""))
         {
-            jTextField2.setText("Gmail");
+            txtgmail.setText("Gmail");
             
-        jTextField2.setForeground(new Color(153,153,153));
+        txtgmail.setForeground(new Color(153,153,153));
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2FocusLost
+    }//GEN-LAST:event_txtgmailFocusLost
 
     private void jTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusGained
         if(jTextField5.getText().trim().equals("OTP"))
@@ -288,6 +304,43 @@ public class DangKyAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordField1FocusGained
 
+    private void sendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseClicked
+        String a="Gmail";
+        otpBUS bus = new otpBUS();
+        otpDTO otp = new otpDTO();
+        if(txtgmail.getText().equals(a))
+        {
+            JOptionPane.showMessageDialog(null,"vui lòng nhập đầy đủ thông tin");
+            
+        }
+        else {  
+            otp.setGmail(txtgmail.getText()+"@gmail.com");
+            otp.setTime(LocalDateTime.now());
+            if(bus.check(otp)==0)
+            {
+                JOptionPane.showMessageDialog(null,"Gmail đã tồn tại");
+            }
+            else
+            {
+                bus.them(otp);
+                dsotp.add(otp);
+            }
+//            bus.them(otp);
+        }
+        t= new Timer(600000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String mail = txtgmail.getText();
+                bus.xoa(mail);
+                t.stop();
+                
+            }
+        });
+        t.start();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendOTPMouseClicked
+        
     /**
      * @param args the command line arguments
      */
@@ -319,13 +372,13 @@ public class DangKyAccount extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new DangKyAccount().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -336,7 +389,8 @@ public class DangKyAccount extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JButton sendOTP;
+    private javax.swing.JTextField txtgmail;
     // End of variables declaration//GEN-END:variables
 }

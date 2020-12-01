@@ -7,7 +7,7 @@ package DAO;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-import java.sql.Connection;
+
 /**
  *
  * @author Admin
@@ -17,11 +17,11 @@ public class MyConnection {
     public Connection getConnecDB()
     {
         try {
-            String uRL = "jdbc:sqlserver://127.0.0.1;databaseName=TracNghiem;useUnicode=true;characterEncoding=UTF-8";
+            String uRL = "jdbc:sqlserver://127.0.0.1:1433;databaseName=TracNghiem;useUnicode=true;characterEncoding=UTF-8";
             String user = "sa";
             String pass = "sa";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(uRL, user, pass);
+            conn =  DriverManager.getConnection(uRL, user, pass);
             System.out.println("Thanh Cong");
         }
         catch (Exception e){

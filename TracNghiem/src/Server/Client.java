@@ -33,7 +33,6 @@ public class Client {
                     input = stdIn.readLine();
                     out.write(input + '\n');
                     out.flush();
-
                     if(input.equals("bye"))
                         break;
                     String res = in.readLine();

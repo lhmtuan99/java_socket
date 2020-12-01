@@ -8,6 +8,7 @@ package Server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,6 +20,7 @@ public class Server {
     public static int port = 1234;
     public static int numThread = 4;
     public static ServerSocket server = null;
+//    public static ArrayList <Worker> Workers = new ArrayList <>(); 
     public static void main( String [] args ) throws IOException{
         ExecutorService executor = Executors.newFixedThreadPool(numThread);
         try{
