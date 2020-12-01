@@ -108,17 +108,18 @@ public class otpDAO {
         try{
             //Int b = rs + 1;
             if(kiemtra(otp)==1){
-            String qry = "Insert into OTP values (";
-            qry = qry+"'"+createid()+"'";
-            qry = qry+","+"N'"+otp.getGmail()+"'";
-            qry = qry+","+"N'"+generateOTP()+"'";
-            qry = qry+","+"N'"+otp.getTime()+"'";
-            qry = qry+")";
+            String qry = "INSERT INTO OTP (id,gmail,otp,time) VALUES ('"+createid()+"','"+otp.getGmail()+"','"+generateOTP()+"','')";
+//            qry = qry+"'"+createid()+"'";
+//            qry = qry+","+"N'"+otp.getGmail()+"'";
+//            qry = qry+","+"N'"+generateOTP()+"'";
+//            qry = qry+","+"N'"+otp.getTime()+"'";
+//            qry = qry+")";
             System.out.println(qry);
             st=conn.createStatement();
             st.executeUpdate(qry);
                 try {
-                    sendMail("koconpro822@gmail.com");
+                    System.out.println("ok");
+                    sendMail(otp.getGmail());
                 } catch (Exception ex) {
                     System.out.println("loi gui mail");
                 }
@@ -131,11 +132,12 @@ public class otpDAO {
     public void xoa (String gmail)
     {
         try {
-            String qry = "delete from OTP where gmail='"+gmail+"'";
+            String qry = "delete from OTP where gmail='"+gmail+"@gmail.com'";
             st = conn.createStatement();
             st.executeUpdate(qry);
             System.out.println("DAO: đã xoá OTP");
             System.out.println(gmail);
+            System.out.println(gmail.length());
         }
         catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "lỗi xoá OTP");
@@ -151,8 +153,8 @@ public class otpDAO {
         properties.put("mail.smtp.host","smtp.gmail.com");
         properties.put("mail.smtp.port","587");
         
-        String myAccountEmail= "phamtiep270299@gmail.com";
-        String password="nguyentiep";
+        String myAccountEmail= "vanvananhanh1122@gmail.com";
+        String password="1234Five";
         
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override

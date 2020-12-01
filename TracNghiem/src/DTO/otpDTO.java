@@ -58,9 +58,9 @@ public class otpDTO {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
+//    public void setTime(LocalDateTime time) {
+//        this.time = time;
+//    }
 
   
     
