@@ -5,6 +5,10 @@
  */
 package DTO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 /**
  *
  * @author Admin
@@ -13,15 +17,17 @@ public class otpDTO {
     private int id;
     private String gmail;
     private String otp;
+    private LocalDateTime time;
 
-    public otpDTO ()
-    {
-        
-    }
-    public otpDTO(int id, String gmail, String otp) {
+    public otpDTO(int id, String gmail, String otp, LocalDateTime time) {
         this.id = id;
         this.gmail = gmail;
         this.otp = otp;
+        this.time = time;
+    }
+    public otpDTO ()
+    {
+        
     }
 
     public int getId() {
@@ -47,5 +53,15 @@ public class otpDTO {
     public void setOtp(String otp) {
         this.otp = otp;
     }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+  
     
 }

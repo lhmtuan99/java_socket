@@ -44,7 +44,6 @@ public class Client {
                     System.out.println("send "+input+" to server");
                     out.write(input + '\n');
                     out.flush();
-
                     if(input.equals("bye"))
                         break;
                     

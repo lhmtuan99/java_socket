@@ -6,6 +6,7 @@
 package DAO;
 
 import DTO.DeThiDTO;
+import DTO.otpDTO;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class DeThiDAO {
     public DeThiDAO()
     {
         MyConnection connectiondatabase = new MyConnection();
-        conn=(Connection) connectiondatabase.getConnecDB();
+        conn=connectiondatabase.getConnecDB();
         
     }
     public ArrayList docDSDT()
