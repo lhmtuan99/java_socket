@@ -17,13 +17,11 @@ public class otpDTO {
     private int id;
     private String gmail;
     private String otp;
-    private LocalDateTime time;
 
-    public otpDTO(int id, String gmail, String otp, LocalDateTime time) {
+    public otpDTO(int id, String gmail, String otp) {
         this.id = id;
         this.gmail = gmail;
         this.otp = otp;
-        this.time = time;
     }
     public otpDTO ()
     {
@@ -54,13 +52,13 @@ public class otpDTO {
         this.otp = otp;
     }
 
-    public LocalDateTime getTime() {
-        return time;
-    }
+//    public LocalDateTime getTime() {
+//        return time;
+//    }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
+//    public void setTime(LocalDateTime time) {
+//        this.time = time;
+//    }
 
   
     

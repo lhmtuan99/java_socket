@@ -39,4 +39,16 @@ public class otpBUS {
         data.xoa(gmail);
         //dsotp.remove(gmail);
     }
+    public int checkOTP(String otp, String gmail)
+    {
+        otpDAO data = new otpDAO();
+        if(data.kiemtraOTP(otp, gmail)==1)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

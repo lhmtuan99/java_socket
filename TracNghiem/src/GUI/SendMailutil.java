@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.*;
+import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 /**
@@ -38,8 +39,8 @@ public class SendMailutil {
         properties.put("mail.smtp.host","smtp.gmail.com");
         properties.put("mail.smtp.port","587");
         
-        String myAccountEmail= "phamtiep270299@gmail.com";
-        String password="nguyentiep";
+        String myAccountEmail= "vanvananhanh1122@gmail.com";
+        String password="1234Five";
         
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -76,7 +77,7 @@ public class SendMailutil {
     public static void main(String []args)
     {
         try {
-            sendMail("koconpro822@gmail.com");
+            sendMail("newfuture155@gmail.com");
         } catch (Exception ex) {
             Logger.getLogger(SendMailutil.class.getName()).log(Level.SEVERE, null, ex);
         }
