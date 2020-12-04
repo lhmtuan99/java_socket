@@ -65,24 +65,24 @@ public class otpDAO {
         String otp  = String.valueOf(randomPin); 
         return otp; 
     } 
-    public int kiemtraOTP (otpDTO otp)
+    public int kiemtraOTP (String otp, String gmail)
     {
+        //String a="";
         try {
             
-            String qry = "SELECT * from OTP where otp='"+otp.getOtp()+"'";
+            String qry = "SELECT * from OTP where otp='"+otp+"' and gmail='"+gmail+"'";
             st=conn.createStatement();
             rs=st.executeQuery(qry);
     
         if(rs.next())
             {
-                System.out.println("trùng khớp OTP");
-                
+                return 1;
             }
         }
         catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "thatbai");
+            JOptionPane.showMessageDialog(null, "DAO: that bai kiem tra checkOTP");
         }
-        return 1;
+        return 0;
     }
     public int kiemtra(otpDTO otp)
     {
@@ -99,7 +99,7 @@ public class otpDAO {
                 }
             }
         catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "thatbai");
+            JOptionPane.showMessageDialog(null, "DAO: that bai kiemtra Gmail");
         }
         return 1;
     }
@@ -109,6 +109,7 @@ public class otpDAO {
             //Int b = rs + 1;
             if(kiemtra(otp)==1){
             String qry = "INSERT INTO OTP (id,gmail,otp,time) VALUES ('"+createid()+"','"+otp.getGmail()+"','"+generateOTP()+"','')";
+
 //            qry = qry+"'"+createid()+"'";
 //            qry = qry+","+"N'"+otp.getGmail()+"'";
 //            qry = qry+","+"N'"+generateOTP()+"'";
@@ -126,7 +127,7 @@ public class otpDAO {
             }    
         }
         catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "lỗi thêm otp");
+            System.out.println("DAO: lỗi thêm otp");
         }
     }
     public void xoa (String gmail)
