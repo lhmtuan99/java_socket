@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import BUS.NguoiDungBUS;
 import BUS.otpBUS;
+import DTO.NguoiDungDTO;
 import DTO.otpDTO;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -22,16 +24,21 @@ import java.util.TimerTask;
  */
 public class DangKyAccount extends javax.swing.JFrame {
     ArrayList<otpDTO> dsotp = new ArrayList<>();
+    ArrayList<NguoiDungDTO> dsnd = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
     static Timer t;
+
     public static int interval = 60;
+
     /**
      * Creates new form DangKyAccount
      */
     public DangKyAccount() {
         initComponents();
         jPanel1.setFocusable(true);
-        jButton1.setEnabled(false);
+
+        btnSubmit.setEnabled(false);
+
     }
 
     /**
@@ -45,14 +52,14 @@ public class DangKyAccount extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txthovaten = new javax.swing.JTextField();
         txtgmail = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtotp = new javax.swing.JTextField();
+        btnSubmit = new javax.swing.JButton();
         sendOTP = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jpwmatkhau = new javax.swing.JPasswordField();
+        jpwmatkhau2 = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -65,20 +72,20 @@ public class DangKyAccount extends javax.swing.JFrame {
         jLabel5.setText("           Đăng ký ");
         jLabel5.setToolTipText("");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField1.setText("Họ và tên");
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txthovaten.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        txthovaten.setForeground(new java.awt.Color(153, 153, 153));
+        txthovaten.setText("Họ và tên");
+        txthovaten.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField1FocusGained(evt);
+                txthovatenFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
+                txthovatenFocusLost(evt);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txthovaten.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txthovatenActionPerformed(evt);
             }
         });
 
@@ -94,23 +101,23 @@ public class DangKyAccount extends javax.swing.JFrame {
             }
         });
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField5.setText("OTP");
-        jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtotp.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        txtotp.setForeground(new java.awt.Color(153, 153, 153));
+        txtotp.setText("OTP");
+        txtotp.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField5FocusGained(evt);
+                txtotpFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField5FocusLost(evt);
+                txtotpFocusLost(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton1.setText("Đăng ký ngay");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSubmit.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnSubmit.setText("Đăng ký ngay");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSubmitActionPerformed(evt);
             }
         });
 
@@ -125,15 +132,15 @@ public class DangKyAccount extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setText("@gmail.com");
 
-        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        jpwmatkhau.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jPasswordField1FocusGained(evt);
+                jpwmatkhauFocusGained(evt);
             }
         });
 
-        jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
+        jpwmatkhau2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField2ActionPerformed(evt);
+                jpwmatkhau2ActionPerformed(evt);
             }
         });
 
@@ -169,8 +176,10 @@ public class DangKyAccount extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
+                        .addComponent(txthovaten, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSubmit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -185,15 +194,19 @@ public class DangKyAccount extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+
+                                .addComponent(txtotp, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(sendOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtgmail, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPasswordField1)
-                            .addComponent(jPasswordField2))))
+
+                            .addComponent(jpwmatkhau)
+                            .addComponent(jpwmatkhau2))))
+
                 .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
@@ -203,7 +216,7 @@ public class DangKyAccount extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(txthovaten, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -212,19 +225,21 @@ public class DangKyAccount extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(jpwmatkhau, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
+                    .addComponent(jpwmatkhau2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sendOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+
+                    .addComponent(txtotp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textTimer, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
@@ -244,36 +259,63 @@ public class DangKyAccount extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txthovatenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txthovatenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txthovatenActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        if(jTextField5.getText() == "123123"){
-            t.cancel();
-        }
-        textTimer.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        if (jTextField1.getText().trim().equals(""))
-        {
-            jTextField1.setText("Họ và tên");
+        otpBUS bus = new otpBUS();
+        otpDTO otp = new otpDTO();
+        NguoiDungDTO nd = new NguoiDungDTO();
+        NguoiDungBUS ndbus = new NguoiDungBUS();
+        String a="Họ và tên";
+        String b="Gmail";
+        String c="";
+//        if(!txthovaten.getText().equals(a) && !txtgmail.getText().equals(b) && !jpwmatkhau.getPassword().toString().equals(c) && jpwmatkhau.getPassword().toString().equals(jpwmatkhau2.getPassword().toString()) )
+//        {
+            if(bus.checkOTP(txtotp.getText(), txtgmail.getText()+"@gmail.com")==1)
+            {
+                nd.setName(txthovaten.getText());
+                nd.setUsername(txtgmail.getText()+"@gmail.com");
+                nd.setPassword(jpwmatkhau.getPassword().toString());
             
-        jTextField1.setForeground(new Color(153,153,153));
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1FocusLost
+            ndbus.them(nd);
+            dsnd.add(nd);
+            t.cancel();  
+            textTimer.setText("");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"OTP nhập chưa chính xác");
+            }
+            
+//        }
+//        else
+//        {
+//            JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin");
+//        }
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
-    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-        if(jTextField1.getText().trim().equals("Họ và tên"))
+    private void txthovatenFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txthovatenFocusLost
+        if (txthovaten.getText().trim().equals(""))
         {
-            jTextField1.setText("");
+            txthovaten.setText("Họ và tên");
+            
+        txthovaten.setForeground(new Color(153,153,153));
         }
-        jTextField1.setForeground(Color.black);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1FocusGained
+    }//GEN-LAST:event_txthovatenFocusLost
+
+    private void txthovatenFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txthovatenFocusGained
+        if(txthovaten.getText().trim().equals("Họ và tên"))
+        {
+            txthovaten.setText("");
+        }
+        txthovaten.setForeground(Color.black);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txthovatenFocusGained
 
     private void txtgmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtgmailFocusGained
         if(txtgmail.getText().trim().equals("Gmail"))
@@ -294,38 +336,39 @@ public class DangKyAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtgmailFocusLost
 
-    private void jTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusGained
-        if(jTextField5.getText().trim().equals("OTP"))
+    private void txtotpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtotpFocusGained
+        if(txtotp.getText().trim().equals("OTP"))
         {
-            jTextField5.setText("");
+            txtotp.setText("");
         }
-        jTextField5.setForeground(Color.black);
+        txtotp.setForeground(Color.black);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5FocusGained
+    }//GEN-LAST:event_txtotpFocusGained
 
-    private void jTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusLost
-        if (jTextField5.getText().trim().equals(""))
+    private void txtotpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtotpFocusLost
+        if (txtotp.getText().trim().equals(""))
         {
-            jTextField5.setText("OTP");
+            txtotp.setText("OTP");
             
-        jTextField5.setForeground(new Color(153,153,153));
+        txtotp.setForeground(new Color(153,153,153));
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5FocusLost
+    }//GEN-LAST:event_txtotpFocusLost
 
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
+    private void jpwmatkhau2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpwmatkhau2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField2ActionPerformed
+    }//GEN-LAST:event_jpwmatkhau2ActionPerformed
 
-    private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
+    private void jpwmatkhauFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jpwmatkhauFocusGained
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1FocusGained
+    }//GEN-LAST:event_jpwmatkhauFocusGained
 
     private void sendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseClicked
         String a="Gmail";
         otpBUS bus = new otpBUS();
         otpDTO otp = new otpDTO();
+        t = new Timer();
         if(txtgmail.getText().equals(a))
         {
             JOptionPane.showMessageDialog(null,"vui lòng nhập đầy đủ thông tin");
@@ -342,7 +385,28 @@ public class DangKyAccount extends javax.swing.JFrame {
             {
                 bus.them(otp);
                 dsotp.add(otp);
+                
+                
             }
+            t.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    System.out.println(interval);
+                    textTimer.setText(String.valueOf(interval));
+                    interval--;
+                    if( interval < 0) 
+                    {
+                        String mail = txtgmail.getText()+"@gmail.com";
+                        bus.xoa(mail);
+                        t.cancel();
+                    }
+                    
+                    if(txtotp.getText().length()==6){
+                        btnSubmit.setEnabled(true);
+                    }else if(txtotp.getText().length()!= 6){
+                        btnSubmit.setEnabled(false);
+                    }
+                }
+            }, 1000, 1000);
 //            bus.them(otp);
         }
 //        t= new Timer(10000, new ActionListener() {
@@ -355,6 +419,7 @@ public class DangKyAccount extends javax.swing.JFrame {
 //            }
 //        });
 //        t.start();
+
         t = new Timer();
             t.scheduleAtFixedRate(new TimerTask() {
 
@@ -372,6 +437,7 @@ public class DangKyAccount extends javax.swing.JFrame {
                     }
                 }
             }, 1000, 1000);
+
         
         // TODO add your handling code here:
     }//GEN-LAST:event_sendOTPMouseClicked
@@ -417,7 +483,7 @@ public class DangKyAccount extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -425,12 +491,12 @@ public class DangKyAccount extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JPasswordField jpwmatkhau;
+    private javax.swing.JPasswordField jpwmatkhau2;
     private javax.swing.JButton sendOTP;
     public static javax.swing.JLabel textTimer;
     private javax.swing.JTextField txtgmail;
+    private javax.swing.JTextField txthovaten;
+    private javax.swing.JTextField txtotp;
     // End of variables declaration//GEN-END:variables
 }
