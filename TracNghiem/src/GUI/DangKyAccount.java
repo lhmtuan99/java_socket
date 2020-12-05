@@ -37,7 +37,7 @@ public class DangKyAccount extends javax.swing.JFrame {
         initComponents();
         jPanel1.setFocusable(true);
 
-        jButton1.setEnabled(false);
+       // jButton1.setEnabled(false);
 
         btnSubmit.setEnabled(false);
 
@@ -278,24 +278,24 @@ public class DangKyAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txthovatenActionPerformed
 
-    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
 //
-        if(jTextField5.getText() == "123123"){
+        if(textTimer.getText() == "123123"){
             t.cancel();
         }
         textTimer.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }                                        
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        if (jTextField1.getText().trim().equals(""))
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {                                      
+        if (txthovaten.getText().trim().equals(""))
         {
             txthovaten.setText("Họ và tên");
             
         txthovaten.setForeground(new Color(153,153,153));
         }
         // TODO add your handling code here:
-    }//GEN-LAST:event_txthovatenFocusLost
+    }                                    
 
     private void txthovatenFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txthovatenFocusGained
         if(txthovaten.getText().trim().equals("Họ và tên"))
@@ -419,10 +419,10 @@ public class DangKyAccount extends javax.swing.JFrame {
                     if( interval < 0) t.cancel();
 
                     
-                    if(jTextField5.getText().length()==6){
-                        jButton1.setEnabled(true);
-                    }else if(jTextField5.getText().length()!= 6){
-                        jButton1.setEnabled(false);
+                    if(textTimer.getText().length()==6){
+                        btnSubmit.setEnabled(true);
+                    }else if(textTimer.getText().length()!= 6){
+                        btnSubmit.setEnabled(false);
                     }
                 }
             }, 1000, 1000);
