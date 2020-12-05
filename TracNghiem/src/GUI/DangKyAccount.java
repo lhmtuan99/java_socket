@@ -430,10 +430,10 @@ public class DangKyAccount extends javax.swing.JFrame {
                     if( interval < 0) t.cancel();
 
                     
-                    if(jTextField5.getText().length()==6){
-                        jButton1.setEnabled(true);
-                    }else if(jTextField5.getText().length()!= 6){
-                        jButton1.setEnabled(false);
+                    if(textTimer.getText().length()==6){
+                        btnSubmit.setEnabled(true);
+                    }else if(textTimer.getText().length()!= 6){
+                        btnSubmit.setEnabled(false);
                     }
                 }
             }, 1000, 1000);

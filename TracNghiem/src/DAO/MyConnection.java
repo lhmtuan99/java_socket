@@ -7,7 +7,7 @@ package DAO;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-
+import java.sql.Connection;
 /**
  *
  * @author Admin
@@ -58,4 +58,9 @@ public class MyConnection {
 //        
 //        System.out.println(createid());
 //    }
+    public static void main(String[] argv ){
+        System.out.println("ok");
+         MyConnection connectiondatabase = new MyConnection();
+        conn=connectiondatabase.getConnecDB();
+    }
 }
