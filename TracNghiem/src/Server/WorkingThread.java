@@ -45,7 +45,7 @@ public class WorkingThread extends Thread {
                     // excute option of client here
                     System.out.println(line);
                     System.out.println(socket);
-                    
+                    System.out.println(socket.getPort());
                 }
             } catch (IOException ex) {
                 Logger.getLogger(WorkingThread.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,11 +5,20 @@
  */
 package Server;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -26,6 +35,12 @@ public class Server implements Runnable{
         threadName = name;
         System.out.println("Creating " + threadName);
     }
+    // generate key 
+    private String key = "aesKey";
+    private String initVector = "encryptionIntVec";
+    
+
+    //
     
     private volatile boolean shutdown;
     
@@ -44,8 +59,16 @@ public class Server implements Runnable{
             while (!shutdown)
             {
                 if(shutdown) server.close();
+
                 Socket socket = server.accept();
-                Clients.add(new TheadClient(socket));
+                
+                TheadClient newClient = new TheadClient(socket);
+                newClient.key = key;
+                newClient.initVector = initVector;
+
+                System.out.println(newClient.key);
+                System.out.println(newClient.initVector);
+                Clients.add(newClient);
                 Clients.get(Clients.size()-1).start();
                 
                 //executor.execute(new Worker(socket));

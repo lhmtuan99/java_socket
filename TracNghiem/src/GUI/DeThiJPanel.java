@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import static javax.swing.JOptionPane.showMessageDialog;
 /**
  *
  * @author Admin
@@ -94,6 +94,12 @@ public class DeThiJPanel extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Môn thi: ");
 
+        txtmonthi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtmonthiActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Thời lượng");
 
@@ -139,14 +145,14 @@ public class DeThiJPanel extends javax.swing.JPanel {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbid)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSua)
@@ -154,16 +160,18 @@ public class DeThiJPanel extends javax.swing.JPanel {
                         .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtthoiluong)
-                            .addComponent(txttieude, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(txttieude, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                            .addComponent(txtmonthi))
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtmonthi)
-                            .addComponent(txtsocau, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtthoiluong, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtsocau)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -173,17 +181,19 @@ public class DeThiJPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtmonthi, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txttieude, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txttieude, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtthoiluong, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtthoiluong, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtsocau, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtsocau, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtmonthi))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -257,9 +267,26 @@ public class DeThiJPanel extends javax.swing.JPanel {
         DeThiDTO dt = new DeThiDTO();
         dt.setDt_id(tt+1);
         dt.setTieude(txttieude.getText());
+        if(txttieude.getText().length()<1) {
+            showMessageDialog(null, "Tiêu đề không được để trống !!!");
+            return;
+        }
         dt.setMonthi(txtmonthi.getText());
+        if(txtmonthi.getText().length()<1) {
+            showMessageDialog(null, "Môn thi không được để trống !!!");
+            return;
+        }
         dt.setSocau(txtsocau.getText());
+        if(txtsocau.getText().length()<1) {
+            showMessageDialog(null, "Số câu không được để trống !!!");
+            return;
+        }
         dt.setThoiluong(txtthoiluong.getText());
+        if(txtthoiluong.getText().length()<1) {
+            showMessageDialog(null, "Thời gian thi không được để trống !!!");
+            return;
+        }
+        showMessageDialog(null, "Tạo đề thi thành công...");
         DeThiBUS bus = new DeThiBUS();
         bus.them(dt);
         Vector row = new Vector();
@@ -282,6 +309,22 @@ public class DeThiJPanel extends javax.swing.JPanel {
 
         if(i>0)
         {
+            if(txttieude.getText().length()<1){
+                showMessageDialog(null, "Tiêu đề không được để trống !!!");
+                return;
+            }
+            if(txtmonthi.getText().length()<1){
+                showMessageDialog(null, "Môn thi không được để trống !!!");
+                return;
+            }
+            if(txtthoiluong.getText().length()<1){
+                showMessageDialog(null, "Thời gian thi không được để trống !!!");
+                return;
+            }
+            if(txtsocau.getText().length()<1){
+                showMessageDialog(null, "Số câu không được để trống !!!");
+                return;
+            }
             DeThiBUS bus  = new DeThiBUS();
             DeThiDTO dethi1 = new DeThiDTO();
             dethi1 = dsdt.get(i);
@@ -302,11 +345,20 @@ public class DeThiJPanel extends javax.swing.JPanel {
             model.setValueAt(dethi.getSocau(),i,4);
 
             jTable1.setModel(model);
+             showMessageDialog(null, "Cập nhật thành công...");
+        }else{
+            showMessageDialog(null, "Vui lòng chọn đề muốn sửa");
         }
     }//GEN-LAST:event_btnSuaMouseClicked
 
     private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
-        int xet=JOptionPane.showConfirmDialog(null,"Bạn có muốn xóa");
+        int selected = -1;
+        selected = jTable1.getSelectedRow();
+        if(selected == -1){
+            showMessageDialog(null,"Vui lòng chọn đề cần xóa !!!");
+        }else {
+            int xet=JOptionPane.showConfirmDialog(null,"Bạn có muốn xóa");
+       
         if(xet==0)
         {
             int i= jTable1.getSelectedRow();
@@ -320,9 +372,11 @@ public class DeThiJPanel extends javax.swing.JPanel {
                 jTable1.setModel(model);
                 //                doc();
                 dsdt.remove(i);
-
+                showMessageDialog(null, "Xóa thành công...");
             }
         }
+        }
+
     }//GEN-LAST:event_btnXoaMouseClicked
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -339,6 +393,10 @@ public class DeThiJPanel extends javax.swing.JPanel {
             lbid.setText(Long.toString(dt.getDt_id()));
         }
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void txtmonthiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmonthiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmonthiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

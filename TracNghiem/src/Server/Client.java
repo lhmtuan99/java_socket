@@ -12,6 +12,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.GeneralSecurityException;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Scanner;
 import javafx.scene.input.KeyCode;
 
@@ -20,6 +27,7 @@ import javafx.scene.input.KeyCode;
  * @author Admin
  */
 public class Client {
+    
 	public static void main(String args[]) throws UnknownHostException, IOException 
 	{ 
             Socket socket = null;
@@ -28,6 +36,7 @@ public class Client {
             try {
                 socket = new Socket("127.0.0.1",1234);
                 System.out.println("Client connected");
+                System.out.println(socket.getLocalPort());
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
