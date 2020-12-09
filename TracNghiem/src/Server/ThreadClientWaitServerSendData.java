@@ -99,6 +99,7 @@ public class ThreadClientWaitServerSendData extends Thread{
             MainJFrame.AlertMessageFromServer("Sai OTP !!!");
         }else if(str.equals("DNOK")){
             lg.dispose();
+            Client.lg.dispose();
             MainJFrame mf = new MainJFrame();
             mf.setVisible(true);
         }else if(str.equals("DNSAI")){
