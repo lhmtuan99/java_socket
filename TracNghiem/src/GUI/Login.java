@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,8 +6,11 @@
 package GUI;
 
 import BUS.NguoiDungBUS;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
+import static Server.Client.SendToServer;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class Login extends javax.swing.JFrame {
-
+public static DangKyAccount r = new DangKyAccount();
     /**
      * Creates new form NewJFrame
      */
@@ -152,13 +155,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        DangKyAccount r = new DangKyAccount();
+        
         r.setVisible(true);
         
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
-
+    
+    public static void CLOSE(){
+        r.dispose();
+    }
+    
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
     NguoiDungBUS nguoidungbus = new NguoiDungBUS();
     String a="";
@@ -166,16 +173,9 @@ public class Login extends javax.swing.JFrame {
     String c= new String(jPasswordField1.getPassword());
     if(!b.equals(a) && !c.equals(a))
     {
-        if(nguoidungbus.CheckLogin(b, c)==1)
-        {
-            MainJFrame main = new MainJFrame();
-            main.setVisible(true);
-            this.dispose();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null,"Sai tài khoản hoặc mật khẩu");
-        }
+        SendToServer("DN:"+b+":"+c+":");
+    }else {
+        JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked
@@ -215,7 +215,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
-
+    public void Run(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Login().setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

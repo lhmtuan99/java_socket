@@ -6,6 +6,7 @@
 package Server;
 
 
+import DTO.otpDTO;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -53,9 +54,53 @@ public class WorkingThread extends Thread {
                     System.out.println(line);
                     System.out.println(socket);
                     System.out.println(socket.getPort());
+                    String [] Clause = line.split(":");
+                    line="";
+                    // tao otp
+                    if(Clause[0].equals("OTP")){
+                        DAO.otpDAO otpDao = new DAO.otpDAO();
+                        DTO.otpDTO otpp = new DTO.otpDTO();
+                        otpp.setGmail(Clause[1]);
+                        int res = otpDao.kiemtra(otpp);
+                        if(res==1){
+                            otpDao.them(otpp);
+                        }
+                        line =""+res;
+                        
+                    }
+                    // xoa otp
+                    if(Clause[0].equals("XOAOTP")){
+                        DAO.otpDAO otpDao = new DAO.otpDAO();
+                        otpDao.xoa(Clause[1]);
+                    }
+                    // thong tin dk
+                    if(Clause[0].equals("DK")){
+                        DAO.otpDAO otpDao = new DAO.otpDAO();
+                        if(otpDao.kiemtraOTP(Clause[4],Clause[2])==1){
+                            DTO.NguoiDungDTO nd = new DTO.NguoiDungDTO();
+                            nd.setName(Clause[1]);
+                            nd.setUsername(Clause[2]);
+                            nd.setPassword(Clause[3]);
+                            DAO.NguoiDungDAO nddao = new DAO.NguoiDungDAO();
+                            nddao.them(nd);
+                            line="DKTC";
+                        }else {
+                            line="SAIOTP";
+                        }
+                    }
+                    // dang nhap
+                    if(Clause[0].equals("DN")){
+                        DAO.NguoiDungDAO nd = new DAO.NguoiDungDAO();
+                        if(nd.CheckLogin(Clause[1], Clause[2])==1){
+                            line="DNOK";
+                        }else {
+                            line="DNSAI";
+                        }
+                    }
+                    //
                     // send data to client
                     if(line.length()>0){
-                        line = encrypt("1223",key+socket.getPort());
+                        line = encrypt(line,key+socket.getPort());
                         System.out.println(line);
                         out.writeBytes(line + "\n");
                         out.flush();

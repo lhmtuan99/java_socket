@@ -6,6 +6,9 @@
 package Server;
 
 
+import GUI.DangKyAccount;
+import GUI.Login;
+import static GUI.Login.CLOSE;
 import GUI.MainJFrame;
 import static GUI.MainJFrame.AlertMessageFromServer;
 import java.io.BufferedReader;
@@ -69,7 +72,8 @@ public class ThreadClientWaitServerSendData extends Thread{
                //System.out.println("Client received: "+ TheadClient.GiaimaData(res, zz));
                System.out.println("Client received: "+ res);
                System.out.println("Client received: "+ decrypt(res,key+socket.getLocalPort()));
-               MainJFrame.AlertMessageFromServer(decrypt(res,key+socket.getLocalPort()));
+               String result = decrypt(res,key+socket.getLocalPort());
+               XULY(result);
                Thread.sleep(1500);
            } catch (IOException ex) {
                Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +84,28 @@ public class ThreadClientWaitServerSendData extends Thread{
         }
         
     }
-    
+    public void XULY(String str){
+        Login lg = new Login();
+        if(str.equals("1")){
+            MainJFrame.AlertMessageFromServer("Vui lòng kiểm tra email để xác thực OTP...");
+            DangKyAccount.CountDown();
+        }else if(str.equals("0")){
+            MainJFrame.AlertMessageFromServer("Email đã tồn tại !!!");
+        }else if(str.equals("DKTC")){
+            MainJFrame.AlertMessageFromServer("Đăng kí thành công...");
+            CLOSE();
+            lg.setVisible(true);
+        }else if(str.equals("SAIOTP")){
+            MainJFrame.AlertMessageFromServer("Sai OTP !!!");
+        }else if(str.equals("DNOK")){
+            lg.dispose();
+            MainJFrame mf = new MainJFrame();
+            mf.setVisible(true);
+        }else if(str.equals("DNSAI")){
+            MainJFrame.AlertMessageFromServer("Sai tài khoản hoặc mật khẩu !!!");
+        }
+        //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
+    }
     
      public String encrypt(String strToEncrypt, String myKey) {
       try {
