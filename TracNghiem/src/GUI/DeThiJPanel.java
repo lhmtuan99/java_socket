@@ -9,6 +9,7 @@ import BUS.DeThiBUS;
 import static BUS.DeThiBUS.dsdt;
 import DTO.DeThiDTO;
 import Server.Client;
+import static Server.Client.SendToServer;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -25,34 +26,35 @@ public class DeThiJPanel extends javax.swing.JPanel {
     /**
      * Creates new form TrangChuJPanel
      */
-    public void doc()
-    {
-        
-        DeThiBUS bus = new DeThiBUS();
-                if(DeThiBUS.dsdt== null) bus.docDSDT();
-        Vector header = new Vector ();
-        header.add("ID");
-        header.add("TIÊU ĐỀ");
-        header.add("MÔN THI");
-        header.add("THỜI LƯỢNG");
-        header.add("SỐ CÂU");
-        model = new DefaultTableModel(header,0);
-        for(DeThiDTO dt: DeThiBUS.dsdt)
-        {
-            Vector row  = new Vector();
-            row.add(dt.getDt_id());
-            row.add(dt.getTieude());
-            row.add(dt.getMonthi());
-            row.add(dt.getThoiluong());
-            row.add(dt.getSocau());
-            model.addRow(row);
-            dsdt.add(dt);
-        }
-        jTable1.setModel(model); 
-    }
+    
+//    public void doc()
+//    {
+//        
+//        DeThiBUS bus = new DeThiBUS();
+//                if(DeThiBUS.dsdt== null) bus.docDSDT();
+//        Vector header = new Vector ();
+//        header.add("ID");
+//        header.add("TIÊU ĐỀ");
+//        header.add("MÔN THI");
+//        header.add("THỜI LƯỢNG");
+//        header.add("SỐ CÂU");
+//        model = new DefaultTableModel(header,0);
+//        for(DeThiDTO dt: DeThiBUS.dsdt)
+//        {
+//            Vector row  = new Vector();
+//            row.add(dt.getDt_id());
+//            row.add(dt.getTieude());
+//            row.add(dt.getMonthi());
+//            row.add(dt.getThoiluong());
+//            row.add(dt.getSocau());
+//            model.addRow(row);
+//            dsdt.add(dt);
+//        }
+//        jTable1.setModel(model); 
+//    }
     public DeThiJPanel() {
         initComponents();
-        doc();
+        SendToServer("LOAD:DETHI:");
         lbid.setVisible(true);
     }
 
@@ -385,14 +387,14 @@ public class DeThiJPanel extends javax.swing.JPanel {
         int i= jTable1.getSelectedRow();
         if(i>=0)
         {
-
-            DeThiDTO dt = new DeThiDTO();
-            dt = dsdt.get(i);
-            txttieude.setText(dt.getTieude());
-            txtmonthi.setText(dt.getMonthi());
-            txtsocau.setText(dt.getSocau());
-            txtthoiluong.setText(dt.getThoiluong());
-            lbid.setText(Long.toString(dt.getDt_id()));
+            lbid.setText((String) jTable1.getValueAt(i, 0));
+//            DeThiDTO dt = new DeThiDTO();
+//            dt = dsdt.get(i);
+            txttieude.setText((String) jTable1.getValueAt(i, 1));
+            txtmonthi.setText((String) jTable1.getValueAt(i, 2));
+            txtsocau.setText((String) jTable1.getValueAt(i, 3));
+            txtthoiluong.setText((String) jTable1.getValueAt(i, 4));
+//            lbid.setText(Long.toString(dt.getDt_id()));
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -414,7 +416,7 @@ public class DeThiJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable1;
     private javax.swing.JLabel lbid;
     private javax.swing.JTextField txtmonthi;
     private javax.swing.JTextField txtsocau;

@@ -17,9 +17,9 @@ public class DeThiBUS {
     public static ArrayList <DeThiDTO> dsdt;
     public void docDSDT()
     {
-        DeThiDAO data = new DeThiDAO();
-        if(dsdt == null) dsdt = new ArrayList<DeThiDTO>();
-        dsdt = data.docDSDT();
+//        DeThiDAO data = new DeThiDAO();
+//        if(dsdt == null) dsdt = new ArrayList<DeThiDTO>();
+//        dsdt = data.docDSDT();
     }
     public void them(DeThiDTO dethi)
     {

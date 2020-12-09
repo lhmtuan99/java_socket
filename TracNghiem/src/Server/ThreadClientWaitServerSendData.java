@@ -8,11 +8,18 @@ package Server;
 
 import GUI.DangKyAccount;
 import static GUI.DangKyAccount.CloseDangkiFrame;
+import GUI.DeThiJPanel;
+import static GUI.DeThiJPanel.jTable1;
 import GUI.Login;
 import static GUI.Login.CLOSE;
 import static GUI.Login.CloseLoginFrame;
 import GUI.MainJFrame;
 import static GUI.MainJFrame.AlertMessageFromServer;
+import static GUI.ThongTinNguoiDungJPanel.block1;
+import static GUI.ThongTinNguoiDungJPanel.block2;
+import static GUI.ThongTinNguoiDungJPanel.block3;
+import static GUI.ThongTinNguoiDungJPanel.jLabel5;
+import static GUI.ThongTinNguoiDungJPanel.jTextField1;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -31,6 +38,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
@@ -39,6 +47,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -86,26 +95,55 @@ public class ThreadClientWaitServerSendData extends Thread{
         }
         
     }
-    public void XULY(String str){
+    public void XULY(String str1){
         Login lg = new Login();
-        if(str.equals("1")){
+        String []str = str1.split(":");
+        if(str[0].equals("1")){
             MainJFrame.AlertMessageFromServer("Vui lòng kiểm tra email để xác thực OTP...");
             DangKyAccount.OffEmail();
             DangKyAccount.CountDown();
-        }else if(str.equals("0")){
+        }else if(str[0].equals("0")){
             MainJFrame.AlertMessageFromServer("Email đã tồn tại !!!");
-        }else if(str.equals("DKTC")){
+        }else if(str[0].equals("DKTC")){
             MainJFrame.AlertMessageFromServer("Đăng kí thành công...");
             CloseDangkiFrame();
             Login.getIntanceLogin().setVisible(true);
-        }else if(str.equals("SAIOTP")){
+            
+        }else if(str[0].equals("SAIOTP")){
             MainJFrame.AlertMessageFromServer("Sai OTP !!!");
-        }else if(str.equals("DNOK")){
+        }else if(str[0].equals("DNOK")){
             CloseLoginFrame();
             MainJFrame jf = new MainJFrame();
             jf.setVisible(true);
-        }else if(str.equals("DNSAI")){
+            jTextField1.setText(str[1]);
+            jLabel5.setText(str[2]);
+            block1.setText( str[3].equals("1") ? "False":"True");
+            block2.setText(str[4].equals("1") ? "False":"True");
+            block3.setText(str[5].equals("1") ? "False":"True");
+        }else if(str[0].equals("DNSAI")){
             MainJFrame.AlertMessageFromServer("Sai tài khoản hoặc mật khẩu !!!");
+        }else if(str[0].equals("LOADDETHI")){
+            Vector header = new Vector ();
+            header.add("ID");
+            header.add("TIÊU ĐỀ");
+            header.add("MÔN THI");
+            header.add("SỐ CÂU");
+            header.add("THỜI LƯỢNG");
+            header.add("TỔNG SỐ NGƯỜI THI");
+            DefaultTableModel model = new DefaultTableModel(header,0);
+            for(int i=1;i<str.length;i=i+6)
+            {
+                Vector row  = new Vector();
+                row.add(str[i]);
+                row.add(str[i+1]);
+                row.add(str[i+2]);
+                row.add(str[i+3]);
+                row.add(str[i+4]);
+                row.add(str[i+5]);
+                model.addRow(row);
+                //dsdt.add(dt);
+            }
+            jTable1.setModel(model); 
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

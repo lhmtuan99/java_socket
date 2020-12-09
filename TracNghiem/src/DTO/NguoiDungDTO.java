@@ -15,18 +15,9 @@ public class NguoiDungDTO {
     private String username;
     private String password;
     private String trangthai;
-    
-    public NguoiDungDTO(){
-        
-    }
-
-    public NguoiDungDTO(int nd_id, String name, String username, String password, String trangthai) {
-        this.nd_id = nd_id;
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.trangthai = trangthai;
-    }
+    private int blockaccount;
+    private int blockthi;
+    private int blocktaode;
 
     public int getNd_id() {
         return nd_id;
@@ -67,5 +58,45 @@ public class NguoiDungDTO {
     public void setTrangthai(String trangthai) {
         this.trangthai = trangthai;
     }
+
+    public int getBlockaccount() {
+        return blockaccount;
+    }
+
+    public void setBlockaccount(int blockaccount) {
+        this.blockaccount = blockaccount;
+    }
+
+    public int getBlockthi() {
+        return blockthi;
+    }
+
+    public void setBlockthi(int blockthi) {
+        this.blockthi = blockthi;
+    }
+
+    public int getBlocktaode() {
+        return blocktaode;
+    }
+
+    public void setBlocktaode(int blocktaode) {
+        this.blocktaode = blocktaode;
+    }
     
+    public NguoiDungDTO(){
+        
+    }
+
+    public NguoiDungDTO(int nd_id, String name, String username, String password, String trangthai, int blockaccount, int blockthi, int blocktaode) {
+        this.nd_id = nd_id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.trangthai = trangthai;
+        this.blockaccount = blockaccount;
+        this.blockthi = blockthi;
+        this.blocktaode = blocktaode;
+    }
+
+   
 }

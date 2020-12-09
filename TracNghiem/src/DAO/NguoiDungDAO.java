@@ -56,7 +56,7 @@ public class NguoiDungDAO {
             System.out.println("DAO: "+nguoidung.getName());
             System.out.println("DAO: "+nguoidung.getUsername());
             System.out.println("DAO: "+nguoidung.getPassword());
-            String qry = "INSERT INTO NguoiDung (nd_id,nd_name,nd_username,nd_password,nd_blockaccount,nd_blocktaode,nd_blockthi) VALUES ('"+createid()+"','"+nguoidung.getName()+"','"+nguoidung.getUsername()+"','"+getMD5(nguoidung.getPassword().toString())+"','1','1','1')";
+            String qry = "INSERT INTO NguoiDung (nd_id,nd_name,nd_username,nd_password,nd_blockaccount,nd_blocktaode,nd_blockthi) VALUES ('"+createid()+"',N'"+nguoidung.getName()+"','"+nguoidung.getUsername()+"','"+getMD5(nguoidung.getPassword().toString())+"','1','1','1')";
             System.out.println(qry);
             st=conn.createStatement();
             System.out.println("qua 1 ");
@@ -103,5 +103,34 @@ public class NguoiDungDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    public NguoiDungDTO getNguoiDung(String email)
+    {
+        NguoiDungDTO nd = new NguoiDungDTO();
+        try{
+            String query = "select * from NguoiDung where nd_username='"+email+"'";
+            st = conn.createStatement();
+            rs=st.executeQuery(query);
+            System.out.println(rs);
+            
+            while (rs.next())
+            {   
+                //System.out.println(rs);
+                
+                nd.setNd_id(rs.getInt("nd_id"));
+                nd.setName(rs.getString("nd_name"));
+                nd.setUsername(rs.getString("nd_username"));
+                nd.setBlockaccount(rs.getInt("nd_blockaccount"));
+                nd.setBlocktaode(rs.getInt("nd_blocktaode"));
+                nd.setBlockthi(rs.getInt("nd_blockthi"));
+                return nd;
+            }
+            
+        }
+        catch(SQLException ex)
+        {
+                JOptionPane.showMessageDialog(null, "lỗi đọc thông tin đề thi");
+        }
+        return nd;
     }
 }

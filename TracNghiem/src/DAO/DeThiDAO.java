@@ -29,11 +29,11 @@ public class DeThiDAO {
         conn=connectiondatabase.getConnecDB();
         
     }
-    public ArrayList docDSDT()
+    public ArrayList docDSDT(int id)
     {
         ArrayList dsdt = new ArrayList<DeThiDTO>();
         try{
-            String query = "select * from DeThi";
+            String query = "select * from DeThi where dt_nguoitao="+id;
             st = conn.createStatement();
             rs=st.executeQuery(query);
             System.out.println(rs);
@@ -46,6 +46,8 @@ public class DeThiDAO {
                 dt.setSocau(rs.getString("dt_socau"));
                 dt.setThoiluong(rs.getString("dt_thoiluong"));
                 dt.setTieude(rs.getString("dt_tieude"));
+                dt.setTongsonguoithi(rs.getInt("dt_songuoithi"));
+                dt.setNguoitao(rs.getInt("dt_nguoitao"));
                 dsdt.add(dt);
             }
         }

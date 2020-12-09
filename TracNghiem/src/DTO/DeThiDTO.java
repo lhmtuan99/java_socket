@@ -12,14 +12,17 @@ import java.sql.Date;
  * @author Admin
  */
 public class DeThiDTO {
-    private int dt_id;
+    private int dt_id,tongsonguoithi,nguoitao;
     private String tieude, monthi, socau;
     private String thoiluong;
     public DeThiDTO(){
         
     }
-    public DeThiDTO(int dt_id, int nd_id, String tieude, String monthi, String socau, String ngaytao, String thoiluong) {
+
+    public DeThiDTO(int dt_id, int tongsonguoithi, int nguoitao, String tieude, String monthi, String socau, String thoiluong) {
         this.dt_id = dt_id;
+        this.tongsonguoithi = tongsonguoithi;
+        this.nguoitao = nguoitao;
         this.tieude = tieude;
         this.monthi = monthi;
         this.socau = socau;
@@ -32,6 +35,22 @@ public class DeThiDTO {
 
     public void setDt_id(int dt_id) {
         this.dt_id = dt_id;
+    }
+
+    public int getTongsonguoithi() {
+        return tongsonguoithi;
+    }
+
+    public void setTongsonguoithi(int tongsonguoithi) {
+        this.tongsonguoithi = tongsonguoithi;
+    }
+
+    public int getNguoitao() {
+        return nguoitao;
+    }
+
+    public void setNguoitao(int nguoitao) {
+        this.nguoitao = nguoitao;
     }
 
     public String getTieude() {
@@ -65,6 +84,8 @@ public class DeThiDTO {
     public void setThoiluong(String thoiluong) {
         this.thoiluong = thoiluong;
     }
+
+    
 
   
     

@@ -6,6 +6,11 @@
 package Server;
 
 
+import BUS.DeThiBUS;
+import DAO.DeThiDAO;
+import DAO.NguoiDungDAO;
+import DTO.DeThiDTO;
+import DTO.NguoiDungDTO;
 import DTO.otpDTO;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -14,6 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +31,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author tiennguyen
  */
 public class WorkingThread extends Thread {
+    public NguoiDungDTO nguoiDung = new NguoiDungDTO();
     protected Socket socket;
     public String key="";
     public WorkingThread(Socket clientSocket) {
@@ -65,7 +72,7 @@ public class WorkingThread extends Thread {
                         if(res==1){
                             otpDao.them(otpp);
                         }
-                        line =""+res;
+                        line =""+res+":";
                         
                     }
                     // xoa otp
@@ -83,18 +90,32 @@ public class WorkingThread extends Thread {
                             nd.setPassword(Clause[3]);
                             DAO.NguoiDungDAO nddao = new DAO.NguoiDungDAO();
                             nddao.them(nd);
-                            line="DKTC";
+                            line="DKTC:";
                         }else {
-                            line="SAIOTP";
+                            line="SAIOTP:";
                         }
                     }
                     // dang nhap
                     if(Clause[0].equals("DN")){
                         DAO.NguoiDungDAO nd = new DAO.NguoiDungDAO();
                         if(nd.CheckLogin(Clause[1], Clause[2])==1){
-                            line="DNOK";
+                            
+                            nguoiDung = new NguoiDungDAO().getNguoiDung(Clause[1]);
+                            line="DNOK:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
                         }else {
-                            line="DNSAI";
+                            line="DNSAI:";
+                        }
+                    }
+                    //
+                    // load de thi
+                    if(Clause[0].equals("LOAD")){
+                        if(Clause[1].equals("DETHI")){
+                            ArrayList <DeThiDTO> dsdt = new ArrayList<>();
+                            dsdt = new DeThiDAO().docDSDT(nguoiDung.getNd_id());
+                            line="LOADDETHI:";
+                            for (DeThiDTO dsdt1 : dsdt) {
+                                line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":";
+                            }
                         }
                     }
                     //
