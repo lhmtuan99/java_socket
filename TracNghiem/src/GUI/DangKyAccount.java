@@ -24,6 +24,16 @@ import java.util.TimerTask;
  * @author Admin
  */
 public class DangKyAccount extends javax.swing.JFrame {
+    public static DangKyAccount INTANCEDANGKI = null;
+    public static DangKyAccount getIntanceDangki (){
+        if(INTANCEDANGKI==null)
+            INTANCEDANGKI= new DangKyAccount();
+        return INTANCEDANGKI;
+    }
+    public static void CloseDangkiFrame(){
+        if(INTANCEDANGKI==null) return;
+        INTANCEDANGKI.dispose();
+    }
     ArrayList<otpDTO> dsotp = new ArrayList<>();
     ArrayList<NguoiDungDTO> dsnd = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
@@ -124,6 +134,9 @@ public class DangKyAccount extends javax.swing.JFrame {
         sendOTP.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 sendOTPMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                sendOTPMouseEntered(evt);
             }
         });
 
@@ -348,8 +361,11 @@ public class DangKyAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jpwmatkhauFocusGained
 
+    public static void OffEmail(){
+         txtgmail.setEnabled(false);
+    }
     private void sendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseClicked
-        txtgmail.setEnabled(false);
+       
         String a="Gmail";
         otpBUS bus = new otpBUS();
         otpDTO otp = new otpDTO();
@@ -389,6 +405,10 @@ public class DangKyAccount extends javax.swing.JFrame {
         
         // TODO add your handling code here:
     }//GEN-LAST:event_sendOTPMouseClicked
+
+    private void sendOTPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendOTPMouseEntered
 //        private static final int setInterval() {
 //        if (interval == 1)
 //            t.cancel();

@@ -35,7 +35,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class Client {
         public static String input= "";
-        public static Login lg = new Login();
+        
 	public static void main(String args[]) throws UnknownHostException, IOException 
 	{
             String key;
@@ -52,7 +52,7 @@ public class Client {
                 //
                 //MainJFrame.Run();
                 
-                lg.Run();
+                Login.getIntanceLogin().setVisible(true);
                 //MainJFrame.AlertMessageFromServer("123");
                 //
                 Scanner sc = new Scanner(System.in);

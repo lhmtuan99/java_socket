@@ -7,8 +7,10 @@ package Server;
 
 
 import GUI.DangKyAccount;
+import static GUI.DangKyAccount.CloseDangkiFrame;
 import GUI.Login;
 import static GUI.Login.CLOSE;
+import static GUI.Login.CloseLoginFrame;
 import GUI.MainJFrame;
 import static GUI.MainJFrame.AlertMessageFromServer;
 import java.io.BufferedReader;
@@ -88,20 +90,20 @@ public class ThreadClientWaitServerSendData extends Thread{
         Login lg = new Login();
         if(str.equals("1")){
             MainJFrame.AlertMessageFromServer("Vui lòng kiểm tra email để xác thực OTP...");
+            DangKyAccount.OffEmail();
             DangKyAccount.CountDown();
         }else if(str.equals("0")){
             MainJFrame.AlertMessageFromServer("Email đã tồn tại !!!");
         }else if(str.equals("DKTC")){
             MainJFrame.AlertMessageFromServer("Đăng kí thành công...");
-            CLOSE();
-            lg.setVisible(true);
+            CloseDangkiFrame();
+            Login.getIntanceLogin().setVisible(true);
         }else if(str.equals("SAIOTP")){
             MainJFrame.AlertMessageFromServer("Sai OTP !!!");
         }else if(str.equals("DNOK")){
-            lg.dispose();
-            Client.lg.dispose();
-            MainJFrame mf = new MainJFrame();
-            mf.setVisible(true);
+            CloseLoginFrame();
+            MainJFrame jf = new MainJFrame();
+            jf.setVisible(true);
         }else if(str.equals("DNSAI")){
             MainJFrame.AlertMessageFromServer("Sai tài khoản hoặc mật khẩu !!!");
         }

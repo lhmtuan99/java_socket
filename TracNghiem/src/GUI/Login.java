@@ -7,6 +7,7 @@ package GUI;
 
 import BUS.NguoiDungBUS;
 import static Server.Client.SendToServer;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +16,16 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 public static DangKyAccount r = new DangKyAccount();
+    public static Login INTANCELOGIN =null;
+    public static Login getIntanceLogin (){
+        if(INTANCELOGIN == null) 
+            INTANCELOGIN= new Login();
+        return INTANCELOGIN;
+    }
+    public static void CloseLoginFrame(){
+        if(INTANCELOGIN==null) return;
+        INTANCELOGIN.dispose();
+    }
     /**
      * Creates new form NewJFrame
      */
@@ -146,10 +157,9 @@ public static DangKyAccount r = new DangKyAccount();
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        
-        r.setVisible(true);
-        
-        this.dispose();
+
+        CloseLoginFrame();
+        DangKyAccount.getIntanceDangki().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
     
