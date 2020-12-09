@@ -79,6 +79,7 @@ public class TheadClient extends Thread{
 //                System.out.println(privateKey);
 //                System.out.println(publicKey);
                 WorkingThread workingThread = new WorkingThread(socket);
+                workingThread.key = key;
                 workingThread.start();
                 check =true;
             }

@@ -27,18 +27,14 @@ public class DangKyAccount extends javax.swing.JFrame {
     ArrayList<NguoiDungDTO> dsnd = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
     static Timer t;
-
-    public static int interval = 60;
-
+    public static int interval = 600;
     /**
      * Creates new form DangKyAccount
      */
     public DangKyAccount() {
         initComponents();
         jPanel1.setFocusable(true);
-
         btnSubmit.setEnabled(false);
-
     }
 
     /**
@@ -176,10 +172,8 @@ public class DangKyAccount extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                         .addComponent(txthovaten, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnSubmit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -194,19 +188,15 @@ public class DangKyAccount extends javax.swing.JFrame {
                                 .addGap(29, 29, 29)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-
                                 .addComponent(txtotp, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(sendOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txtgmail, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-
                             .addComponent(jpwmatkhau)
                             .addComponent(jpwmatkhau2))))
-
                 .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
@@ -234,12 +224,10 @@ public class DangKyAccount extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sendOTP, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                     .addComponent(txtotp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textTimer, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
@@ -265,37 +253,44 @@ public class DangKyAccount extends javax.swing.JFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-
         otpBUS bus = new otpBUS();
         otpDTO otp = new otpDTO();
         NguoiDungDTO nd = new NguoiDungDTO();
-        NguoiDungBUS ndbus = new NguoiDungBUS();
+        NguoiDungBUS nguoidungBUS = new NguoiDungBUS();
         String a="Họ và tên";
         String b="Gmail";
         String c="";
-//        if(!txthovaten.getText().equals(a) && !txtgmail.getText().equals(b) && !jpwmatkhau.getPassword().toString().equals(c) && jpwmatkhau.getPassword().toString().equals(jpwmatkhau2.getPassword().toString()) )
-//        {
-            if(bus.checkOTP(txtotp.getText(), txtgmail.getText()+"@gmail.com")==1)
-            {
-                nd.setName(txthovaten.getText());
-                nd.setUsername(txtgmail.getText()+"@gmail.com");
-                nd.setPassword(jpwmatkhau.getPassword().toString());
-            
-            ndbus.them(nd);
-            dsnd.add(nd);
-            t.cancel();  
-            textTimer.setText("");
-            }
+        String pword= new String (jpwmatkhau.getPassword());
+        String pword2= new String (jpwmatkhau2.getPassword());
+        if(!txthovaten.getText().equals(a) && !txtgmail.getText().equals(b) && !pword.equals(c) && !pword2.equals(c) )
+        {
+            if(pword.equals(pword2))
+                if(bus.checkOTP(txtotp.getText(), txtgmail.getText()+"@gmail.com")==1)
+                {
+                    nd.setName(txthovaten.getText());
+                    nd.setUsername(txtgmail.getText()+"@gmail.com");
+                    nd.setPassword(pword);
+                nguoidungBUS.them(nd);
+                dsnd.add(nd);
+                t.cancel();
+                textTimer.setText("");
+                Login lg = new Login();
+                lg.setVisible(true);
+                this.dispose();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"OTP nhập chưa chính xác");
+                }
             else
             {
-                JOptionPane.showMessageDialog(null,"OTP nhập chưa chính xác");
+                JOptionPane.showMessageDialog(null,"Mật khẩu nhập lại không trùng khớp");
             }
-            
-//        }
-//        else
-//        {
-//            JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin");
-//        }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin");
+        }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void txthovatenFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txthovatenFocusLost
@@ -365,6 +360,7 @@ public class DangKyAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_jpwmatkhauFocusGained
 
     private void sendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseClicked
+        txtgmail.setEnabled(true);
         String a="Gmail";
         otpBUS bus = new otpBUS();
         otpDTO otp = new otpDTO();
@@ -385,10 +381,7 @@ public class DangKyAccount extends javax.swing.JFrame {
             {
                 bus.them(otp);
                 dsotp.add(otp);
-                
-                
-            }
-            t.scheduleAtFixedRate(new TimerTask() {
+                t.scheduleAtFixedRate(new TimerTask() {
                 public void run() {
                     System.out.println(interval);
                     textTimer.setText(String.valueOf(interval));
@@ -407,6 +400,8 @@ public class DangKyAccount extends javax.swing.JFrame {
                     }
                 }
             }, 1000, 1000);
+            }
+            
 //            bus.them(otp);
         }
 //        t= new Timer(10000, new ActionListener() {
@@ -419,25 +414,8 @@ public class DangKyAccount extends javax.swing.JFrame {
 //            }
 //        });
 //        t.start();
-
-        t = new Timer();
-            t.scheduleAtFixedRate(new TimerTask() {
-
-                public void run() {
-                    System.out.println(interval);
-                    textTimer.setText(String.valueOf(interval));
-                    interval--;
-                    if( interval < 0) t.cancel();
-
-                    
-                    if(textTimer.getText().length()==6){
-                        btnSubmit.setEnabled(true);
-                    }else if(textTimer.getText().length()!= 6){
-                        btnSubmit.setEnabled(false);
-                    }
-                }
-            }, 1000, 1000);
-
+        
+        
         
         // TODO add your handling code here:
     }//GEN-LAST:event_sendOTPMouseClicked

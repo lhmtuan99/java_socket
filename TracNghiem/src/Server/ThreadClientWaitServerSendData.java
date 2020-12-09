@@ -6,6 +6,8 @@
 package Server;
 
 
+import GUI.MainJFrame;
+import static GUI.MainJFrame.AlertMessageFromServer;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -47,7 +49,6 @@ public class ThreadClientWaitServerSendData extends Thread{
     DataOutputStream out = null;
     
     public String key ;
-    public String initVector ;
         
     public void run() {
        BufferedReader in = null;
@@ -57,16 +58,8 @@ public class ThreadClientWaitServerSendData extends Thread{
             Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        try {
-            key= in.readLine();
-            initVector = in.readLine();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
         System.out.println(key);
-        System.out.println(initVector);    
        
         
         
@@ -76,7 +69,8 @@ public class ThreadClientWaitServerSendData extends Thread{
                //System.out.println("Client received: "+ TheadClient.GiaimaData(res, zz));
                System.out.println("Client received: "+ res);
                System.out.println("Client received: "+ decrypt(res,key+socket.getLocalPort()));
-               Thread.sleep(2000);
+               MainJFrame.AlertMessageFromServer(decrypt(res,key+socket.getLocalPort()));
+               Thread.sleep(1500);
            } catch (IOException ex) {
                Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
            } catch (InterruptedException ex) {
@@ -103,6 +97,7 @@ public class ThreadClientWaitServerSendData extends Thread{
       }
       return null;
     }
+     
     public String decrypt(String strToDecrypt, String myKey) {
       try {
             MessageDigest sha = MessageDigest.getInstance("SHA-1");

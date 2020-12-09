@@ -14,13 +14,24 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class NguoiDungBUS {
-    public static ArrayList <NguoiDungDTO> dsnd = new ArrayList<>();
+    public static ArrayList <NguoiDungDTO> dsnguoidung  = new ArrayList<>();
     
     
-    public void them(NguoiDungDTO nd)
+    public void them(NguoiDungDTO nguoidung)
     {
         NguoiDungDAO data = new NguoiDungDAO();
-        data.them(nd);
-        //dsnd.add(nd);
+        data.them(nguoidung); 
+        dsnguoidung.add(nguoidung);
+    }
+    public int CheckLogin(String username, String gmail)
+    {
+        NguoiDungDAO data = new NguoiDungDAO();
+        if(data.CheckLogin(username, gmail)==1)
+        {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }

@@ -6,6 +6,7 @@
 package DAO;
 
 import DTO.NguoiDungDTO;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,13 @@ public class NguoiDungDAO {
     Connection conn = null;
     Statement st= null;
     ResultSet rs = null;
-    ArrayList<NguoiDungDTO> dsnd = new ArrayList<>();
-    
+    ArrayList<NguoiDungDTO> dsnguoidung = new ArrayList<>();
+    public NguoiDungDAO()
+    {
+        MyConnection connectiondatabase = new MyConnection();
+        conn=connectiondatabase.getConnecDB();
+        
+    }
     public int createid()
     {
         int id = 0;
@@ -35,24 +41,67 @@ public class NguoiDungDAO {
         while(rs.next())
             {
             id=rs.getInt("createid");   
+                System.out.println("da tao id thanh cong");
             }
         }
         catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "thatbai");
         }
         return id+1;
+        
     }
-    public void them(NguoiDungDTO nd)
+    public void them(NguoiDungDTO nguoidung)
     {
         try{
-            String qry = "INSERT INTO NguoiDung (nd_id,nd_name,nd_username,nd_password,nd_trangthai) VALUES ('"+createid()+"','"+nd.getName()+"','"+nd.getUsername()+"','"+nd.getPassword()+"','active')";
-
+            System.out.println("DAO: "+nguoidung.getName());
+            System.out.println("DAO: "+nguoidung.getUsername());
+            System.out.println("DAO: "+nguoidung.getPassword());
+            String qry = "INSERT INTO NguoiDung (nd_id,nd_name,nd_username,nd_password,nd_trangthai) VALUES ('"+createid()+"','"+nguoidung.getName()+"','"+nguoidung.getUsername()+"','"+getMD5(nguoidung.getPassword().toString())+"','active')";
             System.out.println(qry);
             st=conn.createStatement();
+            System.out.println("qua 1 ");
             st.executeUpdate(qry);
+            System.out.println("qua 2");
             }    
         catch(SQLException ex){
             System.out.println("DAO: lỗi thêm account");
         }
+    }
+    public int CheckLogin (String username, String password)
+    {
+        try {
+            
+            String qry = "SELECT * from NguoiDung where nd_username='"+username+"' and nd_password='"+getMD5(password)+"'";
+            st=conn.createStatement();
+            rs=st.executeQuery(qry);
+    
+        if(rs.next())
+            {
+                return 1;
+            }
+        }
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "DAO: check login thất bại");
+        }
+        return 0;
+    }
+    public String getMD5(String md5)
+    {
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            
+            StringBuffer sb = new StringBuffer();
+            for (int i =0;i< array.length;++i)
+            {
+                sb.append(Integer.toHexString(array[i] & 0xFF | 0x100 ).substring(1,3));
+            }
+            return sb.toString();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

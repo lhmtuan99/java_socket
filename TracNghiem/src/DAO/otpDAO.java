@@ -7,8 +7,6 @@ package DAO;
 
 import DTO.otpDTO;
 import GUI.SendMailutil;
-import static GUI.SendMailutil.generateOTP;
-import static GUI.SendMailutil.sendMail;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -63,6 +61,7 @@ public class otpDAO {
     {
         int randomPin   =(int) (Math.random()*900000)+100000; 
         String otp  = String.valueOf(randomPin); 
+        System.out.println("DAO: OTP duoc create: "+otp);
         return otp; 
     } 
     public int kiemtraOTP (String otp, String gmail)
@@ -84,6 +83,7 @@ public class otpDAO {
         }
         return 0;
     }
+    
     public int kiemtra(otpDTO otp)
     {
         try {
@@ -108,24 +108,17 @@ public class otpDAO {
         try{
             //Int b = rs + 1;
             if(kiemtra(otp)==1){
-            String qry = "INSERT INTO OTP (id,gmail,otp,time) VALUES ('"+createid()+"','"+otp.getGmail()+"','"+generateOTP()+"','')";
-
-//            qry = qry+"'"+createid()+"'";
-//            qry = qry+","+"N'"+otp.getGmail()+"'";
-//            qry = qry+","+"N'"+generateOTP()+"'";
-//            qry = qry+","+"N'"+otp.getTime()+"'";
-//            qry = qry+")";
+                String a = generateOTP();
+            String qry = "INSERT INTO OTP (id,gmail,otp) VALUES ('"+createid()+"','"+otp.getGmail()+"','"+a+"')";
             System.out.println(qry);
             st=conn.createStatement();
             st.executeUpdate(qry);
                 try {
                     System.out.println("ok");
-                    sendMail(otp.getGmail());
-
-                    System.out.println(generateOTP());
-
+                    sendMail(otp.getGmail(),a);
+                    System.out.println(a);
                 } catch (Exception ex) {
-                    System.out.println("loi gui mail");
+                    System.out.println("DAO: loi gui mail");
                 }
             }    
         }
@@ -136,7 +129,7 @@ public class otpDAO {
     public void xoa (String gmail)
     {
         try {
-            String qry = "delete from OTP where gmail='"+gmail+"@gmail.com'";
+            String qry = "delete from OTP where gmail='"+gmail+"'";
             st = conn.createStatement();
             st.executeUpdate(qry);
             System.out.println("DAO: đã xoá OTP");
@@ -147,7 +140,7 @@ public class otpDAO {
             JOptionPane.showMessageDialog(null, "lỗi xoá OTP");
         }
     }
-    public void sendMail(String recepient) throws Exception
+    public void sendMail(String recepient,String OTP) throws Exception
     {
         System.out.println("Preparing to send mail");
         Properties properties = new Properties();
@@ -168,22 +161,22 @@ public class otpDAO {
             
         });
         
-        Message message = prepareMessage(session, myAccountEmail, recepient);
+        Message message = prepareMessage(session, myAccountEmail, recepient,OTP);
         
         Transport.send(message);
         System.out.println("Successfully");
         
     }
     
-    private Message prepareMessage (Session session, String myAccountEmail, String recepient)
+    private Message prepareMessage (Session session, String myAccountEmail, String recepient,String OTP)
     {
         try {
-            String otpSting  =generateOTP();
+//            String otpSting  =generateOTP();
             Message message = new MimeMessage(session) {};
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("OTP");
-            message.setText("Mã OTP của bạn là: "+otpSting);
+            message.setText("Mã OTP của bạn là: "+OTP);
             return message;
         } 
         catch(Exception ex)

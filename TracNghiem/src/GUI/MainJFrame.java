@@ -7,7 +7,8 @@ package GUI;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 /**
  *
  * @author Admin
@@ -321,7 +322,17 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    public static void Run(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainJFrame().setVisible(true);
+            }
+        });
+    }
+    public static void AlertMessageFromServer(String str){
+        showMessageDialog(null,str, "Message from server", JOptionPane.PLAIN_MESSAGE);
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jlbAccount;
     private javax.swing.JLabel jlbCauHoi;

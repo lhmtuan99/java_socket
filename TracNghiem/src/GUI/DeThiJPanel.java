@@ -8,6 +8,7 @@ package GUI;
 import BUS.DeThiBUS;
 import static BUS.DeThiBUS.dsdt;
 import DTO.DeThiDTO;
+import Server.Client;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -47,7 +48,7 @@ public class DeThiJPanel extends javax.swing.JPanel {
             model.addRow(row);
             dsdt.add(dt);
         }
-        jTable1.setModel(model);
+        jTable1.setModel(model); 
     }
     public DeThiJPanel() {
         initComponents();
@@ -152,8 +153,8 @@ public class DeThiJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbid)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
-                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnSua)
                         .addGap(18, 18, 18)
@@ -172,7 +173,7 @@ public class DeThiJPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtsocau)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 53, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -352,6 +353,7 @@ public class DeThiJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSuaMouseClicked
 
     private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        Client.SendToServer("xoa");
         int selected = -1;
         selected = jTable1.getSelectedRow();
         if(selected == -1){
