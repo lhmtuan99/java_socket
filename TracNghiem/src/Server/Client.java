@@ -57,6 +57,9 @@ public class Client {
                 //
                 Scanner sc = new Scanner(System.in);
                 key= in.readLine();
+                
+                
+                
                 while(true){
                     
                     if(!isExistThreadWaitServer){
