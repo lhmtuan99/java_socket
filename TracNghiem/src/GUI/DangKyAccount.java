@@ -9,6 +9,7 @@ import BUS.NguoiDungBUS;
 import BUS.otpBUS;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
+import static Server.Client.SendToServer;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +28,7 @@ public class DangKyAccount extends javax.swing.JFrame {
     ArrayList<NguoiDungDTO> dsnd = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
     static Timer t;
-    public static int interval = 600;
+    public static int interval = 60;
     /**
      * Creates new form DangKyAccount
      */
@@ -35,6 +36,7 @@ public class DangKyAccount extends javax.swing.JFrame {
         initComponents();
         jPanel1.setFocusable(true);
         btnSubmit.setEnabled(false);
+        
     }
 
     /**
@@ -262,26 +264,13 @@ public class DangKyAccount extends javax.swing.JFrame {
         String c="";
         String pword= new String (jpwmatkhau.getPassword());
         String pword2= new String (jpwmatkhau2.getPassword());
+        
         if(!txthovaten.getText().equals(a) && !txtgmail.getText().equals(b) && !pword.equals(c) && !pword2.equals(c) )
         {
             if(pword.equals(pword2))
-                if(bus.checkOTP(txtotp.getText(), txtgmail.getText()+"@gmail.com")==1)
-                {
-                    nd.setName(txthovaten.getText());
-                    nd.setUsername(txtgmail.getText()+"@gmail.com");
-                    nd.setPassword(pword);
-                nguoidungBUS.them(nd);
-                dsnd.add(nd);
-                t.cancel();
-                textTimer.setText("");
-                Login lg = new Login();
-                lg.setVisible(true);
-                this.dispose();
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null,"OTP nhập chưa chính xác");
-                }
+            {
+                SendToServer("DK:"+txthovaten.getText()+":"+txtgmail.getText()+"@gmail.com:"+pword+":"+txtotp.getText()+":");
+            }
             else
             {
                 JOptionPane.showMessageDialog(null,"Mật khẩu nhập lại không trùng khớp");
@@ -360,7 +349,7 @@ public class DangKyAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_jpwmatkhauFocusGained
 
     private void sendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseClicked
-        txtgmail.setEnabled(true);
+        txtgmail.setEnabled(false);
         String a="Gmail";
         otpBUS bus = new otpBUS();
         otpDTO otp = new otpDTO();
@@ -370,37 +359,18 @@ public class DangKyAccount extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"vui lòng nhập đầy đủ thông tin");
             
         }
-        else {  
+        else { 
+            String gmail = txtgmail.getText()+"@gmail.com";
+            SendToServer("OTP:"+gmail+":");
+            
+            
             otp.setGmail(txtgmail.getText()+"@gmail.com");
             //otp.setTime(LocalDateTime.now());
-            if(bus.check(otp)==0)
-            {
-                JOptionPane.showMessageDialog(null,"Gmail đã tồn tại");
-            }
-            else
-            {
-                bus.them(otp);
-                dsotp.add(otp);
-                t.scheduleAtFixedRate(new TimerTask() {
-                public void run() {
-                    System.out.println(interval);
-                    textTimer.setText(String.valueOf(interval));
-                    interval--;
-                    if( interval < 0) 
-                    {
-                        String mail = txtgmail.getText()+"@gmail.com";
-                        bus.xoa(mail);
-                        t.cancel();
-                    }
-                    
-                    if(txtotp.getText().length()==6){
-                        btnSubmit.setEnabled(true);
-                    }else if(txtotp.getText().length()!= 6){
-                        btnSubmit.setEnabled(false);
-                    }
-                }
-            }, 1000, 1000);
-            }
+            
+             
+                
+                
+            
             
 //            bus.them(otp);
         }
@@ -460,8 +430,36 @@ public class DangKyAccount extends javax.swing.JFrame {
         });
     }
 
+    public static void CountDown()
+    {
+        otpBUS bus = new otpBUS();
+        t.scheduleAtFixedRate(new TimerTask() {
+                public void run() {
+                    System.out.println(interval);
+                    textTimer.setText(String.valueOf(interval));
+                    interval--;
+                    if( interval < 0) 
+                    {
+                        String mail = txtgmail.getText()+"@gmail.com";
+                        //bus.xoa(mail);
+                        SendToServer("XOAOTP:"+mail+":");
+                        t.cancel();
+                        textTimer.setText("");
+                        interval=60;
+                    }
+                    
+                    if(txtotp.getText().length()==6){
+                        btnSubmit.setEnabled(true);
+                    }else if(txtotp.getText().length()!= 6){
+                        btnSubmit.setEnabled(false);
+                    }
+                }
+            }, 1000, 1000);
+        
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSubmit;
+    private static javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -473,8 +471,8 @@ public class DangKyAccount extends javax.swing.JFrame {
     private javax.swing.JPasswordField jpwmatkhau2;
     private javax.swing.JButton sendOTP;
     public static javax.swing.JLabel textTimer;
-    private javax.swing.JTextField txtgmail;
+    private static javax.swing.JTextField txtgmail;
     private javax.swing.JTextField txthovaten;
-    private javax.swing.JTextField txtotp;
+    private static javax.swing.JTextField txtotp;
     // End of variables declaration//GEN-END:variables
 }

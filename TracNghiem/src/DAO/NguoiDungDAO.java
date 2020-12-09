@@ -56,7 +56,7 @@ public class NguoiDungDAO {
             System.out.println("DAO: "+nguoidung.getName());
             System.out.println("DAO: "+nguoidung.getUsername());
             System.out.println("DAO: "+nguoidung.getPassword());
-            String qry = "INSERT INTO NguoiDung (nd_id,nd_name,nd_username,nd_password,nd_trangthai) VALUES ('"+createid()+"','"+nguoidung.getName()+"','"+nguoidung.getUsername()+"','"+getMD5(nguoidung.getPassword().toString())+"','active')";
+            String qry = "INSERT INTO NguoiDung (nd_id,nd_name,nd_username,nd_password,nd_blockaccount,nd_blocktaode,nd_blockthi) VALUES ('"+createid()+"','"+nguoidung.getName()+"','"+nguoidung.getUsername()+"','"+getMD5(nguoidung.getPassword().toString())+"','1','1','1')";
             System.out.println(qry);
             st=conn.createStatement();
             System.out.println("qua 1 ");

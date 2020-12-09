@@ -5,6 +5,7 @@
  */
 package Server;
 
+import GUI.Login;
 import GUI.MainJFrame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -49,7 +50,9 @@ public class Client {
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
                 //
-                MainJFrame.Run();
+                //MainJFrame.Run();
+                Login lg = new Login();
+                lg.Run();
                 //MainJFrame.AlertMessageFromServer("123");
                 //
                 Scanner sc = new Scanner(System.in);
