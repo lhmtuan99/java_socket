@@ -10,6 +10,8 @@ import BUS.otpBUS;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
@@ -33,8 +35,14 @@ public class DangKyAccount extends javax.swing.JFrame {
      */
     public DangKyAccount() {
         initComponents();
+        this.setTitle("Đăng ký");
         jPanel1.setFocusable(true);
         btnSubmit.setEnabled(false);
+        setResizable(false);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x, y);
     }
 
     /**

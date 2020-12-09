@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -21,7 +23,11 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         setTitle("QUẢN LÝ ĐỀ THI TRẮC NGHIỆM");
-        
+        setResizable(false);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x, y);
         ChuyenManHinhController controller = new ChuyenManHinhController(jpnView);
         controller.setView(jpnAccount, jlbAccount);
         

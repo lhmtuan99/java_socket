@@ -42,7 +42,7 @@ public class Client {
             int check;
             boolean isExistThreadWaitServer = false;
             try {
-                socket = new Socket("127.0.0.1",1234);
+                socket = new Socket("192.168.1.206",1234);
                 System.out.println("Client connected");
                 System.out.println(socket.getLocalPort());
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

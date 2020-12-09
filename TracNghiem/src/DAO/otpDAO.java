@@ -89,7 +89,7 @@ public class otpDAO {
         try {
             
             String qry = "SELECT * FROM OTP where gmail='"+otp.getGmail()+"'";
-            st=conn.createStatement();
+            st=conn.createStatement(); 
             rs=st.executeQuery(qry);
     
             if(rs.next())
