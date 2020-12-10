@@ -5,16 +5,28 @@
  */
 package GUI;
 
+import static GUI.TaoCauHoiJPanel.jComboBox1;
+import static Server.Client.SendToServer;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Admin
  */
 public class MainJFrame extends javax.swing.JFrame {
-
+    public static MainJFrame INTANCEMAINJFRAME =null;
+    public static MainJFrame getIntanceMainJFrame (){
+        if(INTANCEMAINJFRAME == null) INTANCEMAINJFRAME = new MainJFrame();
+        return INTANCEMAINJFRAME;
+    }
+    public static void CloseMainJFrame (){
+        if(INTANCEMAINJFRAME == null) return;
+        INTANCEMAINJFRAME.dispose();
+    }
     /**
      * Creates new form MainJFrame
      */
@@ -146,6 +158,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jlbCauHoi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlbCauHoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/outline_create_white_18dp.png"))); // NOI18N
         jlbCauHoi.setText("Tạo Câu Hỏi");
+        jlbCauHoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlbCauHoiMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpnCauHoiLayout = new javax.swing.GroupLayout(jpnCauHoi);
         jpnCauHoi.setLayout(jpnCauHoiLayout);
@@ -289,6 +306,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jlbCauHoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlbCauHoiMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jlbCauHoiMouseClicked
 
     /**
      * @param args the command line arguments

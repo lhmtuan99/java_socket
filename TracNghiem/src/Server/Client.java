@@ -82,10 +82,7 @@ public class Client {
                         input="";
                     }
                     
-                    
-//                    String res = in.readLine();
-//                   
-//                    System.out.println("Client received: "+ res);
+
                 }
                 
             } catch (IOException e){

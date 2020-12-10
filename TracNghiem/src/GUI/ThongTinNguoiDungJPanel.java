@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import static Server.Client.SendToServer;
+
 /**
  *
  * @author Admin
@@ -16,6 +18,7 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
      */
     public ThongTinNguoiDungJPanel() {
         initComponents();
+        SendToServer("LOAD:INF:");
     }
 
     /**
@@ -60,7 +63,7 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
         jLabel3.setText("Gmail: ");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        jLabel5.setText("label gmail");
+        jLabel5.setText("__________________________");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -75,13 +78,13 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
         jLabel7.setText("Block Thi");
 
         block3.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        block3.setText("Label trạng thái");
+        block3.setText("__________________________");
 
         block1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        block1.setText("jLabel9");
+        block1.setText("__________________________");
 
         block2.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
-        block2.setText("jLabel9");
+        block2.setText("__________________________");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -101,9 +104,10 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
                     .addComponent(block3, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(block2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(block1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(block2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(block1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );

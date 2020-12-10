@@ -263,44 +263,45 @@ public class DeThiJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
-        DefaultTableModel tbmodel = (DefaultTableModel) jTable1.getModel();
-        int rowCount = jTable1.getRowCount();
-        int tt = (int) jTable1.getValueAt(rowCount-1, 0);
-
-        DeThiDTO dt = new DeThiDTO();
-        dt.setDt_id(tt+1);
-        dt.setTieude(txttieude.getText());
+//        DefaultTableModel tbmodel = (DefaultTableModel) jTable1.getModel();
+//        int rowCount = jTable1.getRowCount();
+//        int tt = (int) jTable1.getValueAt(rowCount-1, 0);
+//
+//        DeThiDTO dt = new DeThiDTO();
+//        dt.setDt_id(tt+1);
+//        dt.setTieude(txttieude.getText());
         if(txttieude.getText().length()<1) {
             showMessageDialog(null, "Tiêu đề không được để trống !!!");
             return;
         }
-        dt.setMonthi(txtmonthi.getText());
+        //dt.setMonthi(txtmonthi.getText());
         if(txtmonthi.getText().length()<1) {
             showMessageDialog(null, "Môn thi không được để trống !!!");
             return;
         }
-        dt.setSocau(txtsocau.getText());
+        //dt.setSocau(txtsocau.getText());
         if(txtsocau.getText().length()<1) {
             showMessageDialog(null, "Số câu không được để trống !!!");
             return;
         }
-        dt.setThoiluong(txtthoiluong.getText());
+        //dt.setThoiluong(txtthoiluong.getText());
         if(txtthoiluong.getText().length()<1) {
             showMessageDialog(null, "Thời gian thi không được để trống !!!");
             return;
         }
-        showMessageDialog(null, "Tạo đề thi thành công...");
-        DeThiBUS bus = new DeThiBUS();
-        bus.them(dt);
-        Vector row = new Vector();
-        row.add(tt+1);
-        row.add(dt.getTieude());
-        row.add(dt.getMonthi());
-        row.add(dt.getThoiluong());
-        row.add(dt.getSocau());
-        dsdt.add(dt);
-        
-        model.addRow(row);
+        //showMessageDialog(null, "Tạo đề thi thành công...");
+        SendToServer("DETHI:THEM:"+txttieude.getText()+":"+txtmonthi.getText()+":"+txtsocau.getText()+":"+txtthoiluong.getText()+":");
+//        DeThiBUS bus = new DeThiBUS();
+//        bus.them(dt);
+//        Vector row = new Vector();
+//        row.add(tt+1);
+//        row.add(dt.getTieude());
+//        row.add(dt.getMonthi());
+//        row.add(dt.getThoiluong());
+//        row.add(dt.getSocau());
+//        dsdt.add(dt);
+//        
+//        model.addRow(row);
     }//GEN-LAST:event_btnThemMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -328,34 +329,46 @@ public class DeThiJPanel extends javax.swing.JPanel {
                 showMessageDialog(null, "Số câu không được để trống !!!");
                 return;
             }
-            DeThiBUS bus  = new DeThiBUS();
-            DeThiDTO dethi1 = new DeThiDTO();
-            dethi1 = dsdt.get(i);
-            DeThiDTO dethi = new DeThiDTO();
-            dethi.setDt_id(Integer.parseInt(lbid.getText()));
-            dethi.setTieude(txttieude.getText());
-            dethi.setThoiluong(txtthoiluong.getText());
-            dethi.setMonthi(txtmonthi.getText());
-            dethi.setSocau(txtsocau.getText());
-
-            bus.sua(Long.toString(dethi1.getDt_id()), dethi);
-
-            DeThiDTO old = dsdt.set(i,dethi);
-            model.setValueAt(dethi.getDt_id(),i,0);
-            model.setValueAt(dethi.getTieude(), i, 1);
-            model.setValueAt(dethi.getMonthi(),i,2);
-            model.setValueAt(dethi.getThoiluong(), i, 3);
-            model.setValueAt(dethi.getSocau(),i,4);
-
-            jTable1.setModel(model);
-             showMessageDialog(null, "Cập nhật thành công...");
+            int getUsed = (int) jTable1.getValueAt(i,5);
+            if(getUsed>0 ) {
+                showMessageDialog(null, "Đề đã có người thi, không thể chỉnh sửa !!!");
+                return;
+            }
+            txttieude.setText("");
+            txtsocau.setText("");
+            txtmonthi.setText("");
+            txtthoiluong.setText("");
+            lbid.setText("");
+            SendToServer("DETHI:SUA:"+lbid.getText()+":"+txttieude.getText()+":"+txtmonthi.getText()+":"+txtsocau.getText()+":"+txtthoiluong.getText()+":");
+            //jTable1.getSelectedRow() = -1;
+//            DeThiBUS bus  = new DeThiBUS();
+//            DeThiDTO dethi1 = new DeThiDTO();
+//            dethi1 = dsdt.get(i);
+//            DeThiDTO dethi = new DeThiDTO();
+//            dethi.setDt_id(Integer.parseInt(lbid.getText()));
+//            dethi.setTieude(txttieude.getText());
+//            dethi.setThoiluong(txtthoiluong.getText());
+//            dethi.setMonthi(txtmonthi.getText());
+//            dethi.setSocau(txtsocau.getText());
+//
+//            bus.sua(Long.toString(dethi1.getDt_id()), dethi);
+//
+//            DeThiDTO old = dsdt.set(i,dethi);
+//            model.setValueAt(dethi.getDt_id(),i,0);
+//            model.setValueAt(dethi.getTieude(), i, 1);
+//            model.setValueAt(dethi.getMonthi(),i,2);
+//            model.setValueAt(dethi.getThoiluong(), i, 3);
+//            model.setValueAt(dethi.getSocau(),i,4);
+//
+//            jTable1.setModel(model);
+//            showMessageDialog(null, "Cập nhật thành công...");
         }else{
             showMessageDialog(null, "Vui lòng chọn đề muốn sửa");
         }
     }//GEN-LAST:event_btnSuaMouseClicked
 
     private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
-        Client.SendToServer("xoa");
+        
         int selected = -1;
         selected = jTable1.getSelectedRow();
         if(selected == -1){
@@ -365,19 +378,25 @@ public class DeThiJPanel extends javax.swing.JPanel {
        
         if(xet==0)
         {
-            int i= jTable1.getSelectedRow();
-            DeThiDTO dethi = new DeThiDTO();
-            dethi = dsdt.get(i);
-            DeThiBUS bus = new DeThiBUS();
-            bus.xoa(dethi);
-            if(i>=0)
-            {
-                model.removeRow(i);
-                jTable1.setModel(model);
-                //                doc();
-                dsdt.remove(i);
-                showMessageDialog(null, "Xóa thành công...");
-            }
+            int i= Integer.parseInt(lbid.getText());
+            Client.SendToServer("DETHI:XOA:"+i);
+            txttieude.setText("");
+            txtsocau.setText("");
+            txtmonthi.setText("");
+            txtthoiluong.setText("");
+            lbid.setText("");
+//            DeThiDTO dethi = new DeThiDTO();
+//            dethi = dsdt.get(i);
+//            DeThiBUS bus = new DeThiBUS();
+//            bus.xoa(dethi);
+//            if(i>=0)
+//            {
+//                model.removeRow(i);
+//                jTable1.setModel(model);
+//                //                doc();
+//                dsdt.remove(i);
+//                showMessageDialog(null, "Xóa thành công...");
+//            }
         }
         }
 

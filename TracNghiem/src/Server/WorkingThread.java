@@ -116,6 +116,38 @@ public class WorkingThread extends Thread {
                             for (DeThiDTO dsdt1 : dsdt) {
                                 line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":";
                             }
+                        }else if(Clause[1].equals("INF")){
+                            line="INF:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
+                        }
+                    }
+                    //
+                    // Them xoa sua de thi
+                    if(Clause[0].equals("DETHI")){
+                        if(Clause[1].equals("THEM")){   //them
+                            DeThiDTO dt = new DeThiDTO();
+                            dt.setTieude(Clause[2]);
+                            dt.setMonthi(Clause[3]);
+                            dt.setSocau(Clause[4]);
+                            dt.setThoiluong(Clause[5]);
+                            dt.setNguoitao(nguoiDung.getNd_id());
+                            
+                            DeThiBUS bus = new DeThiBUS();
+                            bus.them(dt);
+                            line="TAOTHANHCONG:";
+                        }else if(Clause[1].equals("XOA")){  //xoa
+                            DeThiDAO dt = new DeThiDAO();
+                            dt.xoa(Clause[2]);
+                            line="XOATHANHCONG:";
+                        }else if(Clause[1].equals("SUA")){  //sua
+                            DeThiBUS bus  = new DeThiBUS();
+                            DeThiDTO dethi = new DeThiDTO();
+                            dethi.setDt_id(Integer.parseInt(Clause[2]));
+                            dethi.setTieude(Clause[3]);
+                            dethi.setMonthi(Clause[4]);
+                            dethi.setSocau(Clause[5]);
+                            dethi.setThoiluong(Clause[6]);
+                            bus.sua(dethi);
+                            line="SUATHANHCONG:";
                         }
                     }
                     //

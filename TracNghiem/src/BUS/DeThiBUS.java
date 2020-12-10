@@ -25,22 +25,22 @@ public class DeThiBUS {
     {
         DeThiDAO data = new DeThiDAO();
         data.them(dethi);
-        dsdt.add(dethi);
+        //dsdt.add(dethi);
     }
-    public void sua(String id,DeThiDTO dethi)
+    public void sua(DeThiDTO dethi)
     {
         DeThiDAO data = new DeThiDAO();
-        data.sua(id, dethi);
-        for(DeThiDTO dethi1 : dsdt)
-        {
-            if(dethi1.getDt_id() == Integer.parseInt(id))
-            {
-                dethi1.setTieude(dethi.getTieude());
-                dethi1.setThoiluong(dethi.getThoiluong());
-                dethi1.setMonthi(dethi.getMonthi());
-                dethi1.setSocau(dethi.getSocau());
-            }
-        }
+        data.sua(dethi);
+//        for(DeThiDTO dethi1 : dsdt)
+//        {
+//            if(dethi1.getDt_id() == Integer.parseInt(id))
+//            {
+//                dethi1.setTieude(dethi.getTieude());
+//                dethi1.setThoiluong(dethi.getThoiluong());
+//                dethi1.setMonthi(dethi.getMonthi());
+//                dethi1.setSocau(dethi.getSocau());
+//            }
+//        }
     }
     public void xoa(DeThiDTO dethi)
     {

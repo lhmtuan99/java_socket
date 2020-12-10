@@ -6,6 +6,7 @@
 package Server;
 
 
+import DTO.DeThiDTO;
 import GUI.DangKyAccount;
 import static GUI.DangKyAccount.CloseDangkiFrame;
 import GUI.DeThiJPanel;
@@ -15,6 +16,8 @@ import static GUI.Login.CLOSE;
 import static GUI.Login.CloseLoginFrame;
 import GUI.MainJFrame;
 import static GUI.MainJFrame.AlertMessageFromServer;
+import static GUI.MainJFrame.getIntanceMainJFrame;
+import static GUI.TaoCauHoiJPanel.jComboBox1;
 import static GUI.ThongTinNguoiDungJPanel.block1;
 import static GUI.ThongTinNguoiDungJPanel.block2;
 import static GUI.ThongTinNguoiDungJPanel.block3;
@@ -36,6 +39,7 @@ import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Vector;
@@ -47,6 +51,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -55,6 +61,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ThreadClientWaitServerSendData extends Thread{
     protected Socket socket;
+    public String [] arrDethi = new String[1000];
+    public static DefaultComboBoxModel modelCombobox = null;
     public ThreadClientWaitServerSendData(Socket clientSocket) {
         this.socket = clientSocket;
     }
@@ -71,11 +79,8 @@ public class ThreadClientWaitServerSendData extends Thread{
         } catch (IOException ex) {
             Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+                
         System.out.println(key);
-       
-        
         
         while (true) {
            try {
@@ -113,8 +118,7 @@ public class ThreadClientWaitServerSendData extends Thread{
             MainJFrame.AlertMessageFromServer("Sai OTP !!!");
         }else if(str[0].equals("DNOK")){
             CloseLoginFrame();
-            MainJFrame jf = new MainJFrame();
-            jf.setVisible(true);
+            getIntanceMainJFrame().setVisible(true);
             jTextField1.setText(str[1]);
             jLabel5.setText(str[2]);
             block1.setText( str[3].equals("1") ? "False":"True");
@@ -131,8 +135,10 @@ public class ThreadClientWaitServerSendData extends Thread{
             header.add("THỜI LƯỢNG");
             header.add("TỔNG SỐ NGƯỜI THI");
             DefaultTableModel model = new DefaultTableModel(header,0);
+            int run =0;
             for(int i=1;i<str.length;i=i+6)
             {
+                arrDethi[run++] = str[i+1];
                 Vector row  = new Vector();
                 row.add(str[i]);
                 row.add(str[i+1]);
@@ -143,7 +149,28 @@ public class ThreadClientWaitServerSendData extends Thread{
                 model.addRow(row);
                 //dsdt.add(dt);
             }
+            System.out.println(run);
+            modelCombobox = new DefaultComboBoxModel();
+            for(int i=0;i<run;i++){
+                modelCombobox.addElement(arrDethi[i]);
+            }
+//            jComboBox1.setModel(modelCombobox);
             jTable1.setModel(model); 
+        }else if(str[0].equals("TAOTHANHCONG")){
+            MainJFrame.AlertMessageFromServer("Tạo đề thành công...");
+            Client.SendToServer("LOAD:DETHI:");
+        }else if(str[0].equals("SUATHANHCONG")){
+            MainJFrame.AlertMessageFromServer("Sửa đề thành công...");
+            Client.SendToServer("LOAD:DETHI:");
+        }else if(str[0].equals("XOATHANHCONG")){
+            MainJFrame.AlertMessageFromServer("Xóa đề thành công...");
+            Client.SendToServer("LOAD:DETHI:");
+        }else if(str[0].equals("INF")){
+            jTextField1.setText(str[1]);
+            jLabel5.setText(str[2]);
+            block1.setText( str[3].equals("1") ? "False":"True");
+            block2.setText(str[4].equals("1") ? "False":"True");
+            block3.setText(str[5].equals("1") ? "False":"True");
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

@@ -86,16 +86,24 @@ public class DeThiDAO {
             qry = qry+","+"N'"+dt.getThoiluong()+"'";
             qry = qry+","+"N'"+dt.getMonthi()+"'";
             qry= qry+","+"N'"+dt.getSocau()+"'";
+            
+            qry= qry+","+"'"+0+"'";
+            qry= qry +","+"'"+dt.getNguoitao()+"'";
+            
             qry = qry+")";
             System.out.println(qry);
             st=conn.createStatement();
             st.executeUpdate(qry);
+            for(int i=1;i<= Integer.parseInt(dt.getSocau());i++){
+                
+            }
+            
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "lỗi thêm đề thi");
         }
     }
-    public void sua(String id,DeThiDTO dt)
+    public void sua(DeThiDTO dt)
     {
         try{
             String qry = "update DeThi set ";
