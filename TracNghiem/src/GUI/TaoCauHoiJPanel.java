@@ -455,6 +455,7 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         cH.setDapanC(jTextField3.getText().trim());
         cH.setDapanD(jTextField4.getText().trim());
         cH.setTraloi(ans.trim());
+        listCauHoi.set(Integer.parseInt(cau.getText())-1, cH);
         SendToServer("UPDATE:CAUHOI:"+cH.getCh_id()+":"+cH.getCauhoi()+":"+cH.getDapanA()+":"+cH.getDapanB()+":"+cH.getDapanC()+":"+cH.getDapanD()+":"+cH.getTraloi()+":");
         MainJFrame.AlertMessageFromServer("Cập nhật thành công, vui lòng chờ...");
     }//GEN-LAST:event_jButton2MouseClicked
