@@ -5,8 +5,10 @@
  */
 package GUI;
 
+import DTO.CauHoi;
 import static Server.Client.SendToServer;
 import Server.ThreadClientWaitServerSendData;
+import static Server.ThreadClientWaitServerSendData.listCauHoi;
 import static Server.ThreadClientWaitServerSendData.modelCombobox;
 import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
@@ -22,10 +24,10 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
      */
     public TaoCauHoiJPanel() {
         initComponents();
-        SendToServer("LOAD:DETHI:");
-        
+        SendToServer("LOAD:DECOMBOBOX:");
+        MainJFrame.AlertMessageFromServer("Đang tải đề...");
         //arr = Arrays.stream().filter(x->x.length()>0).toArray(String[]::new);
-        jComboBox1.setModel(modelCombobox);
+        //jComboBox1.setModel(modelCombobox);
     }
 
     /**
@@ -43,26 +45,21 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         cau = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         tongcau = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -74,6 +71,7 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        idcauhoi = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel1.setText("Đề:");
@@ -89,21 +87,23 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Câu hỏi:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel8.setText("Câu thứ:");
 
         cau.setText("0");
 
         jButton5.setText("Tải đề");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
 
         jLabel10.setText("/");
 
         tongcau.setText("0");
+
+        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -116,12 +116,11 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cau)
@@ -129,7 +128,10 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tongcau)
-                        .addGap(142, 142, 142))))
+                        .addGap(142, 142, 142))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,9 +148,10 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 108, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTextField5)
                         .addContainerGap())))
         );
 
@@ -164,25 +167,13 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel7.setText("Câu D:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextArea4.setColumns(20);
-        jTextArea4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea4.setRows(5);
-        jScrollPane4.setViewportView(jTextArea4);
+        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextArea5.setColumns(20);
-        jTextArea5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextArea5.setRows(5);
-        jScrollPane5.setViewportView(jTextArea5);
+        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -190,25 +181,24 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(jTextField4))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,14 +206,14 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                    .addComponent(jTextField2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5))
+                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                    .addComponent(jTextField4))
                 .addGap(31, 31, 31))
         );
 
@@ -323,6 +313,11 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/outline_build_white_24dp.png"))); // NOI18N
         jButton2.setText("Cập nhật");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -332,10 +327,20 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/baseline_chevron_left_white_24dp.png"))); // NOI18N
         jButton3.setText("Lùi");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/baseline_chevron_right_white_24dp.png"))); // NOI18N
         jButton4.setText("Tiếp");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -372,12 +377,18 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(398, 398, 398)
+                .addComponent(idcauhoi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(idcauhoi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -399,10 +410,138 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        // TODO add your handling code here:
+        String str  = (String) jComboBox1.getSelectedItem();
+        String idDethi = str.split("-")[0];
+        SendToServer("LOAD:DE:"+idDethi+":");
+        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        if(jTextField5.getText().length()<2){
+            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu hỏi ...");
+            return;
+        }else if(jTextField1.getText().length()<2){
+            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời A...");
+            return;
+        }else if(jTextField2.getText().length()<2){
+            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời B...");
+            return;
+        }else if(jTextField3.getText().length()<2){
+            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời C...");
+            return;
+        }else if(jTextField4.getText().length()<2){
+            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời D...");
+            return;
+        }
+        String ans = "";
+        if(buttonGroup1.getSelection().equals(jRadioButton1.getModel())) {
+            ans = jTextField1.getText();
+        }else if(buttonGroup1.getSelection().equals(jRadioButton2.getModel())) {
+            ans = jTextField2.getText();
+        }else if(buttonGroup1.getSelection().equals(jRadioButton3.getModel())) {
+            ans = jTextField3.getText();
+        }else if(buttonGroup1.getSelection().equals(jRadioButton4.getModel())) {
+            ans = jTextField4.getText();
+        }else {
+            MainJFrame.AlertMessageFromServer("Vui lòng chọn câu trả lời đúng !!!");
+        }
+        DTO.CauHoi cH = listCauHoi.get(Integer.parseInt(cau.getText())-1);
+        cH.setCauhoi(jTextField5.getText().trim());
+        cH.setDapanA(jTextField1.getText().trim());
+        cH.setDapanB(jTextField2.getText().trim());
+        cH.setDapanC(jTextField3.getText().trim());
+        cH.setDapanD(jTextField4.getText().trim());
+        cH.setTraloi(ans.trim());
+        SendToServer("UPDATE:CAUHOI:"+cH.getCh_id()+":"+cH.getCauhoi()+":"+cH.getDapanA()+":"+cH.getDapanB()+":"+cH.getDapanC()+":"+cH.getDapanD()+":"+cH.getTraloi()+":");
+        MainJFrame.AlertMessageFromServer("Cập nhật thành công, vui lòng chờ...");
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+        // TODO add your handling code here:
+        if(Integer.parseInt(cau.getText())< Integer.parseInt(tongcau.getText())){
+            int y = Integer.parseInt(cau.getText())+1;
+            DTO.CauHoi z = listCauHoi.get(y-1);
+            cau.setText(y+"");
+            if(listCauHoi.get(y-1).getDapanA().length()>0){
+                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(y-1).getDapanA());
+            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanB().length()>0){
+                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(y-1).getDapanB());
+            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanC().length()>0){
+                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(y-1).getDapanC());
+            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanD().length()>0){
+                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(y-1).getDapanD());
+            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+            if(listCauHoi.get(y-1).getCauhoi().length()>0){
+                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(y-1).getCauhoi());
+            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+            
+            
+            if(listCauHoi.get(y-1).getTraloi().length()>0){
+                if(listCauHoi.get(y-1).getDapanA().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanB().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanC().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanD().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+            }
+            
+          
+            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
+        }else MainJFrame.AlertMessageFromServer("Không có câu tiếp theo !!!");
+    }//GEN-LAST:event_jButton4MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        if(Integer.parseInt(cau.getText())>1){
+            int y = Integer.parseInt(cau.getText())-1;
+            DTO.CauHoi z = listCauHoi.get(y-1);
+            cau.setText(y+"");
+            if(listCauHoi.get(y-1).getDapanA().length()>0){
+                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(y-1).getDapanA());
+            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanB().length()>0){
+                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(y-1).getDapanB());
+            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanC().length()>0){
+                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(y-1).getDapanC());
+            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanD().length()>0){
+                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(y-1).getDapanD());
+            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+            if(listCauHoi.get(y-1).getCauhoi().length()>0){
+                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(y-1).getCauhoi());
+            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+            
+            
+            if(listCauHoi.get(y-1).getTraloi().length()>0){
+                if(listCauHoi.get(y-1).getDapanA().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanB().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanC().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanD().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+            }
+            
+          
+            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
+        }else MainJFrame.AlertMessageFromServer("Không có câu trước !!!");
+    }//GEN-LAST:event_jButton3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel cau;
+    public static javax.swing.JLabel cau;
+    public static javax.swing.JLabel idcauhoi;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -423,20 +562,15 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
-    private javax.swing.JLabel tongcau;
+    public static javax.swing.JRadioButton jRadioButton1;
+    public static javax.swing.JRadioButton jRadioButton2;
+    public static javax.swing.JRadioButton jRadioButton3;
+    public static javax.swing.JRadioButton jRadioButton4;
+    public static javax.swing.JTextField jTextField1;
+    public static javax.swing.JTextField jTextField2;
+    public static javax.swing.JTextField jTextField3;
+    public static javax.swing.JTextField jTextField4;
+    public static javax.swing.JTextField jTextField5;
+    public static javax.swing.JLabel tongcau;
     // End of variables declaration//GEN-END:variables
 }

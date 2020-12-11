@@ -56,9 +56,7 @@ public class Client {
                 //MainJFrame.AlertMessageFromServer("123");
                 //
                 Scanner sc = new Scanner(System.in);
-                key= in.readLine();
-                
-                
+                key= in.readLine();                
                 
                 while(true){
                     

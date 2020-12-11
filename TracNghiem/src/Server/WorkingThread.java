@@ -9,6 +9,7 @@ package Server;
 import BUS.DeThiBUS;
 import DAO.DeThiDAO;
 import DAO.NguoiDungDAO;
+import DTO.CauHoi;
 import DTO.DeThiDTO;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
@@ -118,6 +119,38 @@ public class WorkingThread extends Thread {
                             }
                         }else if(Clause[1].equals("INF")){
                             line="INF:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
+                        }else if(Clause[1].equals("DE")){
+                            ArrayList<DTO.CauHoi> ListCauHoi = new ArrayList<>();
+                            ListCauHoi = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
+                            
+                            line="LOADDE:";
+                            for (CauHoi ListCauHoi1 : ListCauHoi) {
+                                line+=ListCauHoi1.getCh_id()+": "+ListCauHoi1.getCauhoi()+": "+ListCauHoi1.getDapanA()+": "+ListCauHoi1.getDapanB()+": "+ListCauHoi1.getDapanC()+": "+ListCauHoi1.getDapanD()+": "+ListCauHoi1.getTraloi()+":";
+                            }
+                            System.out.println("-------->"+line);
+                        }else if(Clause[1].equals("DECOMBOBOX")){
+                            ArrayList <DeThiDTO> dsdt = new ArrayList<>();
+                            dsdt = new DeThiDAO().docDSDT(nguoiDung.getNd_id());
+                            line="LOADDECOMBOBOX:";
+                            for (DeThiDTO dsdt1 : dsdt) {
+                                line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":";
+                            }
+                        }
+                    }
+                    //
+                    // UPDATE CAU HOI
+                    if(Clause[0].equals("UPDATE")){
+                        if(Clause[1].equals("CAUHOI")){
+                            DTO.CauHoi z = new CauHoi();
+                            z.setCh_id(Integer.parseInt(Clause[2]));
+                            z.setCauhoi(Clause[3]);
+                            z.setDapanA(Clause[4]);
+                            z.setDapanB(Clause[5]);
+                            z.setDapanC(Clause[6]);
+                            z.setDapanD(Clause[7]);
+                            z.setTraloi(Clause[8]);
+                            new DAO.DeThiDAO().UpdateCauhoi(z);
+                            line="UPDATECAUHOITHANHCONG:";
                         }
                     }
                     //

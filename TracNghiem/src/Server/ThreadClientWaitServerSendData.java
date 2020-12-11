@@ -6,6 +6,7 @@
 package Server;
 
 
+import DTO.CauHoi;
 import DTO.DeThiDTO;
 import GUI.DangKyAccount;
 import static GUI.DangKyAccount.CloseDangkiFrame;
@@ -17,6 +18,7 @@ import static GUI.Login.CloseLoginFrame;
 import GUI.MainJFrame;
 import static GUI.MainJFrame.AlertMessageFromServer;
 import static GUI.MainJFrame.getIntanceMainJFrame;
+import GUI.TaoCauHoiJPanel;
 import static GUI.TaoCauHoiJPanel.jComboBox1;
 import static GUI.ThongTinNguoiDungJPanel.block1;
 import static GUI.ThongTinNguoiDungJPanel.block2;
@@ -62,6 +64,7 @@ import javax.swing.table.DefaultTableModel;
 public class ThreadClientWaitServerSendData extends Thread{
     protected Socket socket;
     public String [] arrDethi = new String[1000];
+    public static ArrayList<DTO.CauHoi> listCauHoi = null;
     public static DefaultComboBoxModel modelCombobox = null;
     public ThreadClientWaitServerSendData(Socket clientSocket) {
         this.socket = clientSocket;
@@ -119,6 +122,7 @@ public class ThreadClientWaitServerSendData extends Thread{
         }else if(str[0].equals("DNOK")){
             CloseLoginFrame();
             getIntanceMainJFrame().setVisible(true);
+            //Client.SendToServer("LOAD:DETHI:");
             jTextField1.setText(str[1]);
             jLabel5.setText(str[2]);
             block1.setText( str[3].equals("1") ? "False":"True");
@@ -138,7 +142,8 @@ public class ThreadClientWaitServerSendData extends Thread{
             int run =0;
             for(int i=1;i<str.length;i=i+6)
             {
-                arrDethi[run++] = str[i+1];
+                if(str[i+5].equals("0"))
+                arrDethi[run++] = str[i]+"-"+str[i+1];
                 Vector row  = new Vector();
                 row.add(str[i]);
                 row.add(str[i+1]);
@@ -150,11 +155,7 @@ public class ThreadClientWaitServerSendData extends Thread{
                 //dsdt.add(dt);
             }
             System.out.println(run);
-            modelCombobox = new DefaultComboBoxModel();
-            for(int i=0;i<run;i++){
-                modelCombobox.addElement(arrDethi[i]);
-            }
-//            jComboBox1.setModel(modelCombobox);
+                        
             jTable1.setModel(model); 
         }else if(str[0].equals("TAOTHANHCONG")){
             MainJFrame.AlertMessageFromServer("Tạo đề thành công...");
@@ -171,6 +172,66 @@ public class ThreadClientWaitServerSendData extends Thread{
             block1.setText( str[3].equals("1") ? "False":"True");
             block2.setText(str[4].equals("1") ? "False":"True");
             block3.setText(str[5].equals("1") ? "False":"True");
+        }else if(str[0].equals("LOADDE")){
+            listCauHoi = new ArrayList<>();
+            
+            for(int i=1;i<str.length;i=i+7){
+            DTO.CauHoi ch = new CauHoi();
+                ch.setCh_id(Integer.parseInt(str[i]));
+                ch.setCauhoi(str[i+1]);
+                ch.setDapanA(str[i+2]);
+                ch.setDapanB(str[i+3]);
+                ch.setDapanC(str[i+4]);
+                ch.setDapanD(str[i+5]);
+                ch.setTraloi(str[i+6]);
+                listCauHoi.add(ch);
+            }
+            if(listCauHoi.get(0).getDapanA().length()>0){
+                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(0).getDapanA());
+            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+            if(listCauHoi.get(0).getDapanB().length()>0){
+                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(0).getDapanB());
+            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+            if(listCauHoi.get(0).getDapanC().length()>0){
+                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(0).getDapanC());
+            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+            if(listCauHoi.get(0).getDapanD().length()>0){
+                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(0).getDapanD());
+            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+            if(listCauHoi.get(0).getCauhoi().length()>0){
+                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(0).getCauhoi());
+            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+            
+            
+            if(listCauHoi.get(0).getTraloi().length()>0){
+                if(listCauHoi.get(0).getDapanA().equals(listCauHoi.get(0).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+                if(listCauHoi.get(0).getDapanB().equals(listCauHoi.get(0).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+                if(listCauHoi.get(0).getDapanC().equals(listCauHoi.get(0).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+                if(listCauHoi.get(0).getDapanD().equals(listCauHoi.get(0).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+            }
+            
+            TaoCauHoiJPanel.cau.setText("1");
+            TaoCauHoiJPanel.tongcau.setText(listCauHoi.size()+"");
+            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(0).getCh_id()+"");
+        }else if(str[0].equals("LOADDECOMBOBOX")){
+            modelCombobox = new DefaultComboBoxModel();
+            int run =0;
+            for(int i=1;i<str.length;i=i+6)
+            {
+                if(str[i+5].equals("0"))
+                arrDethi[run++] = str[i]+"-"+str[i+1];
+            }
+            for(int i=0;i<run;i++){
+                modelCombobox.addElement(arrDethi[i]);
+            }
+            jComboBox1.setModel(modelCombobox);
+            MainJFrame.AlertMessageFromServer("Đã tải xong...");
+        }else if(str[0].equals("UPDATECAUHOITHANHCONG")){
+            MainJFrame.AlertMessageFromServer("Cập nhật xong...");
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }
