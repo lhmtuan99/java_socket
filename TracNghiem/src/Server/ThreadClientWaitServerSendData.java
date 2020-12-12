@@ -20,6 +20,7 @@ import static GUI.MainJFrame.AlertMessageFromServer;
 import static GUI.MainJFrame.getIntanceMainJFrame;
 import GUI.TaoCauHoiJPanel;
 import static GUI.TaoCauHoiJPanel.jComboBox1;
+import GUI.ThiThuJPanel;
 import static GUI.ThongTinNguoiDungJPanel.block1;
 import static GUI.ThongTinNguoiDungJPanel.block2;
 import static GUI.ThongTinNguoiDungJPanel.block3;
@@ -106,10 +107,20 @@ public class ThreadClientWaitServerSendData extends Thread{
     public void XULY(String str1){
         Login lg = new Login();
         String []str = str1.split(":");
+        
         if(str[0].equals("1")){
             MainJFrame.AlertMessageFromServer("Vui lòng kiểm tra email để xác thực OTP...");
             DangKyAccount.OffEmail();
             DangKyAccount.CountDown();
+        }else if(str[0].equals("KETQUACAUTHU1")){
+            if(str[1].equals("TRUE")){
+                System.out.println("Kết quả đúng");
+               MainJFrame.AlertMessageFromServer("Kết quả đúng -"+str[2]);
+            }else if(str[1].equals("FALSE")){
+                System.out.println("Kết quả sai");
+               MainJFrame.AlertMessageFromServer("Kết quả sai -"+str[2]);
+            }
+            //ThiThuJPanel.tiep.setEnabled(true);
         }else if(str[0].equals("0")){
             MainJFrame.AlertMessageFromServer("Email đã tồn tại !!!");
         }else if(str[0].equals("DKTC")){
@@ -138,9 +149,10 @@ public class ThreadClientWaitServerSendData extends Thread{
             header.add("SỐ CÂU");
             header.add("THỜI LƯỢNG");
             header.add("TỔNG SỐ NGƯỜI THI");
+            header.add("PUBLIC");
             DefaultTableModel model = new DefaultTableModel(header,0);
             int run =0;
-            for(int i=1;i<str.length;i=i+6)
+            for(int i=1;i<str.length;i=i+7)
             {
                 if(str[i+5].equals("0"))
                 arrDethi[run++] = str[i]+"-"+str[i+1];
@@ -151,6 +163,7 @@ public class ThreadClientWaitServerSendData extends Thread{
                 row.add(str[i+3]);
                 row.add(str[i+4]);
                 row.add(str[i+5]);
+                row.add(str[i+6]);
                 model.addRow(row);
                 //dsdt.add(dt);
             }
@@ -187,30 +200,30 @@ public class ThreadClientWaitServerSendData extends Thread{
                 listCauHoi.add(ch);
             }
             if(listCauHoi.get(0).getDapanA().length()>0){
-                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(0).getDapanA());
-            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(0).getDapanA().trim());
+            }else TaoCauHoiJPanel.jTextField1.setText("") ;
             if(listCauHoi.get(0).getDapanB().length()>0){
-                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(0).getDapanB());
-            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(0).getDapanB().trim());
+            }else TaoCauHoiJPanel.jTextField2.setText("") ;
             if(listCauHoi.get(0).getDapanC().length()>0){
-                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(0).getDapanC());
-            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(0).getDapanC().trim());
+            }else TaoCauHoiJPanel.jTextField3.setText("") ;
             if(listCauHoi.get(0).getDapanD().length()>0){
-                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(0).getDapanD());
-            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(0).getDapanD().trim());
+            }else TaoCauHoiJPanel.jTextField4.setText("") ;
             if(listCauHoi.get(0).getCauhoi().length()>0){
-                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(0).getCauhoi());
-            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(0).getCauhoi().trim());
+            }else TaoCauHoiJPanel.jTextField5.setText("") ;
             
             
             if(listCauHoi.get(0).getTraloi().length()>0){
-                if(listCauHoi.get(0).getDapanA().equals(listCauHoi.get(0).getTraloi()))
+                if(listCauHoi.get(0).getDapanA().trim().equals(listCauHoi.get(0).getTraloi().trim()))
                     TaoCauHoiJPanel.jRadioButton1.setSelected(true);
-                if(listCauHoi.get(0).getDapanB().equals(listCauHoi.get(0).getTraloi()))
+                if(listCauHoi.get(0).getDapanB().trim().equals(listCauHoi.get(0).getTraloi().trim()))
                     TaoCauHoiJPanel.jRadioButton2.setSelected(true);
-                if(listCauHoi.get(0).getDapanC().equals(listCauHoi.get(0).getTraloi()))
+                if(listCauHoi.get(0).getDapanC().trim().equals(listCauHoi.get(0).getTraloi().trim()))
                     TaoCauHoiJPanel.jRadioButton3.setSelected(true);
-                if(listCauHoi.get(0).getDapanD().equals(listCauHoi.get(0).getTraloi()))
+                if(listCauHoi.get(0).getDapanD().trim().equals(listCauHoi.get(0).getTraloi().trim()))
                     TaoCauHoiJPanel.jRadioButton4.setSelected(true);
             }
             
@@ -232,6 +245,68 @@ public class ThreadClientWaitServerSendData extends Thread{
             MainJFrame.AlertMessageFromServer("Đã tải xong...");
         }else if(str[0].equals("UPDATECAUHOITHANHCONG")){
             MainJFrame.AlertMessageFromServer("Cập nhật xong...");
+        }else if(str[0].equals("LOADDECOMBOBOXTHITHU")){
+            modelCombobox = new DefaultComboBoxModel();
+            int run =0;
+            for(int i=1;i<str.length;i=i+6)
+            {
+                if(str[i+5].equals("0"))
+                arrDethi[run++] = str[i]+"-"+str[i+1];
+            }
+            for(int i=0;i<run;i++){
+                modelCombobox.addElement(arrDethi[i]);
+            }
+            ThiThuJPanel.comboboxThithu.setModel(modelCombobox);
+            MainJFrame.AlertMessageFromServer("Đã tải xong...");
+        }else if(str[0].equals("PUBLICDETHITHANHCONG")){
+            MainJFrame.AlertMessageFromServer("Public thành công...");
+        }else if(str[0].equals("LOADDETHITHU")){
+            ThiThuJPanel.cau.setText("1");
+            ThiThuJPanel.tongcau.setText(str[1]);
+            ThiThuJPanel.jButton3.setEnabled(true);
+            ThiThuJPanel.minutes = Integer.parseInt(str[2]);
+        }else if(str[0].equals("CAUHOI")){
+            ThiThuJPanel.cauhoi.setText(str[1]);
+            ArrayList<String> ListCauHoi = new ArrayList<>();
+            if(!str[7].equals("-1")){
+                if(str[6].equals("TRUE")){
+                MainJFrame.AlertMessageFromServer("Kết quả đúng: "+str[7]);
+                }else {
+                    MainJFrame.AlertMessageFromServer("Kết quả sai: "+str[7]);
+                }
+            }
+            ListCauHoi.add(str[2]);
+            ListCauHoi.add(str[3]);
+            ListCauHoi.add(str[4]);
+            ListCauHoi.add(str[5]);
+            String a = ListCauHoi.get((int) (Math.random() * ListCauHoi.size()));
+            ThiThuJPanel.ca.setText(a);
+           
+            ListCauHoi.remove(a);
+            a = ListCauHoi.get((int) (Math.random() * ListCauHoi.size()));
+            ThiThuJPanel.cb.setText(a);
+            
+
+            ListCauHoi.remove(a);
+            a = ListCauHoi.get((int) (Math.random() * ListCauHoi.size()));
+            ThiThuJPanel.cc.setText(a);
+
+            ListCauHoi.remove(a);
+            a = ListCauHoi.get((int) (Math.random() * ListCauHoi.size()));
+            ThiThuJPanel.cd.setText(a);
+ 
+            ListCauHoi.remove(a);
+            
+           
+            
+        }else if(str[0].equals("CAUHOI1")){
+            if(!str[7].equals("-1")){
+                if(str[6].equals("TRUE")){
+                MainJFrame.AlertMessageFromServer("Kết quả đúng: "+str[7]);
+                }else {
+                    MainJFrame.AlertMessageFromServer("Kết quả sai: "+str[7]);
+                }
+            }
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

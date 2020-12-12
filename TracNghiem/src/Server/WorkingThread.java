@@ -33,6 +33,10 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class WorkingThread extends Thread {
     public NguoiDungDTO nguoiDung = new NguoiDungDTO();
+    public DTO.CauHoi currentCauHoiforClient = null;
+    public static ArrayList<DTO.CauHoi> ThiThu = null;
+    public int totalCauHoitrue=0;
+    public int totalCauHoifalse=0;
     protected Socket socket;
     public String key="";
     public WorkingThread(Socket clientSocket) {
@@ -115,7 +119,7 @@ public class WorkingThread extends Thread {
                             dsdt = new DeThiDAO().docDSDT(nguoiDung.getNd_id());
                             line="LOADDETHI:";
                             for (DeThiDTO dsdt1 : dsdt) {
-                                line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":";
+                                line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":"+dsdt1.getDt_public()+":";
                             }
                         }else if(Clause[1].equals("INF")){
                             line="INF:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
@@ -135,8 +139,84 @@ public class WorkingThread extends Thread {
                             for (DeThiDTO dsdt1 : dsdt) {
                                 line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":";
                             }
+                        }else if(Clause[1].equals("DECOMBOBOXTHITHU")){
+                            totalCauHoifalse=0;
+                            totalCauHoitrue=0;
+                            ArrayList <DeThiDTO> dsdt = new ArrayList<>();
+                            dsdt = new DeThiDAO().GetAllDeThiPublic();
+                            line="LOADDECOMBOBOXTHITHU:";
+                            for (DeThiDTO dsdt1 : dsdt) {
+                                line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getSocau()+":"+dsdt1.getThoiluong()+":"+dsdt1.getTongsonguoithi()+":";
+                            }
+                           
+                        }else if(Clause[1].equals("DETHITHU")){
+                            ThiThu = new ArrayList<>();
+                            ThiThu = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
+                            DTO.DeThiDTO dethi = new DAO.DeThiDAO().GetDeThi(Clause[2]);
+                            line="LOADDETHITHU:"+dethi.getSocau()+":"+dethi.getThoiluong()+":";
+                            
+                        }else if(Clause[1].equals("CAUHOITHU1")){
+                            //Thread.sleep(200);
+                            //check kq
+                            String kq = "FALSE:-1:";
+                            if(!Clause[2].equals("z")){
+                                if(Clause[2].trim().equals(currentCauHoiforClient.getTraloi().trim())){
+                                totalCauHoitrue++;
+                                kq="TRUE:"+totalCauHoitrue+":";
+                            }else {
+                                totalCauHoifalse++;
+                                kq="FALSE:"+totalCauHoifalse+":";
+                            }
+                            }
+                            //
+                            
+                            int randomIndex = (int) (Math.random() * ThiThu.size());
+                            currentCauHoiforClient = ThiThu.get(randomIndex);
+                            ThiThu.remove(currentCauHoiforClient);
+                            line="CAUHOI:"+currentCauHoiforClient.getCauhoi().trim()+":"+currentCauHoiforClient.getDapanA().trim()+":"+currentCauHoiforClient.getDapanB().trim()+":"+currentCauHoiforClient.getDapanC().trim()+":"+currentCauHoiforClient.getDapanD().trim()+":"+kq+":";
+                            System.out.println("-11111111111111111--------------------111111111111111111");
+                        }else if(Clause[1].equals("CAUHOITHU2")){
+                            String kq = "FALSE:-1:";
+                            if(Clause[2].trim().equals(currentCauHoiforClient.getTraloi().trim())){
+                                totalCauHoitrue++;
+                                kq="TRUE:"+totalCauHoitrue+":";
+                            }else {
+                                totalCauHoifalse++;
+                                kq="FALSE:"+totalCauHoifalse+":";
+                            }
+                            line="CAUHOI1:"+currentCauHoiforClient.getCauhoi().trim()+":"+currentCauHoiforClient.getDapanA().trim()+":"+currentCauHoiforClient.getDapanB().trim()+":"+currentCauHoiforClient.getDapanC().trim()+":"+currentCauHoiforClient.getDapanD().trim()+":"+kq+":";
                         }
                     }
+                    //
+                    // check KETQUACAUTHU
+                    if(Clause[0].equals("KETQUACAUTHU")){
+                        Thread.sleep(500);
+                        if(Clause[1].trim().equals(currentCauHoiforClient.getTraloi().trim())){
+                            totalCauHoitrue+=1;
+                            line="KETQUACAUTHU1:TRUE:"+totalCauHoitrue+":";
+                            System.out.println("");
+                        }else {
+                            totalCauHoifalse+=1;
+                            line="KETQUACAUTHU1:FALSE:"+totalCauHoifalse+":";
+                            System.out.println("1");
+                        }
+                    }
+                    //
+                    // KETTHUCTHITHU
+                    if(Clause[0].equals("KETTHUCTHITHU")){
+                        
+                    }
+                    //
+                    // PUBLICDETHI
+                    if(Clause[0].equals("PUBLICDETHI")){
+                        new DeThiDAO().PublicDeThi(Clause[1]);
+                        line="PUBLICDETHITHANHCONG:";
+                    }
+                    // KETTHUCTHITHU
+                    if(Clause[0].equals("KETTHUCTHITHU")){
+                        
+                    }
+                    //
                     //
                     // UPDATE CAU HOI
                     if(Clause[0].equals("UPDATE")){
@@ -194,6 +274,8 @@ public class WorkingThread extends Thread {
                     }
                 }
             } catch (IOException ex) {
+                Logger.getLogger(WorkingThread.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(WorkingThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

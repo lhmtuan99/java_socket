@@ -77,6 +77,7 @@ public class Client {
                         System.out.println(input);
                         out.write(input + '\n');
                         out.flush();
+                        Thread.sleep(100);
                         input="";
                     }
                     
@@ -90,7 +91,7 @@ public class Client {
             } finally{
                 if(socket!=null){
                     socket.close();
-                    System.out.println("Client oscket closed");
+                    System.out.println("Client socket closed");
                 }
             }
         }

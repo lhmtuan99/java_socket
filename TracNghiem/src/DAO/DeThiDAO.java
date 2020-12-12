@@ -49,6 +49,7 @@ public class DeThiDAO {
                 dt.setTieude(rs.getString("dt_tieude"));
                 dt.setTongsonguoithi(rs.getInt("dt_songuoithi"));
                 dt.setNguoitao(rs.getInt("dt_nguoitao"));
+                dt.setDt_public(rs.getInt("dt_public"));
                 dsdt.add(dt);
             }
         }
@@ -57,6 +58,57 @@ public class DeThiDAO {
                 JOptionPane.showMessageDialog(null, "lỗi đọc thông tin đề thi");
         }
         return dsdt;
+    }
+    public ArrayList GetAllDeThiPublic()
+    {
+        ArrayList dsdt = new ArrayList<DeThiDTO>();
+        try{
+            String query = "select * from DeThi where dt_public=1";
+            st = conn.createStatement();
+            rs=st.executeQuery(query);
+            System.out.println(rs);
+            while (rs.next())
+            {   
+                System.out.println(rs);
+                DeThiDTO dt = new DeThiDTO();
+                dt.setDt_id(rs.getInt("dt_id"));
+                dt.setMonthi(rs.getString("dt_monthi"));
+                dt.setSocau(rs.getString("dt_socau"));
+                dt.setThoiluong(rs.getString("dt_thoiluong"));
+                dt.setTieude(rs.getString("dt_tieude"));
+                dt.setTongsonguoithi(rs.getInt("dt_songuoithi"));
+                dt.setNguoitao(rs.getInt("dt_nguoitao"));
+                dt.setDt_public(rs.getInt("dt_public"));
+                dsdt.add(dt);
+            }
+        }
+        catch(SQLException ex)
+        {
+                JOptionPane.showMessageDialog(null, "lỗi đề thi public");
+        }
+        return dsdt;
+    }
+    public DTO.DeThiDTO GetDeThi(String id)
+    {
+        DTO.DeThiDTO dithinew = new DeThiDTO();
+        try{
+            String query = "select * from DeThi where dt_id="+id;
+            st = conn.createStatement();
+            rs=st.executeQuery(query);
+            System.out.println(rs);
+            while (rs.next())
+            {   
+                dithinew.setDt_id(rs.getInt("dt_id"));
+                dithinew.setSocau(rs.getString("dt_socau"));
+                dithinew.setThoiluong(rs.getString("dt_thoiluong"));
+                return dithinew;
+            }
+        }
+        catch(SQLException ex)
+        {
+                JOptionPane.showMessageDialog(null, "lỗi load dethi combobox thi thu");
+        }
+        return dithinew;
     }
     public int createid()
     {
@@ -108,6 +160,18 @@ public class DeThiDAO {
             JOptionPane.showMessageDialog(null, "lỗi sửa câu hỏi đề thi");
         }
     }
+    public void PublicDeThi(String iddethi)
+    {
+        try{
+            String qry = "UPDATE DeThi SET dt_public=1 WHERE dt_id="+iddethi;
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "lỗi public đề thi");
+        }
+    }
     public void them (DeThiDTO dt)
     {
         try{
@@ -122,7 +186,7 @@ public class DeThiDAO {
             
             qry= qry+","+"'"+0+"'";
             qry= qry +","+"'"+dt.getNguoitao()+"'";
-            
+            qry= qry +","+"'"+0+"'";
             qry = qry+")";
             System.out.println(qry);
             st=conn.createStatement();

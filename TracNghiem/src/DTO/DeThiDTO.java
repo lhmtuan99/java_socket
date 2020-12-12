@@ -12,22 +12,33 @@ import java.sql.Date;
  * @author Admin
  */
 public class DeThiDTO {
-    private int dt_id,tongsonguoithi,nguoitao;
+    private int dt_id,tongsonguoithi,nguoitao,dt_public;
     private String tieude, monthi, socau;
     private String thoiluong;
     public DeThiDTO(){
         
     }
 
-    public DeThiDTO(int dt_id, int tongsonguoithi, int nguoitao, String tieude, String monthi, String socau, String thoiluong) {
+    public DeThiDTO(int dt_id, int tongsonguoithi, int nguoitao, int dt_public, String tieude, String monthi, String socau, String thoiluong) {
         this.dt_id = dt_id;
         this.tongsonguoithi = tongsonguoithi;
         this.nguoitao = nguoitao;
+        this.dt_public = dt_public;
         this.tieude = tieude;
         this.monthi = monthi;
         this.socau = socau;
         this.thoiluong = thoiluong;
     }
+
+    public int getDt_public() {
+        return dt_public;
+    }
+
+    public void setDt_public(int dt_public) {
+        this.dt_public = dt_public;
+    }
+
+    
 
     public int getDt_id() {
         return dt_id;
