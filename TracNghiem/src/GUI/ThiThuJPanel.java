@@ -454,7 +454,9 @@ public class ThiThuJPanel extends javax.swing.JPanel {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        Client.SendToServer("KETTHUCTHITHU:");
+        String str  = (String) comboboxThithu.getSelectedItem();
+        String idDethi = str.split("-")[0];
+        Client.SendToServer("KETTHUCTHITHU:"+idDethi+":");
         //timer.cancel();
         jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2MouseClicked

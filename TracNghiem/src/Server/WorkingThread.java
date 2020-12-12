@@ -206,6 +206,15 @@ public class WorkingThread extends Thread {
                     if(Clause[0].equals("KETTHUCTHITHU")){
                         float res = totalCauHoitrue/(totalCauHoifalse+totalCauHoitrue)*10;
                         line="KETQUATHITHUXONG:"+totalCauHoitrue+":"+totalCauHoifalse+":"+res+":";
+                        DTO.DeThiDTO dthi = new DAO.DeThiDAO().GetDeThi(Clause[1]);
+                        
+                        float tongcau = totalCauHoitrue+ totalCauHoifalse;
+                        float diemmotcau = 10/tongcau;
+                        //int tongsocau = Integer.parseInt(str[1])+ Integer.parseInt(str[2]);
+                        float resu = totalCauHoitrue * diemmotcau;
+                        
+                        new DAO.DeThiDAO().UpdateLuotThi(dthi.getDt_id(), dthi.getTongsonguoithi());
+                        new DAO.DeThiDAO().AddDiem(nguoiDung.getNd_id(),dthi.getDt_id(),resu+"");
                         totalCauHoifalse=0;
                         totalCauHoitrue=0;
                     }
@@ -216,8 +225,15 @@ public class WorkingThread extends Thread {
                         line="PUBLICDETHITHANHCONG:";
                     }
                     // KETTHUCTHITHU
-                    if(Clause[0].equals("KETTHUCTHITHU")){
-                        
+                    if(Clause[0].equals("EDITNGUOIDUNG1")){
+                        new DAO.NguoiDungDAO().UpdateNguoiDungWithPass(nguoiDung.getNd_id(), Clause[1], Clause[2].trim());
+                        nguoiDung.setName(Clause[1]);
+                        line="UPDATENGUOIDUNGSUCCESS:";
+                    }
+                    if(Clause[0].equals("EDITNGUOIDUNG2")){
+                        new DAO.NguoiDungDAO().UpdateNguoiDung(nguoiDung.getNd_id(), Clause[1]);
+                        nguoiDung.setName(Clause[1]);
+                        line="UPDATENGUOIDUNGSUCCESS:";
                     }
                     //
                     //

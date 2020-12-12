@@ -250,7 +250,7 @@ public class ThreadClientWaitServerSendData extends Thread{
             int run =0;
             for(int i=1;i<str.length;i=i+6)
             {
-                if(str[i+5].equals("0"))
+                //if(str[i+5].equals("0"))
                 arrDethi[run++] = str[i]+"-"+str[i+1];
             }
             for(int i=0;i<run;i++){
@@ -313,6 +313,8 @@ public class ThreadClientWaitServerSendData extends Thread{
             int tongsocau = Integer.parseInt(str[1])+ Integer.parseInt(str[2]);
             float resu = Integer.parseInt(str[1]) * diemmotcau;
             MainJFrame.AlertMessageFromServer("Kết quả thi xong: "+resu+" ("+str[1]+"/"+tongsocau+")");
+        }else if(str[0].endsWith("UPDATENGUOIDUNGSUCCESS")){
+            MainJFrame.AlertMessageFromServer("Cập nhật người dùng thành công..");
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

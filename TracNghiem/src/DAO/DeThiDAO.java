@@ -101,6 +101,7 @@ public class DeThiDAO {
                 dithinew.setDt_id(rs.getInt("dt_id"));
                 dithinew.setSocau(rs.getString("dt_socau"));
                 dithinew.setThoiluong(rs.getString("dt_thoiluong"));
+                dithinew.setTongsonguoithi(rs.getInt("dt_songuoithi"));
                 return dithinew;
             }
         }
@@ -160,6 +161,18 @@ public class DeThiDAO {
             JOptionPane.showMessageDialog(null, "lỗi sửa câu hỏi đề thi");
         }
     }
+    public void UpdateLuotThi(int iddt,int id)
+    {
+        id+=1;
+        try{
+            String qry = "UPDATE DeThi SET dt_songuoithi="+id+" WHERE dt_id="+iddt;
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "lỗi update luot thi");
+        }
+    }
     public void PublicDeThi(String iddethi)
     {
         try{
@@ -205,6 +218,17 @@ public class DeThiDAO {
         }
         catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "lỗi thêm đề thi");
+        }
+    }
+    public void AddDiem(int nd,int de,String diem)
+    {
+        try{
+            st=conn.createStatement();
+            String qry="INSERT INTO Diem (nd_id,dt_id,Diem) VALUES ("+nd+","+de+",'"+diem+"')";
+            System.out.println(qry);
+            rs=st.executeQuery(qry);
+        }catch(Exception e){
+            System.out.println("loi add diem thi thu");
         }
     }
     public void sua(DeThiDTO dt)

@@ -133,4 +133,28 @@ public class NguoiDungDAO {
         }
         return nd;
     }
+    public void UpdateNguoiDung(int ndid,String ten)
+    {
+        try{
+            String qry = "UPDATE NguoiDung SET nd_name=N'"+ten+"' WHERE nd_id="+ndid;
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "lỗi update ten nguoi dung");
+        }
+    }
+    public void UpdateNguoiDungWithPass(int ndid,String ten,String pass)
+    {
+        try{
+            String qry = "UPDATE NguoiDung SET nd_name=N'"+ten+"',nd_password=N'"+getMD5(pass)+"' WHERE nd_id="+ndid;
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "lỗi update ten nguoi dung vs pass");
+        }
+    }
 }
