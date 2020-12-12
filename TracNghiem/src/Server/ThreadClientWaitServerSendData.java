@@ -307,6 +307,12 @@ public class ThreadClientWaitServerSendData extends Thread{
                     MainJFrame.AlertMessageFromServer("Kết quả sai: "+str[7]);
                 }
             }
+        }else if(str[0].equals("KETQUATHITHUXONG")){
+            float tongcau = Integer.parseInt(str[1])+ Integer.parseInt(str[2]);
+            float diemmotcau = 10/tongcau;
+            int tongsocau = Integer.parseInt(str[1])+ Integer.parseInt(str[2]);
+            float resu = Integer.parseInt(str[1]) * diemmotcau;
+            MainJFrame.AlertMessageFromServer("Kết quả thi xong: "+resu+" ("+str[1]+"/"+tongsocau+")");
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

@@ -427,7 +427,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
         jButton3.setEnabled(false);
        tiep.setEnabled(true);
         Client.SendToServer("LOAD:CAUHOITHU1:z:");
-        interval=60;
+//        interval=60;
 //        timer.scheduleAtFixedRate(new TimerTask() {
 //
 //        public void run() {
@@ -454,9 +454,9 @@ public class ThiThuJPanel extends javax.swing.JPanel {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-//        Client.SendToServer("KETTHUCTHITHU:");
-//        timer.cancel();
-//        jButton2.setEnabled(false);
+        Client.SendToServer("KETTHUCTHITHU:");
+        //timer.cancel();
+        jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2MouseClicked
 
 

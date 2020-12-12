@@ -204,7 +204,10 @@ public class WorkingThread extends Thread {
                     //
                     // KETTHUCTHITHU
                     if(Clause[0].equals("KETTHUCTHITHU")){
-                        
+                        float res = totalCauHoitrue/(totalCauHoifalse+totalCauHoitrue)*10;
+                        line="KETQUATHITHUXONG:"+totalCauHoitrue+":"+totalCauHoifalse+":"+res+":";
+                        totalCauHoifalse=0;
+                        totalCauHoitrue=0;
                     }
                     //
                     // PUBLICDETHI
