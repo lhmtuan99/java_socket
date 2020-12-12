@@ -238,7 +238,7 @@ public class DeThiDAO {
             qry = qry+"dt_tieude=N"+"'"+dt.getTieude()+"'";
             qry = qry+","+"dt_thoiluong=N"+"'"+dt.getThoiluong()+"'";
             qry = qry+","+"dt_monthi=N"+"'"+dt.getMonthi()+"'";
-            qry = qry+","+"dt_socau=N"+"'"+dt.getSocau()+"'";
+            //qry = qry+","+"dt_socau=N"+"'"+dt.getSocau()+"'";
             qry = qry+" "+ "where dt_id='"+dt.getDt_id()+"'"; 
             
             st = conn.createStatement();

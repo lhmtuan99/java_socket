@@ -315,6 +315,16 @@ public class ThreadClientWaitServerSendData extends Thread{
             MainJFrame.AlertMessageFromServer("Kết quả thi xong: "+resu+" ("+str[1]+"/"+tongsocau+")");
         }else if(str[0].endsWith("UPDATENGUOIDUNGSUCCESS")){
             MainJFrame.AlertMessageFromServer("Cập nhật người dùng thành công..");
+        }else if(str[0].equals("ERROR")){
+            if(str[1].equals("BLOCK")){
+                MainJFrame.AlertMessageFromServer("Tài khoản của bạn đang tạm khóa, vui lòng đăng nhập lại sau!!!");
+            }else  if(str[1].equals("ACCOUTBLOCKED")){
+                MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị cấm tạo đề !!!");
+            }else  if(str[1].equals("CAMTHI")){
+                MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị cấm thi !!!");
+                ThiThuJPanel.tiep.setEnabled(false);
+                
+            }
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

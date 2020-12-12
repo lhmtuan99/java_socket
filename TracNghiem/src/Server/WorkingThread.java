@@ -106,6 +106,10 @@ public class WorkingThread extends Thread {
                         if(nd.CheckLogin(Clause[1], Clause[2])==1){
                             
                             nguoiDung = new NguoiDungDAO().getNguoiDung(Clause[1]);
+                            boolean checkBlock = new DAO.NguoiDungDAO().getBlockUser(nguoiDung.getNd_id());
+                            if(checkBlock==true){
+                                line="ERROR:BLOCK:";
+                            }else 
                             line="DNOK:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
                         }else {
                             line="DNSAI:";
@@ -156,7 +160,10 @@ public class WorkingThread extends Thread {
                             line="LOADDETHITHU:"+dethi.getSocau()+":"+dethi.getThoiluong()+":";
                             
                         }else if(Clause[1].equals("CAUHOITHU1")){
-                            //Thread.sleep(200);
+                            if(nguoiDung.getBlockthi()==0){
+                                line="ERROR:CAMTHI:";
+                            }else{
+                                //Thread.sleep(200);
                             //check kq
                             String kq = "FALSE:-1:";
                             if(!Clause[2].equals("z")){
@@ -175,6 +182,7 @@ public class WorkingThread extends Thread {
                             ThiThu.remove(currentCauHoiforClient);
                             line="CAUHOI:"+currentCauHoiforClient.getCauhoi().trim()+":"+currentCauHoiforClient.getDapanA().trim()+":"+currentCauHoiforClient.getDapanB().trim()+":"+currentCauHoiforClient.getDapanC().trim()+":"+currentCauHoiforClient.getDapanD().trim()+":"+kq+":";
                             System.out.println("-11111111111111111--------------------111111111111111111");
+                            }
                         }else if(Clause[1].equals("CAUHOITHU2")){
                             String kq = "FALSE:-1:";
                             if(Clause[2].trim().equals(currentCauHoiforClient.getTraloi().trim())){
@@ -256,16 +264,20 @@ public class WorkingThread extends Thread {
                     // Them xoa sua de thi
                     if(Clause[0].equals("DETHI")){
                         if(Clause[1].equals("THEM")){   //them
-                            DeThiDTO dt = new DeThiDTO();
-                            dt.setTieude(Clause[2]);
-                            dt.setMonthi(Clause[3]);
-                            dt.setSocau(Clause[4]);
-                            dt.setThoiluong(Clause[5]);
-                            dt.setNguoitao(nguoiDung.getNd_id());
-                            
-                            DeThiBUS bus = new DeThiBUS();
-                            bus.them(dt);
-                            line="TAOTHANHCONG:";
+                            if(nguoiDung.getBlocktaode()==0){ // bi block
+                                line="ERROR:ACCOUTBLOCKED:";
+                            }else {
+                                DeThiDTO dt = new DeThiDTO();
+                                dt.setTieude(Clause[2]);
+                                dt.setMonthi(Clause[3]);
+                                dt.setSocau(Clause[4]);
+                                dt.setThoiluong(Clause[5]);
+                                dt.setNguoitao(nguoiDung.getNd_id());
+
+                                DeThiBUS bus = new DeThiBUS();
+                                bus.them(dt);
+                                line="TAOTHANHCONG:";
+                            }
                         }else if(Clause[1].equals("XOA")){  //xoa
                             DeThiDAO dt = new DeThiDAO();
                             dt.xoa(Clause[2]);

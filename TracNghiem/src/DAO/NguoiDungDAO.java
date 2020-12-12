@@ -157,4 +157,24 @@ public class NguoiDungDAO {
             JOptionPane.showMessageDialog(null, "lỗi update ten nguoi dung vs pass");
         }
     }
+    public boolean getBlockUser(int id)
+    {
+        try{
+            String query = "select * from NguoiDung where nd_id='"+id+"'";
+            st = conn.createStatement();
+            rs=st.executeQuery(query);
+            while (rs.next())
+            {   
+                int block = rs.getInt("nd_blockaccount");
+                if(block==0)return true;
+                return false;
+            }
+            
+        }
+        catch(SQLException ex)
+        {
+                JOptionPane.showMessageDialog(null, "lỗi check block accout");
+        }
+        return false;
+    }
 }

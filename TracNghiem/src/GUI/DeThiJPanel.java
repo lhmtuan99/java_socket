@@ -291,7 +291,13 @@ public class DeThiJPanel extends javax.swing.JPanel {
             return;
         }
         //showMessageDialog(null, "Tạo đề thi thành công...");
+        
         SendToServer("DETHI:THEM:"+txttieude.getText()+":"+txtmonthi.getText()+":"+txtsocau.getText()+":"+txtthoiluong.getText()+":");
+            txttieude.setText("");
+            txtsocau.setText("");
+            txtmonthi.setText("");
+            txtthoiluong.setText("");
+            lbid.setText("");
 //        DeThiBUS bus = new DeThiBUS();
 //        bus.them(dt);
 //        Vector row = new Vector();
@@ -312,7 +318,7 @@ public class DeThiJPanel extends javax.swing.JPanel {
     private void btnSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseClicked
         
         int i =lbid.getText().length();
-        
+        int j= jTable1.getSelectedRow();
         if(i>0)
         {
             if(txttieude.getText().length()<1){
@@ -331,9 +337,14 @@ public class DeThiJPanel extends javax.swing.JPanel {
                 showMessageDialog(null, "Số câu không được để trống !!!");
                 return;
             }
-            int getUsed = (int) jTable1.getValueAt(i,5);
+            int getUsed = Integer.parseInt((String) jTable1.getValueAt(i,5));
             if(getUsed>0 ) {
                 showMessageDialog(null, "Đề đã có người thi, không thể chỉnh sửa !!!");
+                return;
+            }
+            int socauhoi =Integer.parseInt((String) jTable1.getValueAt(j,3));
+            if(socauhoi!= Integer.parseInt(txtsocau.getText())){
+                showMessageDialog(null, "Đề đã tạo không thể thay đổi số câu hỏi !!!");
                 return;
             }
             txttieude.setText("");
