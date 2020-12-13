@@ -266,6 +266,8 @@ public class ThreadClientWaitServerSendData extends Thread{
             ThiThuJPanel.cau.setText("1");
             ThiThuJPanel.tongcau.setText(str[1]);
             ThiThuJPanel.jButton3.setEnabled(true);
+            int timeeeethi = Integer.parseInt(str[2])*60;
+            ThiThuJPanel.timeCountDown.setText(timeeeethi+"");
             ThiThuJPanel.minutes = Integer.parseInt(str[2]);
         }else if(str[0].equals("CAUHOI")){
             ThiThuJPanel.cauhoi.setText(str[1]);

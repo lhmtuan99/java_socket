@@ -35,7 +35,7 @@ public class ServerExcute implements Runnable{
         
     }
     public void Menu(){
-        System.out.println("------------Menu--------------");
+        System.out.println("-------------------MENU---------------------");
         System.out.println("1: Có tổng cộng bao nhiêu người dùng.");
         System.out.println("2: Thông tin cơ bản của tất cả người dùng.");
         System.out.println("3: Gửi tin nhắn đến một người đang online.");
@@ -44,6 +44,9 @@ public class ServerExcute implements Runnable{
         System.out.println("6: Thông tin cơ bản những người đang online.");
         System.out.println("7: Block.");
         System.out.println("8: Có bao nhiu kết nối tới server.");
+        System.out.println("9: Hệ thống có bao nhiêu đề thi.");
+        System.out.println("10: Thông tin của các đề thi.");
+        System.out.println("--------------------------------------------");
         
     }
     public void ServerExcute() throws IOException, SQLException{
@@ -53,7 +56,7 @@ public class ServerExcute implements Runnable{
         
         while(!flag){
             Menu();
-            System.out.print("Your choice is:");
+            System.out.print("Lựa chọn của bạn:");
             int n;
             n= sc.nextInt();
             switch(n){
@@ -208,6 +211,45 @@ public class ServerExcute implements Runnable{
                     // kết nối
                     System.out.println("Tổng số kết nối: "+Clients.size());
                     
+                    break;
+                }
+                case 9: {
+                    System.out.println("Bạn chọn 9:");
+                    // tổng số đề thi
+                    DAO.MyConnection myconnection = new DAO.MyConnection();
+                    Connection con = myconnection.getConnecDB();
+                    Statement statement = con.createStatement();
+                    String sql = "select COUNT(*) as total from DeThi";
+                    ResultSet rs;
+                    rs = statement.executeQuery(sql);
+                    rs.next();
+                    System.out.println("Tổng số đề thi trên hệ thống là: "+rs.getInt("total"));
+                    break;
+                }
+                case 10:{
+                    System.out.println("Bạn chọn 10:");
+                    // chi tiết đề thi
+                    DAO.MyConnection myconnection = new DAO.MyConnection();
+                    Connection con = myconnection.getConnecDB();
+                    Statement statement = con.createStatement();
+                    String sql = "select * from DeThi";
+                    ResultSet rs;
+                    rs = statement.executeQuery(sql);
+                    String format = "%-10s%-25s%-25s%-25s%-25s%-25s%-25s%-25s%n";
+                    System.out.printf(format, "ID", "TIÊU ĐỀ","THỜI GIAN","MÔN THI","SỐ CÂU","LƯỢT THI","ID NGƯỜI TẠO","TRẠNG THÁI");
+                  
+                    while(rs.next()){
+                        int id = rs.getInt("dt_id");
+                        String str1 = rs.getString("dt_tieude");
+                        String str2 = rs.getString("dt_thoiluong");
+                        String str3 = rs.getString("dt_socau");
+                        String str4 = rs.getString("dt_monthi");
+                        int trangthai = rs.getInt("dt_songuoithi");
+                        int trangthai1 = rs.getInt("dt_nguoitao");
+                        int trangthai2 = rs.getInt("dt_public");
+                        System.out.printf(format, id, str1,str2,str4,str3,trangthai,trangthai1,trangthai2==1?"TRUE":"FALSE");
+                    }
+                  
                     break;
                 }
                 default:{

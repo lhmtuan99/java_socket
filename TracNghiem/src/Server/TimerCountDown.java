@@ -25,7 +25,7 @@ public class TimerCountDown implements java.lang.Runnable{
         this.runTimer();
     }
     public void runTimer(){
-        int i = minutes;
+        int i = minutes*60;
         int check =0;
         ThiThuJPanel.timeCountDown.setText("0");
          while (i>=0 && check==0){
