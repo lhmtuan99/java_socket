@@ -7,6 +7,8 @@ package GUI;
 
 import BUS.NguoiDungBUS;
 import static Server.Client.SendToServer;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,6 +34,9 @@ public static DangKyAccount r = new DangKyAccount();
     public Login() {
         initComponents();
         setTitle("Đăng nhập");
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setResizable(false);
     }
 
     /**
@@ -175,8 +180,12 @@ public static DangKyAccount r = new DangKyAccount();
     if(!b.equals(a) && !c.equals(a))
     {
         SendToServer("DN:"+b+":"+c+":");
+        JOptionPane.showMessageDialog(null,"Vui lòng chờ...");
+        jTextField1.setText("");
+        jPasswordField1.setText("");
     }else {
         JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");
+        return;
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2MouseClicked

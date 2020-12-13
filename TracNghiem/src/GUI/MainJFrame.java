@@ -7,6 +7,8 @@ package GUI;
 
 import static GUI.TaoCauHoiJPanel.jComboBox1;
 import static Server.Client.SendToServer;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +35,9 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
         setTitle("QUẢN LÝ ĐỀ THI TRẮC NGHIỆM");
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setResizable(false);
         
         ChuyenManHinhController controller = new ChuyenManHinhController(jpnView);
         controller.setView(jpnAccount, jlbAccount);

@@ -11,6 +11,8 @@ import DTO.NguoiDungDTO;
 import DTO.otpDTO;
 import static Server.Client.SendToServer;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
@@ -46,7 +48,9 @@ public class DangKyAccount extends javax.swing.JFrame {
         initComponents();
         jPanel1.setFocusable(true);
         btnSubmit.setEnabled(false);
-        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setResizable(false);
     }
 
     /**
