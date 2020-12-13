@@ -100,6 +100,11 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
                 jButton5MouseClicked(evt);
             }
         });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("/");
 
@@ -111,6 +116,11 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -355,6 +365,11 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
                 jButton3MouseClicked(evt);
             }
         });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/baseline_chevron_right_white_24dp.png"))); // NOI18N
@@ -418,30 +433,47 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+               // TODO add your handling code here:
+        if(Integer.parseInt(cau.getText())< Integer.parseInt(tongcau.getText())){
+            int y = Integer.parseInt(cau.getText())+1;
+            DTO.CauHoi z = listCauHoi.get(y-1);
+            cau.setText(y+"");
+            if(listCauHoi.get(y-1).getDapanA().length()>0){
+                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(y-1).getDapanA());
+            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanB().length()>0){
+                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(y-1).getDapanB());
+            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanC().length()>0){
+                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(y-1).getDapanC());
+            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+            if(listCauHoi.get(y-1).getDapanD().length()>0){
+                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(y-1).getDapanD());
+            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+            if(listCauHoi.get(y-1).getCauhoi().length()>0){
+                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(y-1).getCauhoi());
+            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+            
+            
+            if(listCauHoi.get(y-1).getTraloi().length()>0){
+                if(listCauHoi.get(y-1).getDapanA().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanB().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanC().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+                if(listCauHoi.get(y-1).getDapanD().equals(listCauHoi.get(y-1).getTraloi()))
+                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+            }
+            
+          
+            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
+        }else MainJFrame.AlertMessageFromServer("Không có câu tiếp theo !!!");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        // TODO add your handling code here:
-        if(jComboBox1.getSelectedIndex()<0){
-            MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
-            return;
-        }
-        String str  = (String) jComboBox1.getSelectedItem();
-        String idDethi = str.split("-")[0];
-        SendToServer("LOAD:DE:"+idDethi+":");
-        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
-    }//GEN-LAST:event_jButton5MouseClicked
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
+               // TODO add your handling code here:
         if(jTextField5.getText().length()<1){
             MainJFrame.AlertMessageFromServer("Vui lòng nhập câu hỏi ...");
             return;
@@ -480,49 +512,175 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
         listCauHoi.set(Integer.parseInt(cau.getText())-1, cH);
         SendToServer("UPDATE:CAUHOI:"+cH.getCh_id()+":"+cH.getCauhoi()+":"+cH.getDapanA()+":"+cH.getDapanB()+":"+cH.getDapanC()+":"+cH.getDapanD()+":"+cH.getTraloi()+":");
         MainJFrame.AlertMessageFromServer("Cập nhật thành công, vui lòng chờ...");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+//        // TODO add your handling code here:
+//        if(jComboBox1.getSelectedIndex()<0){
+//            MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
+//            return;
+//        }
+//        String str  = (String) jComboBox1.getSelectedItem();
+//        String idDethi = str.split("-")[0];
+//        SendToServer("LOAD:DE:"+idDethi+":");
+//        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+//        // TODO add your handling code here:
+//        if(jTextField5.getText().length()<1){
+//            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu hỏi ...");
+//            return;
+//        }else if(jTextField1.getText().length()<1){
+//            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời A...");
+//            return;
+//        }else if(jTextField2.getText().length()<1){
+//            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời B...");
+//            return;
+//        }else if(jTextField3.getText().length()<1){
+//            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời C...");
+//            return;
+//        }else if(jTextField4.getText().length()<1){
+//            MainJFrame.AlertMessageFromServer("Vui lòng nhập câu trả lời D...");
+//            return;
+//        }
+//        String ans = "";
+//        if(buttonGroup1.getSelection().equals(jRadioButton1.getModel())) {
+//            ans = jTextField1.getText();
+//        }else if(buttonGroup1.getSelection().equals(jRadioButton2.getModel())) {
+//            ans = jTextField2.getText();
+//        }else if(buttonGroup1.getSelection().equals(jRadioButton3.getModel())) {
+//            ans = jTextField3.getText();
+//        }else if(buttonGroup1.getSelection().equals(jRadioButton4.getModel())) {
+//            ans = jTextField4.getText();
+//        }else {
+//            MainJFrame.AlertMessageFromServer("Vui lòng chọn câu trả lời đúng !!!");
+//        }
+//        DTO.CauHoi cH = listCauHoi.get(Integer.parseInt(cau.getText())-1);
+//        cH.setCauhoi(jTextField5.getText().trim());
+//        cH.setDapanA(jTextField1.getText().trim());
+//        cH.setDapanB(jTextField2.getText().trim());
+//        cH.setDapanC(jTextField3.getText().trim());
+//        cH.setDapanD(jTextField4.getText().trim());
+//        cH.setTraloi(ans.trim());
+//        listCauHoi.set(Integer.parseInt(cau.getText())-1, cH);
+//        SendToServer("UPDATE:CAUHOI:"+cH.getCh_id()+":"+cH.getCauhoi()+":"+cH.getDapanA()+":"+cH.getDapanB()+":"+cH.getDapanC()+":"+cH.getDapanD()+":"+cH.getTraloi()+":");
+//        MainJFrame.AlertMessageFromServer("Cập nhật thành công, vui lòng chờ...");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
-        // TODO add your handling code here:
-        if(Integer.parseInt(cau.getText())< Integer.parseInt(tongcau.getText())){
-            int y = Integer.parseInt(cau.getText())+1;
-            DTO.CauHoi z = listCauHoi.get(y-1);
-            cau.setText(y+"");
-            if(listCauHoi.get(y-1).getDapanA().length()>0){
-                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(y-1).getDapanA());
-            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
-            if(listCauHoi.get(y-1).getDapanB().length()>0){
-                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(y-1).getDapanB());
-            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
-            if(listCauHoi.get(y-1).getDapanC().length()>0){
-                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(y-1).getDapanC());
-            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
-            if(listCauHoi.get(y-1).getDapanD().length()>0){
-                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(y-1).getDapanD());
-            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
-            if(listCauHoi.get(y-1).getCauhoi().length()>0){
-                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(y-1).getCauhoi());
-            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
-            
-            
-            if(listCauHoi.get(y-1).getTraloi().length()>0){
-                if(listCauHoi.get(y-1).getDapanA().equals(listCauHoi.get(y-1).getTraloi()))
-                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
-                if(listCauHoi.get(y-1).getDapanB().equals(listCauHoi.get(y-1).getTraloi()))
-                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
-                if(listCauHoi.get(y-1).getDapanC().equals(listCauHoi.get(y-1).getTraloi()))
-                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
-                if(listCauHoi.get(y-1).getDapanD().equals(listCauHoi.get(y-1).getTraloi()))
-                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
-            }
-            
-          
-            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
-        }else MainJFrame.AlertMessageFromServer("Không có câu tiếp theo !!!");
+//        // TODO add your handling code here:
+//        if(Integer.parseInt(cau.getText())< Integer.parseInt(tongcau.getText())){
+//            int y = Integer.parseInt(cau.getText())+1;
+//            DTO.CauHoi z = listCauHoi.get(y-1);
+//            cau.setText(y+"");
+//            if(listCauHoi.get(y-1).getDapanA().length()>0){
+//                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(y-1).getDapanA());
+//            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+//            if(listCauHoi.get(y-1).getDapanB().length()>0){
+//                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(y-1).getDapanB());
+//            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+//            if(listCauHoi.get(y-1).getDapanC().length()>0){
+//                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(y-1).getDapanC());
+//            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+//            if(listCauHoi.get(y-1).getDapanD().length()>0){
+//                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(y-1).getDapanD());
+//            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+//            if(listCauHoi.get(y-1).getCauhoi().length()>0){
+//                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(y-1).getCauhoi());
+//            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+//            
+//            
+//            if(listCauHoi.get(y-1).getTraloi().length()>0){
+//                if(listCauHoi.get(y-1).getDapanA().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+//                if(listCauHoi.get(y-1).getDapanB().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+//                if(listCauHoi.get(y-1).getDapanC().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+//                if(listCauHoi.get(y-1).getDapanD().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+//            }
+//            
+//          
+//            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
+//        }else MainJFrame.AlertMessageFromServer("Không có câu tiếp theo !!!");
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+//        // TODO add your handling code here:
+//        if(Integer.parseInt(cau.getText())>1){
+//            int y = Integer.parseInt(cau.getText())-1;
+//            DTO.CauHoi z = listCauHoi.get(y-1);
+//            cau.setText(y+"");
+//            if(listCauHoi.get(y-1).getDapanA().length()>0){
+//                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(y-1).getDapanA());
+//            }else TaoCauHoiJPanel.jTextField1.setText(" ") ;
+//            if(listCauHoi.get(y-1).getDapanB().length()>0){
+//                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(y-1).getDapanB());
+//            }else TaoCauHoiJPanel.jTextField2.setText(" ") ;
+//            if(listCauHoi.get(y-1).getDapanC().length()>0){
+//                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(y-1).getDapanC());
+//            }else TaoCauHoiJPanel.jTextField3.setText(" ") ;
+//            if(listCauHoi.get(y-1).getDapanD().length()>0){
+//                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(y-1).getDapanD());
+//            }else TaoCauHoiJPanel.jTextField4.setText(" ") ;
+//            if(listCauHoi.get(y-1).getCauhoi().length()>0){
+//                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(y-1).getCauhoi());
+//            }else TaoCauHoiJPanel.jTextField5.setText(" ") ;
+//            
+//            
+//            if(listCauHoi.get(y-1).getTraloi().length()>0){
+//                if(listCauHoi.get(y-1).getDapanA().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+//                if(listCauHoi.get(y-1).getDapanB().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+//                if(listCauHoi.get(y-1).getDapanC().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+//                if(listCauHoi.get(y-1).getDapanD().equals(listCauHoi.get(y-1).getTraloi()))
+//                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+//            }
+//            
+//          
+//            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
+//        }else MainJFrame.AlertMessageFromServer("Không có câu trước !!!");
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+//        // TODO add your handling code here:
+//         String str  = (String) jComboBox1.getSelectedItem();
+//        String idDethi = str.split("-")[0];
+//        Client.SendToServer("PUBLICDETHI:"+idDethi);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+                // TODO add your handling code here:
+        if(jComboBox1.getSelectedIndex()<0){
+            MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
+            return;
+        }
+        String str  = (String) jComboBox1.getSelectedItem();
+        String idDethi = str.split("-")[0];
+        SendToServer("LOAD:DE:"+idDethi+":");
+        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+               // TODO add your handling code here:
+         String str  = (String) jComboBox1.getSelectedItem();
+        String idDethi = str.split("-")[0];
+        Client.SendToServer("PUBLICDETHI:"+idDethi);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+               // TODO add your handling code here:
         if(Integer.parseInt(cau.getText())>1){
             int y = Integer.parseInt(cau.getText())-1;
             DTO.CauHoi z = listCauHoi.get(y-1);
@@ -558,14 +716,7 @@ public class TaoCauHoiJPanel extends javax.swing.JPanel {
           
             TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(y-1).getCh_id()+"");
         }else MainJFrame.AlertMessageFromServer("Không có câu trước !!!");
-    }//GEN-LAST:event_jButton3MouseClicked
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-         String str  = (String) jComboBox1.getSelectedItem();
-        String idDethi = str.split("-")[0];
-        Client.SendToServer("PUBLICDETHI:"+idDethi);
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -143,6 +143,11 @@ public class DangKyAccount extends javax.swing.JFrame {
                 sendOTPMouseEntered(evt);
             }
         });
+        sendOTP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendOTPActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setText("@gmail.com");
@@ -370,6 +375,52 @@ public class DangKyAccount extends javax.swing.JFrame {
     }
     private void sendOTPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseClicked
        
+//        String a="Gmail";
+//        otpBUS bus = new otpBUS();
+//        otpDTO otp = new otpDTO();
+//        t = new Timer();
+//        if(txtgmail.getText().equals(a))
+//        {
+//            JOptionPane.showMessageDialog(null,"vui lòng nhập đầy đủ thông tin");
+//            
+//        }
+//        else { 
+//            String gmail = txtgmail.getText()+"@gmail.com";
+//            SendToServer("OTP:"+gmail+":");
+//            
+//            
+//            otp.setGmail(txtgmail.getText()+"@gmail.com");
+//            //otp.setTime(LocalDateTime.now());
+//            
+//             
+//                
+//                
+//            
+//            
+////            bus.them(otp);
+//        }
+//        t= new Timer(10000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String mail = txtgmail.getText();
+//                bus.xoa(mail);
+//                t.stop();
+//                
+//            }
+//        });
+//        t.start();
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendOTPMouseClicked
+
+    private void sendOTPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendOTPMouseEntered
+
+    private void sendOTPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendOTPActionPerformed
+        // TODO add your handling code here:
         String a="Gmail";
         otpBUS bus = new otpBUS();
         otpDTO otp = new otpDTO();
@@ -394,25 +445,7 @@ public class DangKyAccount extends javax.swing.JFrame {
             
 //            bus.them(otp);
         }
-//        t= new Timer(10000, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String mail = txtgmail.getText();
-//                bus.xoa(mail);
-//                t.stop();
-//                
-//            }
-//        });
-//        t.start();
-        
-        
-        
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sendOTPMouseClicked
-
-    private void sendOTPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendOTPMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sendOTPMouseEntered
+    }//GEN-LAST:event_sendOTPActionPerformed
 //        private static final int setInterval() {
 //        if (interval == 1)
 //            t.cancel();

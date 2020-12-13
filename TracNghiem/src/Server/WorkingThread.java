@@ -218,6 +218,11 @@ public class WorkingThread extends Thread {
                         }
                     }
                     //
+                    //LOGOUT
+                    if(Clause[0].equals("LOGOUT")){
+                        ListUserOnline.remove(nguoiDung);
+                    }
+                    //
                     // KETTHUCTHITHU
                     if(Clause[0].equals("KETTHUCTHITHU")){
                         float res = totalCauHoitrue/totalSoCau*10;

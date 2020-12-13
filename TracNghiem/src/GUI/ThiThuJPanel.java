@@ -117,6 +117,11 @@ public class ThiThuJPanel extends javax.swing.JPanel {
                 jButton5MouseClicked(evt);
             }
         });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("/");
 
@@ -131,6 +136,11 @@ public class ThiThuJPanel extends javax.swing.JPanel {
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -311,6 +321,11 @@ public class ThiThuJPanel extends javax.swing.JPanel {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -350,16 +365,16 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_comboboxThithuActionPerformed
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        // TODO add your handling code here:
-        if(comboboxThithu.getSelectedIndex()<0){
-            MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
-            return;
-        }
-        String str  = (String) comboboxThithu.getSelectedItem();
-        String idDethi = str.split("-")[0];
-       
-        SendToServer("LOAD:DETHITHU:"+idDethi+":");
-        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
+//        // TODO add your handling code here:
+//        if(comboboxThithu.getSelectedIndex()<0){
+//            MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
+//            return;
+//        }
+//        String str  = (String) comboboxThithu.getSelectedItem();
+//        String idDethi = str.split("-")[0];
+//       
+//        SendToServer("LOAD:DETHITHU:"+idDethi+":");
+//        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void cbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbActionPerformed
@@ -425,7 +440,66 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tiepActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+//        // TODO add your handling code here:
+//        jButton3.setEnabled(false);
+//       tiep.setEnabled(true);
+//        Client.SendToServer("LOAD:CAUHOITHU1:z:");
+//        
+//        TimerCountDown demthoigianthi = new TimerCountDown(minutes);
+//        Thread thread = new Thread(demthoigianthi);
+//        thread.start();
+////        interval=60;
+////        timer.scheduleAtFixedRate(new TimerTask() {
+////
+////        public void run() {
+////            timeCountDown.setText(interval+"");
+////            interval--;
+////            if( interval < 0) 
+////            {
+////                timer.cancel();
+////            }
+////        }
+////    }, 1000, 1000);
+//        
+//        
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void caActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caActionPerformed
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_caActionPerformed
+
+    private void tiepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tiepMouseClicked
+      
+    }//GEN-LAST:event_tiepMouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+//        String str  = (String) comboboxThithu.getSelectedItem();
+//        String idDethi = str.split("-")[0];
+//        Client.SendToServer("KETTHUCTHITHU:"+idDethi+":");
+//        //timer.cancel();
+//        jButton2.setEnabled(false);
+//        nopbai=1;
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+               // TODO add your handling code here:
+        if(comboboxThithu.getSelectedIndex()<0){
+            MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
+            return;
+        }
+        String str  = (String) comboboxThithu.getSelectedItem();
+        String idDethi = str.split("-")[0];
+       
+        SendToServer("LOAD:DETHITHU:"+idDethi+":");
+        MainJFrame.AlertMessageFromServer("Vui lòng chờ giây lát...");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+               // TODO add your handling code here:
         jButton3.setEnabled(false);
        tiep.setEnabled(true);
         Client.SendToServer("LOAD:CAUHOITHU1:z:");
@@ -447,26 +521,18 @@ public class ThiThuJPanel extends javax.swing.JPanel {
 //    }, 1000, 1000);
         
         
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void caActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_caActionPerformed
-
-    private void tiepMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tiepMouseClicked
-      
-    }//GEN-LAST:event_tiepMouseClicked
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
-        String str  = (String) comboboxThithu.getSelectedItem();
+        nopbai=1;
+                String str  = (String) comboboxThithu.getSelectedItem();
         String idDethi = str.split("-")[0];
         Client.SendToServer("KETTHUCTHITHU:"+idDethi+":");
         //timer.cancel();
         jButton2.setEnabled(false);
-        nopbai=1;
-    }//GEN-LAST:event_jButton2MouseClicked
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

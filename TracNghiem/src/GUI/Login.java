@@ -27,6 +27,7 @@ public static DangKyAccount r = new DangKyAccount();
     public static void CloseLoginFrame(){
         if(INTANCELOGIN==null) return;
         INTANCELOGIN.dispose();
+        
     }
     /**
      * Creates new form NewJFrame
@@ -77,11 +78,21 @@ public static DangKyAccount r = new DangKyAccount();
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Đăng nhập");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -163,9 +174,9 @@ public static DangKyAccount r = new DangKyAccount();
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
-        CloseLoginFrame();
-        DangKyAccount.getIntanceDangki().setVisible(true);
-        // TODO add your handling code here:
+//        CloseLoginFrame();
+//        DangKyAccount.getIntanceDangki().setVisible(true);
+//        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
     
     public static void CLOSE(){
@@ -173,7 +184,27 @@ public static DangKyAccount r = new DangKyAccount();
     }
     
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-    NguoiDungBUS nguoidungbus = new NguoiDungBUS();
+//      JOptionPane.showConfirmDialog(null, "ok");
+//      jButton2.setEnabled(false);
+//    NguoiDungBUS nguoidungbus = new NguoiDungBUS();
+//    String a="";
+//    String b=jTextField1.getText();
+//    String c= new String(jPasswordField1.getPassword());
+//    if(!b.equals(a) && !c.equals(a))
+//    {
+//        SendToServer("DN:"+b+":"+c+":");
+//        JOptionPane.showMessageDialog(null,"Vui lòng chờ...");
+//        
+//    }else {
+//        JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");
+//        return;
+//    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+           NguoiDungBUS nguoidungbus = new NguoiDungBUS();
     String a="";
     String b=jTextField1.getText();
     String c= new String(jPasswordField1.getPassword());
@@ -183,12 +214,18 @@ public static DangKyAccount r = new DangKyAccount();
         JOptionPane.showMessageDialog(null,"Vui lòng chờ...");
         jTextField1.setText("");
         jPasswordField1.setText("");
+        
     }else {
         JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");
         return;
     }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2MouseClicked
+        CloseLoginFrame();
+        DangKyAccount.getIntanceDangki().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

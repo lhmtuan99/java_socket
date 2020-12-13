@@ -70,6 +70,11 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -197,6 +202,11 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -254,7 +264,43 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1MouseDragged
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+//        // TODO add your handling code here:
+//        if(jTextField1.getText().length()<1){
+//            MainJFrame.AlertMessageFromServer("Tên không được để trống !!!");
+//            return;
+//        }
+//        String c= new String(jPasswordField1.getPassword());
+//        if(c.length()>0){
+//            String cc = new String(jPasswordField2.getPassword());
+//            if(!c.equals(cc)){
+//                MainJFrame.AlertMessageFromServer("Mật khẩu không trùng nhau !!!");
+//                return;
+//            }else {
+//                Client.SendToServer("EDITNGUOIDUNG1:"+jTextField1.getText()+":"+c+":");
+//                jPasswordField1.setText("");
+//                jPasswordField2.setText("");
+//                MainJFrame.AlertMessageFromServer("Cập nhật thành công...");
+//            }
+//        }else {
+//            Client.SendToServer("EDITNGUOIDUNG2:"+jTextField1.getText()+":");
+//             MainJFrame.AlertMessageFromServer("Cập nhật thành công...");
+//        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+//        SendToServer("LOGOUT:");
+//        MainJFrame.CloseMainJFrame();
+//        Login.getIntanceLogin().setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+               // TODO add your handling code here:
         if(jTextField1.getText().length()<1){
             MainJFrame.AlertMessageFromServer("Tên không được để trống !!!");
             return;
@@ -275,17 +321,14 @@ public class ThongTinNguoiDungJPanel extends javax.swing.JPanel {
             Client.SendToServer("EDITNGUOIDUNG2:"+jTextField1.getText()+":");
              MainJFrame.AlertMessageFromServer("Cập nhật thành công...");
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
+          SendToServer("LOGOUT:");
         MainJFrame.CloseMainJFrame();
         Login.getIntanceLogin().setVisible(true);
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
