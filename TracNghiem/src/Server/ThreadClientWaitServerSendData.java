@@ -325,6 +325,8 @@ public class ThreadClientWaitServerSendData extends Thread{
                 ThiThuJPanel.tiep.setEnabled(false);
                 
             }
+        }else if(str[0].equals("ALERT")){
+            MainJFrame.AlertMessageFromServer(str[1]);
         }
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }

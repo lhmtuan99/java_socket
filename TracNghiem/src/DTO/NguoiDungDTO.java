@@ -19,6 +19,15 @@ public class NguoiDungDTO {
     private int blockthi;
     private int blocktaode;
 
+    private int PORT;
+
+    public int getPORT() {
+        return PORT;
+    }
+
+    public void setPORT(int PORT) {
+        this.PORT = PORT;
+    }
     public int getNd_id() {
         return nd_id;
     }

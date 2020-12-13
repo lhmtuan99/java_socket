@@ -40,13 +40,16 @@ import javax.crypto.spec.SecretKeySpec;
 public class TheadClient extends Thread{
     public String key ;
     public String initVector ;
+    public int PORT;
     protected Socket socket;
     public String line = "";
     public int id = -1;
     private boolean check = false;
+
     public TheadClient(Socket clientSocket) {
         this.socket = clientSocket;
         this.id = clientSocket.getPort();
+        PORT = clientSocket.getPort();
     }
     public void run() {
         InputStream inp = null;
@@ -86,6 +89,7 @@ public class TheadClient extends Thread{
             try {
                 
                 if(line.length()>0){
+                    line= "ALERT:"+line+":";
                     line = encrypt(line,key+socket.getPort());
                     System.out.println(line);
                     out.writeBytes(line + "\n");

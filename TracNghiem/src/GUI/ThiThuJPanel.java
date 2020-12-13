@@ -17,6 +17,7 @@ import BUS.otpBUS;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
 import static Server.Client.SendToServer;
+import Server.TimerCountDown;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -427,6 +428,10 @@ public class ThiThuJPanel extends javax.swing.JPanel {
         jButton3.setEnabled(false);
        tiep.setEnabled(true);
         Client.SendToServer("LOAD:CAUHOITHU1:z:");
+        
+        TimerCountDown demthoigianthi = new TimerCountDown(minutes);
+        Thread thread = new Thread(demthoigianthi);
+        thread.start();
 //        interval=60;
 //        timer.scheduleAtFixedRate(new TimerTask() {
 //
@@ -472,7 +477,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     public static javax.swing.JRadioButton cd;
     public static javax.swing.JComboBox<String> comboboxThithu;
     public static javax.swing.JLabel idcauhoi;
-    private javax.swing.JButton jButton2;
+    public static javax.swing.JButton jButton2;
     public static javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -487,7 +492,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButton jRadioButton4;
     public static javax.swing.JButton tiep;
-    private javax.swing.JLabel timeCountDown;
+    public static javax.swing.JLabel timeCountDown;
     public static javax.swing.JLabel tongcau;
     // End of variables declaration//GEN-END:variables
 }

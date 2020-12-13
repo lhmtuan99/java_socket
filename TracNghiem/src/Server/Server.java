@@ -49,6 +49,7 @@ public class Server implements Runnable{
     public static ServerSocket server = null;
     
     public static List<TheadClient> Clients = new ArrayList<>();
+    public static ArrayList<DTO.NguoiDungDTO> ListUserOnline = new ArrayList<>();
     
     public void Start() throws IOException{
         //ExecutorService executor = Executors.newFixedThreadPool(numThread);

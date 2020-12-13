@@ -13,6 +13,7 @@ import DTO.CauHoi;
 import DTO.DeThiDTO;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
+import static Server.Server.ListUserOnline;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -109,8 +110,12 @@ public class WorkingThread extends Thread {
                             boolean checkBlock = new DAO.NguoiDungDAO().getBlockUser(nguoiDung.getNd_id());
                             if(checkBlock==true){
                                 line="ERROR:BLOCK:";
-                            }else 
-                            line="DNOK:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
+                            }else {
+                                line="DNOK:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
+                                nguoiDung.setPORT(socket.getPort());
+                                ListUserOnline.add(nguoiDung);
+                            }
+                            //line="DNOK:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
                         }else {
                             line="DNSAI:";
                         }
