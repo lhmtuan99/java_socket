@@ -163,9 +163,41 @@ public class ServerExcute implements Runnable{
                 }
                 case 7:{
                     System.out.println("Bạn chọn 7:");
-                    System.out.println("OPTION: 1, Block account. - 2, Cấm thi. - 3, Không cho tạo đề.");
-                    System.out.println("Block theo cú pháp sau: block:user:option ví dụ: block:1:1 -> block account user có id 1.");
-                    System.out.print("Nhập: ");
+                    System.out.println("Nhập 1: UNBLOCK, Nhập 2:Block");
+                    int choice = sc.nextInt();
+                    if(choice ==1){
+                        System.out.print("Nhập ID người dùng muốn UNBLOCK: ");
+                        int id = sc.nextInt();
+                        if( new DAO.ServerDAO().kiemtraNguoiDung(id)==1){
+                            System.out.println("Nhập 1: UNBLOCK ACCOUNT, Nhập 2: UNBLOCK TẠO ĐỀ THI, Nhập 3: UNBLOCK THI");
+                            int luachon = sc.nextInt();
+                            if(luachon==1){
+                                new DAO.ServerDAO().UnBlockaccount(id);
+                            }else if(luachon==2){
+                                new DAO.ServerDAO().UnBlocktaode(id);
+                            }else if(luachon==3){
+                                new DAO.ServerDAO().UnBlockthi(id);
+                            }else System.out.println("Lựa chọn không tồn tại...");
+                        }else {
+                            System.out.println("ID người dùng không tồn tại....");
+                        }
+                    }else if(choice ==2){
+                        System.out.print("Nhập ID người dùng mốn BLOCK: ");
+                        int id = sc.nextInt();
+                        if( new DAO.ServerDAO().kiemtraNguoiDung(id)==1){
+                            System.out.println("Nhập 1: BLOCK ACCOUNT, Nhập 2: BLOCK TẠO ĐỀ THI, Nhập 3: BLOCK THI");
+                            int luachon = sc.nextInt();
+                            if(luachon==1){
+                                new DAO.ServerDAO().Blockaccount(id);
+                            }else if(luachon==2){
+                                new DAO.ServerDAO().Blocktaode(id);
+                            }else if(luachon==3){
+                                new DAO.ServerDAO().Blockthi(id);
+                            }else System.out.println("Lựa chọn không tồn tại...");
+                        }else {
+                            System.out.println("ID người dùng không tồn tại....");
+                        }
+                    }else System.out.println("Lựa chọn không tồn tại...");
                     // kết nối
                     //System.out.println("Tổng số người đang online: "+Clients.size());
                     

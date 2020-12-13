@@ -39,6 +39,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     public static int minutes = 0;
     static int interval;
     static Timer timer;
+    public static int nopbai =0;
     /**
      * Creates new form ThiThuJPanel
      */
@@ -464,6 +465,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
         Client.SendToServer("KETTHUCTHITHU:"+idDethi+":");
         //timer.cancel();
         jButton2.setEnabled(false);
+        nopbai=1;
     }//GEN-LAST:event_jButton2MouseClicked
 
 

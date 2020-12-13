@@ -224,7 +224,7 @@ public class DeThiDAO {
     {
         try{
             st=conn.createStatement();
-            String qry="INSERT INTO Diem (nd_id,dt_id,Diem) VALUES ("+nd+","+de+",'"+diem+"')";
+            String qry="INSERT INTO Diem (nd_id,dt_id,Diem) VALUES ("+nd+","+de+","+diem+")";
             System.out.println(qry);
             rs=st.executeQuery(qry);
         }catch(Exception e){

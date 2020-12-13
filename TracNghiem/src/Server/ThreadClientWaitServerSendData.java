@@ -20,6 +20,7 @@ import static GUI.MainJFrame.AlertMessageFromServer;
 import static GUI.MainJFrame.getIntanceMainJFrame;
 import GUI.TaoCauHoiJPanel;
 import static GUI.TaoCauHoiJPanel.jComboBox1;
+import GUI.ThanhTichJPanel;
 import GUI.ThiThuJPanel;
 import static GUI.ThongTinNguoiDungJPanel.block1;
 import static GUI.ThongTinNguoiDungJPanel.block2;
@@ -65,6 +66,7 @@ import javax.swing.table.DefaultTableModel;
 public class ThreadClientWaitServerSendData extends Thread{
     protected Socket socket;
     public String [] arrDethi = new String[1000];
+    public String [] arrThanhTich = new String[1000]; // cái này của thằng tiếp
     public static ArrayList<DTO.CauHoi> listCauHoi = null;
     public static DefaultComboBoxModel modelCombobox = null;
     public ThreadClientWaitServerSendData(Socket clientSocket) {
@@ -186,50 +188,50 @@ public class ThreadClientWaitServerSendData extends Thread{
             block2.setText(str[4].equals("1") ? "False":"True");
             block3.setText(str[5].equals("1") ? "False":"True");
         }else if(str[0].equals("LOADDE")){
-            listCauHoi = new ArrayList<>();
-            
-            for(int i=1;i<str.length;i=i+7){
-            DTO.CauHoi ch = new CauHoi();
-                ch.setCh_id(Integer.parseInt(str[i]));
-                ch.setCauhoi(str[i+1]);
-                ch.setDapanA(str[i+2]);
-                ch.setDapanB(str[i+3]);
-                ch.setDapanC(str[i+4]);
-                ch.setDapanD(str[i+5]);
-                ch.setTraloi(str[i+6]);
-                listCauHoi.add(ch);
-            }
-            if(listCauHoi.get(0).getDapanA().length()>0){
-                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(0).getDapanA().trim());
-            }else TaoCauHoiJPanel.jTextField1.setText("") ;
-            if(listCauHoi.get(0).getDapanB().length()>0){
-                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(0).getDapanB().trim());
-            }else TaoCauHoiJPanel.jTextField2.setText("") ;
-            if(listCauHoi.get(0).getDapanC().length()>0){
-                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(0).getDapanC().trim());
-            }else TaoCauHoiJPanel.jTextField3.setText("") ;
-            if(listCauHoi.get(0).getDapanD().length()>0){
-                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(0).getDapanD().trim());
-            }else TaoCauHoiJPanel.jTextField4.setText("") ;
-            if(listCauHoi.get(0).getCauhoi().length()>0){
-                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(0).getCauhoi().trim());
-            }else TaoCauHoiJPanel.jTextField5.setText("") ;
-            
-            
-            if(listCauHoi.get(0).getTraloi().length()>0){
-                if(listCauHoi.get(0).getDapanA().trim().equals(listCauHoi.get(0).getTraloi().trim()))
-                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
-                if(listCauHoi.get(0).getDapanB().trim().equals(listCauHoi.get(0).getTraloi().trim()))
-                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
-                if(listCauHoi.get(0).getDapanC().trim().equals(listCauHoi.get(0).getTraloi().trim()))
-                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
-                if(listCauHoi.get(0).getDapanD().trim().equals(listCauHoi.get(0).getTraloi().trim()))
-                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
-            }
-            
-            TaoCauHoiJPanel.cau.setText("1");
-            TaoCauHoiJPanel.tongcau.setText(listCauHoi.size()+"");
-            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(0).getCh_id()+"");
+//            listCauHoi = new ArrayList<>();
+//            
+//            for(int i=1;i<str.length;i=i+7){
+//            DTO.CauHoi ch = new CauHoi();
+//                ch.setCh_id(Integer.parseInt(str[i]));
+//                ch.setCauhoi(str[i+1]);
+//                ch.setDapanA(str[i+2]);
+//                ch.setDapanB(str[i+3]);
+//                ch.setDapanC(str[i+4]);
+//                ch.setDapanD(str[i+5]);
+//                ch.setTraloi(str[i+6]);
+//                listCauHoi.add(ch);
+//            }
+//            if(listCauHoi.get(0).getDapanA().length()>0){
+//                TaoCauHoiJPanel.jTextField1.setText(listCauHoi.get(0).getDapanA().trim());
+//            }else TaoCauHoiJPanel.jTextField1.setText("") ;
+//            if(listCauHoi.get(0).getDapanB().length()>0){
+//                TaoCauHoiJPanel.jTextField2.setText(listCauHoi.get(0).getDapanB().trim());
+//            }else TaoCauHoiJPanel.jTextField2.setText("") ;
+//            if(listCauHoi.get(0).getDapanC().length()>0){
+//                TaoCauHoiJPanel.jTextField3.setText(listCauHoi.get(0).getDapanC().trim());
+//            }else TaoCauHoiJPanel.jTextField3.setText("") ;
+//            if(listCauHoi.get(0).getDapanD().length()>0){
+//                TaoCauHoiJPanel.jTextField4.setText(listCauHoi.get(0).getDapanD().trim());
+//            }else TaoCauHoiJPanel.jTextField4.setText("") ;
+//            if(listCauHoi.get(0).getCauhoi().length()>0){
+//                TaoCauHoiJPanel.jTextField5.setText(listCauHoi.get(0).getCauhoi().trim());
+//            }else TaoCauHoiJPanel.jTextField5.setText("") ;
+//            
+//            
+//            if(listCauHoi.get(0).getTraloi().length()>0){
+//                if(listCauHoi.get(0).getDapanA().trim().equals(listCauHoi.get(0).getTraloi().trim()))
+//                    TaoCauHoiJPanel.jRadioButton1.setSelected(true);
+//                if(listCauHoi.get(0).getDapanB().trim().equals(listCauHoi.get(0).getTraloi().trim()))
+//                    TaoCauHoiJPanel.jRadioButton2.setSelected(true);
+//                if(listCauHoi.get(0).getDapanC().trim().equals(listCauHoi.get(0).getTraloi().trim()))
+//                    TaoCauHoiJPanel.jRadioButton3.setSelected(true);
+//                if(listCauHoi.get(0).getDapanD().trim().equals(listCauHoi.get(0).getTraloi().trim()))
+//                    TaoCauHoiJPanel.jRadioButton4.setSelected(true);
+//            }
+//            
+//            TaoCauHoiJPanel.cau.setText("1");
+//            TaoCauHoiJPanel.tongcau.setText(listCauHoi.size()+"");
+//            TaoCauHoiJPanel.idcauhoi.setText(listCauHoi.get(0).getCh_id()+"");
         }else if(str[0].equals("LOADDECOMBOBOX")){
             modelCombobox = new DefaultComboBoxModel();
             int run =0;
@@ -323,11 +325,43 @@ public class ThreadClientWaitServerSendData extends Thread{
             }else  if(str[1].equals("CAMTHI")){
                 MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị cấm thi !!!");
                 ThiThuJPanel.tiep.setEnabled(false);
-                
+                ThiThuJPanel.jButton2.setEnabled(false);
+                ThiThuJPanel.nopbai=1;
             }
         }else if(str[0].equals("ALERT")){
             MainJFrame.AlertMessageFromServer(str[1]);
+        }else if(str[0].equals("LOADTHANHTICH")){// cái này của thằng tiếp nè
+            Vector header = new Vector ();
+            header.add("ID");
+            header.add("TIÊU ĐỀ");
+            header.add("MÔN THI");
+            header.add("THỜI LƯỢNG");
+            header.add("SỐ CÂU");
+            header.add("TỔNG SỐ LẦN THI");
+            header.add("ĐIỂM CAO NHẤT");
+            header.add("ĐIỂM TRUNG BÌNH");
+            DefaultTableModel model = new DefaultTableModel(header,0);
+            int run =0;
+            for(int i=1;i<str.length;i=i+8)
+            {
+                
+                arrThanhTich[run++] = str[i]+"-"+str[i+1];
+                Vector row  = new Vector();
+                row.add(str[i]);
+                row.add(str[i+1]);
+                row.add(str[i+2]);
+                row.add(str[i+3]);
+                row.add(str[i+4]);
+                row.add(str[i+5]);
+                row.add(str[i+6]);
+                row.add(str[i+7]);
+                model.addRow(row);
+                //dsdt.add(dt);
+            }
+            System.out.println(run);
+            ThanhTichJPanel.jTable1.setModel(model);
         }
+
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
     }
     

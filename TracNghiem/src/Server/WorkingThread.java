@@ -9,8 +9,10 @@ package Server;
 import BUS.DeThiBUS;
 import DAO.DeThiDAO;
 import DAO.NguoiDungDAO;
+import DAO.ThanhTichDAO;
 import DTO.CauHoi;
 import DTO.DeThiDTO;
+import DTO.DiemDTO;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
 import static Server.Server.ListUserOnline;
@@ -38,6 +40,7 @@ public class WorkingThread extends Thread {
     public static ArrayList<DTO.CauHoi> ThiThu = null;
     public int totalCauHoitrue=0;
     public int totalCauHoifalse=0;
+    public int totalSoCau = 0;
     protected Socket socket;
     public String key="";
     public WorkingThread(Socket clientSocket) {
@@ -133,14 +136,14 @@ public class WorkingThread extends Thread {
                         }else if(Clause[1].equals("INF")){
                             line="INF:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
                         }else if(Clause[1].equals("DE")){
-                            ArrayList<DTO.CauHoi> ListCauHoi = new ArrayList<>();
-                            ListCauHoi = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
-                            
-                            line="LOADDE:";
-                            for (CauHoi ListCauHoi1 : ListCauHoi) {
-                                line+=ListCauHoi1.getCh_id()+": "+ListCauHoi1.getCauhoi()+": "+ListCauHoi1.getDapanA()+": "+ListCauHoi1.getDapanB()+": "+ListCauHoi1.getDapanC()+": "+ListCauHoi1.getDapanD()+": "+ListCauHoi1.getTraloi()+":";
-                            }
-                            System.out.println("-------->"+line);
+//                            ArrayList<DTO.CauHoi> ListCauHoi = new ArrayList<>();
+//                            ListCauHoi = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
+//                            
+//                            line="LOADDE:";
+//                            for (CauHoi ListCauHoi1 : ListCauHoi) {
+//                                line+=ListCauHoi1.getCh_id()+": "+ListCauHoi1.getCauhoi()+": "+ListCauHoi1.getDapanA()+": "+ListCauHoi1.getDapanB()+": "+ListCauHoi1.getDapanC()+": "+ListCauHoi1.getDapanD()+": "+ListCauHoi1.getTraloi()+":";
+//                            }
+//                            System.out.println("-------->"+line);
                         }else if(Clause[1].equals("DECOMBOBOX")){
                             ArrayList <DeThiDTO> dsdt = new ArrayList<>();
                             dsdt = new DeThiDAO().docDSDT(nguoiDung.getNd_id());
@@ -163,7 +166,7 @@ public class WorkingThread extends Thread {
                             ThiThu = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
                             DTO.DeThiDTO dethi = new DAO.DeThiDAO().GetDeThi(Clause[2]);
                             line="LOADDETHITHU:"+dethi.getSocau()+":"+dethi.getThoiluong()+":";
-                            
+                            totalSoCau = Integer.parseInt(dethi.getSocau());
                         }else if(Clause[1].equals("CAUHOITHU1")){
                             if(nguoiDung.getBlockthi()==0){
                                 line="ERROR:CAMTHI:";
@@ -217,7 +220,7 @@ public class WorkingThread extends Thread {
                     //
                     // KETTHUCTHITHU
                     if(Clause[0].equals("KETTHUCTHITHU")){
-                        float res = totalCauHoitrue/(totalCauHoifalse+totalCauHoitrue)*10;
+                        float res = totalCauHoitrue/totalSoCau*10;
                         line="KETQUATHITHUXONG:"+totalCauHoitrue+":"+totalCauHoifalse+":"+res+":";
                         DTO.DeThiDTO dthi = new DAO.DeThiDAO().GetDeThi(Clause[1]);
                         
@@ -264,6 +267,35 @@ public class WorkingThread extends Thread {
                             new DAO.DeThiDAO().UpdateCauhoi(z);
                             line="UPDATECAUHOITHANHCONG:";
                         }
+                    }
+                    //
+                    // tiếp làm thành tích
+                    if(Clause[0].equals("THANHTICH"))
+                    {   
+                        ArrayList <DeThiDTO> dsdt = new ArrayList<>();
+                        ArrayList <DiemDTO> dsdiem = new ArrayList<>();
+                            dsdt = new ThanhTichDAO().docDSDT();
+                            line="LOADTHANHTICH:";
+                            for (DeThiDTO dsdt1 : dsdt) {
+                                line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getThoiluong()+":"+dsdt1.getSocau()+":"+dsdt1.getTongsonguoithi()+":";
+                                float diemcaonhat = -1;
+                                float tong = 0;
+                                float diemtrungbinh = 0 ;
+                                dsdiem = new ThanhTichDAO().docDSDiem(dsdt1.getDt_id());
+                                for(DiemDTO dsdiem1 : dsdiem)
+                                {   
+                                    if(diemcaonhat < Integer.parseInt(dsdiem1.getDiem()))
+                                    {
+                                        diemcaonhat = Integer.parseInt(dsdiem1.getDiem());
+                                    }
+                                    tong += Integer.parseInt(dsdiem1.getDiem());
+                                }
+                                line+=diemcaonhat+":";
+                                diemtrungbinh = tong / dsdiem.size();
+                                System.out.println("Diem cao nhut: "+diemcaonhat);
+                                System.out.println("Diem trung binh: "+diemtrungbinh);
+                                line+=diemtrungbinh+":";
+                            }
                     }
                     //
                     // Them xoa sua de thi
