@@ -10,6 +10,7 @@ import DTO.CauHoi;
 import DTO.DeThiDTO;
 import GUI.DangKyAccount;
 import static GUI.DangKyAccount.CloseDangkiFrame;
+import static GUI.DangKyAccount.isClickedDK;
 import GUI.DeThiJPanel;
 import static GUI.DeThiJPanel.jTable1;
 import GUI.Login;
@@ -126,6 +127,7 @@ public class ThreadClientWaitServerSendData extends Thread{
         }else if(str[0].equals("0")){
             MainJFrame.AlertMessageFromServer("Email đã tồn tại !!!");
         }else if(str[0].equals("DKTC")){
+            isClickedDK=1;
             MainJFrame.AlertMessageFromServer("Đăng kí thành công...");
             CloseDangkiFrame();
             Login.getIntanceLogin().setVisible(true);
