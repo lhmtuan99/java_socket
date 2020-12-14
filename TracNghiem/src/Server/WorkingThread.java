@@ -136,14 +136,14 @@ public class WorkingThread extends Thread {
                         }else if(Clause[1].equals("INF")){
                             line="INF:"+nguoiDung.getName()+":"+nguoiDung.getUsername()+":"+nguoiDung.getBlockaccount()+":"+nguoiDung.getBlocktaode()+":"+nguoiDung.getBlockthi()+":";
                         }else if(Clause[1].equals("DE")){
-//                            ArrayList<DTO.CauHoi> ListCauHoi = new ArrayList<>();
-//                            ListCauHoi = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
-//                            
-//                            line="LOADDE:";
-//                            for (CauHoi ListCauHoi1 : ListCauHoi) {
-//                                line+=ListCauHoi1.getCh_id()+": "+ListCauHoi1.getCauhoi()+": "+ListCauHoi1.getDapanA()+": "+ListCauHoi1.getDapanB()+": "+ListCauHoi1.getDapanC()+": "+ListCauHoi1.getDapanD()+": "+ListCauHoi1.getTraloi()+":";
-//                            }
-//                            System.out.println("-------->"+line);
+                            ArrayList<DTO.CauHoi> ListCauHoi = new ArrayList<>();
+                            ListCauHoi = new DeThiDAO().GetAllCauHoiFromDethi(Clause[2]);
+                            
+                            line="LOADDE:";
+                            for (CauHoi ListCauHoi1 : ListCauHoi) {
+                                line+=ListCauHoi1.getCh_id()+": "+ListCauHoi1.getCauhoi()+": "+ListCauHoi1.getDapanA()+": "+ListCauHoi1.getDapanB()+": "+ListCauHoi1.getDapanC()+": "+ListCauHoi1.getDapanD()+": "+ListCauHoi1.getTraloi()+":";
+                            }
+                            System.out.println("-------->"+line);
                         }else if(Clause[1].equals("DECOMBOBOX")){
                             ArrayList <DeThiDTO> dsdt = new ArrayList<>();
                             dsdt = new DeThiDAO().docDSDT(nguoiDung.getNd_id());

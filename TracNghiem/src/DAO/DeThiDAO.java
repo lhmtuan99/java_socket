@@ -254,6 +254,8 @@ public class DeThiDAO {
             String qry = "delete from DeThi where dt_id='"+id+"'";
             st = conn.createStatement();
             st.executeUpdate(qry);
+            qry = "delete from CauHoii where dt_id='"+id+"'";
+            st.executeUpdate(qry);
             System.out.println("xoa thanh cong");
             System.out.println(id);
         }

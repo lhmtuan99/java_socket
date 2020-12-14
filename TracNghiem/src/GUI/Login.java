@@ -204,21 +204,21 @@ public static DangKyAccount r = new DangKyAccount();
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-           NguoiDungBUS nguoidungbus = new NguoiDungBUS();
-    String a="";
-    String b=jTextField1.getText();
-    String c= new String(jPasswordField1.getPassword());
-    if(!b.equals(a) && !c.equals(a))
-    {
-        SendToServer("DN:"+b+":"+c+":");
-        JOptionPane.showMessageDialog(null,"Vui lòng chờ...");
-        jTextField1.setText("");
-        jPasswordField1.setText("");
-        
-    }else {
-        JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");
-        return;
-    }
+        NguoiDungBUS nguoidungbus = new NguoiDungBUS();
+        String a="";
+        String b=jTextField1.getText();
+        String c= new String(jPasswordField1.getPassword());
+        if(!b.equals(a) && !c.equals(a))
+        {
+            SendToServer("DN:"+b+":"+c+":");
+            JOptionPane.showMessageDialog(null,"Vui lòng chờ...");
+            jTextField1.setText("");
+            jPasswordField1.setText("");
+
+        }else {
+            JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");
+            return;
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

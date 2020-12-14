@@ -22,7 +22,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class DeThiJPanel extends javax.swing.JPanel {
     ArrayList<DeThiDTO> dsdt = new ArrayList<>();
     DefaultTableModel model = new DefaultTableModel();
-
+    public int socauselected =0;
+    public int Thied =0;
     /**
      * Creates new form TrangChuJPanel
      */
@@ -462,6 +463,8 @@ public class DeThiJPanel extends javax.swing.JPanel {
             txtmonthi.setText((String) jTable1.getValueAt(i, 2));
             txtsocau.setText((String) jTable1.getValueAt(i, 3));
             txtthoiluong.setText((String) jTable1.getValueAt(i, 4));
+            socauselected = Integer.parseInt(txtsocau.getText().trim());
+            Thied = Integer.parseInt((String) jTable1.getValueAt(i, 5));
 //            lbid.setText(Long.toString(dt.getDt_id()));
         }
     }//GEN-LAST:event_jTable1MouseClicked
@@ -492,22 +495,25 @@ public class DeThiJPanel extends javax.swing.JPanel {
                 showMessageDialog(null, "Số câu không được để trống !!!");
                 return;
             }
-            int getUsed = Integer.parseInt((String) jTable1.getValueAt(i,5));
+            int getUsed = Thied;
             if(getUsed>0 ) {
-                showMessageDialog(null, "Đề đã có người thi, không thể chỉnh sửa !!!");
+                showMessageDialog(null, "Đề đã có người thi, không thể chỉnh sửa !!!"+Thied);
                 return;
+                
+            }else{
+                int socauhoi = Integer.parseInt(txtsocau.getText());
+                if(socauhoi!= socauselected){
+                    showMessageDialog(null, "Đề đã tạo không thể thay đổi số câu hỏi !!!"+socauselected);
+                    return;
+                }
             }
-            int socauhoi =Integer.parseInt((String) jTable1.getValueAt(j,3));
-            if(socauhoi!= Integer.parseInt(txtsocau.getText())){
-                showMessageDialog(null, "Đề đã tạo không thể thay đổi số câu hỏi !!!");
-                return;
-            }
-            txttieude.setText("");
+            
+            SendToServer("DETHI:SUA:"+lbid.getText().trim()+":"+txttieude.getText().trim()+":"+txtmonthi.getText().trim()+":"+txtsocau.getText().trim()+":"+txtthoiluong.getText().trim()+":");
+             txttieude.setText("");
             txtsocau.setText("");
             txtmonthi.setText("");
             txtthoiluong.setText("");
             lbid.setText("");
-            SendToServer("DETHI:SUA:"+lbid.getText()+":"+txttieude.getText()+":"+txtmonthi.getText()+":"+txtsocau.getText()+":"+txtthoiluong.getText()+":");
             //jTable1.getSelectedRow() = -1;
 //            DeThiBUS bus  = new DeThiBUS();
 //            DeThiDTO dethi1 = new DeThiDTO();
@@ -539,7 +545,7 @@ public class DeThiJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
          int selected = -1;
         selected = jTable1.getSelectedRow();
-        if(selected == -1){
+        if(selected == -1 || lbid.getText().length()==0){
             showMessageDialog(null,"Vui lòng chọn đề cần xóa !!!");
         }else {
             int xet=JOptionPane.showConfirmDialog(null,"Bạn có muốn xóa");
