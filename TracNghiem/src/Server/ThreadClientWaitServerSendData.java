@@ -334,6 +334,11 @@ public class ThreadClientWaitServerSendData extends Thread{
                 ThiThuJPanel.nopbai=1;
             }
         }else if(str[0].equals("ALERT")){
+            if(str[1].equals("BLOCKUSERLOGOUT")){
+                MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị khóa...");
+                CloseMainJFrame();
+                Login.getIntanceLogin().setVisible(true);
+            }
             MainJFrame.AlertMessageFromServer(str[1]);
         }else if(str[0].equals("LOADTHANHTICH")){// cái này của thằng tiếp nè
             Vector header = new Vector ();
@@ -366,9 +371,9 @@ public class ThreadClientWaitServerSendData extends Thread{
             System.out.println(run);
             ThanhTichJPanel.jTable1.setModel(model);
         }else if(str[0].equals("BLOCKUSERLOGOUT")){
-            MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị khóa...");
-            CloseMainJFrame();
-            Login.getIntanceLogin().setVisible(true);
+//            MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị khóa...");
+//            CloseMainJFrame();
+//            Login.getIntanceLogin().setVisible(true);
         }
 
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
