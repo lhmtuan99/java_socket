@@ -192,6 +192,16 @@ public class ServerExcute implements Runnable{
                             int luachon = sc.nextInt();
                             if(luachon==1){
                                 new DAO.ServerDAO().Blockaccount(id);
+                                for(int i=0;i<Server.ListUserOnline.size();i++){
+                                    if(Server.ListUserOnline.get(i).getNd_id()==id){
+                                        int port = Server.ListUserOnline.get(i).getPORT();
+                                        for(int j=0;j<Clients.size();j++){
+                                            if(Clients.get(j).PORT == port){
+                                                Clients.get(j).line="BLOCKUSERLOGOUT:";
+                                            }
+                                        }
+                                    }
+                                }
                             }else if(luachon==2){
                                 new DAO.ServerDAO().Blocktaode(id);
                             }else if(luachon==3){

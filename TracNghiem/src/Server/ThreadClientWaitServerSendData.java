@@ -18,6 +18,7 @@ import static GUI.Login.CLOSE;
 import static GUI.Login.CloseLoginFrame;
 import GUI.MainJFrame;
 import static GUI.MainJFrame.AlertMessageFromServer;
+import static GUI.MainJFrame.CloseMainJFrame;
 import static GUI.MainJFrame.getIntanceMainJFrame;
 import GUI.TaoCauHoiJPanel;
 import static GUI.TaoCauHoiJPanel.jComboBox1;
@@ -364,6 +365,10 @@ public class ThreadClientWaitServerSendData extends Thread{
             }
             System.out.println(run);
             ThanhTichJPanel.jTable1.setModel(model);
+        }else if(str[0].equals("BLOCKUSERLOGOUT")){
+            MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị khóa...");
+            CloseMainJFrame();
+            Login.getIntanceLogin().setVisible(true);
         }
 
         //MainJFrame.AlertMessageFromServer(decrypt(str,key+socket.getLocalPort()));
