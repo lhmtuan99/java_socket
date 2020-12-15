@@ -31,7 +31,7 @@ public class ThanhTichDAO {
     {
         ArrayList dsdt = new ArrayList<DeThiDTO>();
         try{
-            String query = "select * from DeThi";
+            String query = "select * from DeThi where dt_public=1";
             st = conn.createStatement();
             rs=st.executeQuery(query);
             while (rs.next())

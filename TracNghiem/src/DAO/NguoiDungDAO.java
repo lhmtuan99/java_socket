@@ -50,6 +50,25 @@ public class NguoiDungDAO {
         return id+1;
         
     }
+    public int kiemtraExistDTO (String gmail)
+    {
+        //String a="";
+        try {
+            
+            String qry = "SELECT * from NguoiDung where nd_username='"+gmail+"'";
+            st=conn.createStatement();
+            rs=st.executeQuery(qry);
+    
+        if(rs.next())
+            {
+                return 1;
+            }
+        }
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "check email username exist error");
+        }
+        return 0;
+    }
     public void them(NguoiDungDTO nguoidung)
     {
         try{

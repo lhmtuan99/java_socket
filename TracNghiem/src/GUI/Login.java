@@ -20,12 +20,12 @@ public class Login extends javax.swing.JFrame {
 public static DangKyAccount r = new DangKyAccount();
     public static Login INTANCELOGIN =null;
     public static Login getIntanceLogin (){
-        if(INTANCELOGIN == null) 
-            INTANCELOGIN= new Login();
-        return INTANCELOGIN;
+//        if(INTANCELOGIN == null) 
+//            INTANCELOGIN= new Login();
+        return INTANCELOGIN= new Login();
     }
     public static void CloseLoginFrame(){
-        if(INTANCELOGIN==null) return;
+        //if(INTANCELOGIN==null) return;
         INTANCELOGIN.dispose();
         
     }
@@ -115,7 +115,7 @@ public static DangKyAccount r = new DangKyAccount();
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,8 +141,7 @@ public static DangKyAccount r = new DangKyAccount();
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,8 +211,8 @@ public static DangKyAccount r = new DangKyAccount();
         {
             SendToServer("DN:"+b+":"+c+":");
             JOptionPane.showMessageDialog(null,"Vui lòng chờ...");
-            jTextField1.setText("");
-            jPasswordField1.setText("");
+//            jTextField1.setText("");
+//            jPasswordField1.setText("");
 
         }else {
             JOptionPane.showMessageDialog(null,"Vui lòng điền đầy đủ thông tin !!!");

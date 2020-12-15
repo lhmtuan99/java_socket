@@ -92,7 +92,7 @@ public class WorkingThread extends Thread {
                     // thong tin dk
                     if(Clause[0].equals("DK")){
                         DAO.otpDAO otpDao = new DAO.otpDAO();
-                        if(otpDao.kiemtraOTP(Clause[4],Clause[2])==1){
+                        if(otpDao.kiemtraOTP(Clause[4],Clause[2])==1 && new NguoiDungDAO().kiemtraExistDTO(Clause[2])==0){
                             DTO.NguoiDungDTO nd = new DTO.NguoiDungDTO();
                             nd.setName(Clause[1]);
                             nd.setUsername(Clause[2]);
@@ -283,7 +283,7 @@ public class WorkingThread extends Thread {
                             line="LOADTHANHTICH:";
                             for (DeThiDTO dsdt1 : dsdt) {
                                 line+=dsdt1.getDt_id()+":"+dsdt1.getTieude()+":"+dsdt1.getMonthi()+":"+dsdt1.getThoiluong()+":"+dsdt1.getSocau()+":"+dsdt1.getTongsonguoithi()+":";
-                                float diemcaonhat = -1;
+                                float diemcaonhat = 0;
                                 float tong = 0;
                                 float diemtrungbinh = 0 ;
                                 dsdiem = new ThanhTichDAO().docDSDiem(dsdt1.getDt_id());
@@ -297,6 +297,7 @@ public class WorkingThread extends Thread {
                                 }
                                 line+=diemcaonhat+":";
                                 diemtrungbinh = tong / dsdiem.size();
+                                if(Double.isNaN(diemtrungbinh)) diemtrungbinh=0;
                                 System.out.println("Diem cao nhut: "+diemcaonhat);
                                 System.out.println("Diem trung binh: "+diemtrungbinh);
                                 line+=diemtrungbinh+":";
