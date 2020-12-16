@@ -5,12 +5,12 @@
         <group>
             <file>file:/D:/LAPTRINHMANG/TracNghiem/src/GUI/DangKyAccount.java</file>
             <file>file:/D:/LAPTRINHMANG/TracNghiem/src/Server/Client.java</file>
+            <file>file:/D:/LAPTRINHMANG/TracNghiem/src/Server/ServerExcute.java</file>
             <file>file:/D:/LAPTRINHMANG/TracNghiem/src/Server/MainServer.java</file>
             <file>file:/D:/LAPTRINHMANG/TracNghiem/src/Server/WorkingThread.java</file>
             <file>file:/D:/LAPTRINHMANG/TracNghiem/src/Server/ThreadClientWaitServerSendData.java</file>
             <file>file:/D:/LAPTRINHMANG/TracNghiem/src/GUI/Login.java</file>
-            <file>file:/D:/LAPTRINHMANG/TracNghiem/src/GUI/ThongTinNguoiDungJPanel.java</file>
-            <file>file:/D:/LAPTRINHMANG/TracNghiem/src/DAO/NguoiDungDAO.java</file>
+            <file>file:/D:/LAPTRINHMANG/TracNghiem/src/Server/TheadClient.java</file>
         </group>
     </open-files>
 </project-private>

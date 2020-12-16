@@ -38,6 +38,8 @@ import javax.crypto.spec.SecretKeySpec;
  * @author tiennguyen
  */
 public class TheadClient extends Thread{
+    public int chit =0;
+    
     public String key ;
     public String initVector ;
     public int PORT;
@@ -92,6 +94,7 @@ public class TheadClient extends Thread{
                     line= "ALERT:"+line+":";
                     line = encrypt(line,key+socket.getPort());
                     System.out.println(line);
+                    System.out.println(socket.getPort());
                     out.writeBytes(line + "\n");
                     out.flush();
                     line="";
@@ -101,7 +104,12 @@ public class TheadClient extends Thread{
                 e.printStackTrace();
                 return;
             } catch (InterruptedException ex) {
-                Logger.getLogger(TheadClient.class.getName()).log(Level.SEVERE, null, ex);
+                if(chit==0){
+                System.out.println("");
+                Server.Clients.remove(0);
+                chit=1;
+            }
+                //Logger.getLogger(TheadClient.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }

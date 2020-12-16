@@ -89,22 +89,24 @@ public class ThreadClientWaitServerSendData extends Thread{
         }
                 
         System.out.println(key);
-        
-        while (true) {
-           try {
-               String res = in.readLine();
-               //System.out.println("Client received: "+ TheadClient.GiaimaData(res, zz));
-               System.out.println("Client received: "+ res);
-               System.out.println("Client received: "+ decrypt(res,key+socket.getLocalPort()));
-               String result = decrypt(res,key+socket.getLocalPort());
-               XULY(result);
-               Thread.sleep(1500);
-           } catch (IOException ex) {
-               Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (InterruptedException ex) {
-               Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
-           }
-            
+        String res;
+        try {
+            while ((res = in.readLine())!=null) {
+                try {
+                    //String res = in.readLine();
+                    //System.out.println("Client received: "+ TheadClient.GiaimaData(res, zz));
+                    System.out.println("Client received: "+ res);
+                    System.out.println("Client received: "+ decrypt(res,key+socket.getLocalPort()));
+                    String result = decrypt(res,key+socket.getLocalPort());
+                    XULY(result);
+                    Thread.sleep(1500);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        } catch (IOException ex) {
+            //Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -338,7 +340,7 @@ public class ThreadClientWaitServerSendData extends Thread{
                 MainJFrame.AlertMessageFromServer("Tài khoản của bạn bị khóa...");
                 CloseMainJFrame();
                 Login.getIntanceLogin().setVisible(true);
-            }
+            }else
             MainJFrame.AlertMessageFromServer(str[1]);
         }else if(str[0].equals("LOADTHANHTICH")){// cái này của thằng tiếp nè
             Vector header = new Vector ();

@@ -8,10 +8,12 @@ package GUI;
 import static GUI.TaoCauHoiJPanel.jComboBox1;
 import static Server.Client.SendToServer;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
@@ -50,6 +52,20 @@ public class MainJFrame extends javax.swing.JFrame {
         listItem.add(new DanhMuc("ThanhTich",jpnThanhTich,jlbThanhTich));
         
         controller.setEvent(listItem);
+        JFrame frame = this;
+        
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            if (JOptionPane.showConfirmDialog(frame, 
+            "You must log out first ?", "Close Window?", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            }else
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+        });
     }
 
     /**

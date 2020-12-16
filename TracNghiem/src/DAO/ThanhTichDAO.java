@@ -44,6 +44,8 @@ public class ThanhTichDAO {
                 dt.setTongsonguoithi(rs.getInt("dt_songuoithi"));
                 dt.setThoiluong(rs.getString("dt_thoiluong"));
                 dt.setSocau(rs.getString("dt_socau"));
+                dt.setDt_public(rs.getInt("dt_public"));
+                dt.setNguoitao(rs.getInt("dt_nguoitao"));
                 dsdt.add(dt);
             }
         }
@@ -60,10 +62,10 @@ public class ThanhTichDAO {
             String query = "select * from Diem where dt_id="+dt_id+"";
             st = conn.createStatement();
             rs=st.executeQuery(query);
-            System.out.println(rs);
+            //System.out.println(rs);
             while (rs.next())
             {   
-                System.out.println(rs);
+                //System.out.println(rs);
                 DiemDTO diem = new DiemDTO();
                 diem.setDiem(rs.getString("Diem"));
                 diem.setDt_id(rs.getInt("dt_id"));

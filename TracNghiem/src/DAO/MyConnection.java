@@ -22,7 +22,7 @@ public class MyConnection {
             String pass = "sa";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn =  DriverManager.getConnection(uRL, user, pass);
-            System.out.println("Thanh Cong");
+            //System.out.println("Thanh Cong");
         }
         catch (Exception e){
             System.out.println("Khong thanh cong");

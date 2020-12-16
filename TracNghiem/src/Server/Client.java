@@ -35,17 +35,19 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class Client {
         public static String input= "";
-        
+        public static Socket socket = null;
 	public static void main(String args[]) throws UnknownHostException, IOException 
 	{
             String key;
-            Socket socket = null;
+            
             int check;
             boolean isExistThreadWaitServer = false;
             try {
+                //
                 socket = new Socket("127.0.0.1",1234);
                 System.out.println("Client connected");
                 System.out.println(socket.getLocalPort());
+                System.out.println(socket.getPort());
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));

@@ -9,18 +9,24 @@ import BUS.NguoiDungBUS;
 import BUS.otpBUS;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
+import Server.Client;
 import static Server.Client.SendToServer;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 /**
  *
  * @author Admin
@@ -52,6 +58,27 @@ public class DangKyAccount extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setResizable(false);
+        JFrame frame = this;
+        
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            if (JOptionPane.showConfirmDialog(frame, 
+            "Are you sure you want to close this window?", "Close Window?", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+                try {
+//                    SendToServer("CLOSECONNECT:");
+//                    Thread.sleep(1000);
+                    Client.socket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(DangKyAccount.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            System.exit(0);
+            }else
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+        });
     }
 
     /**
