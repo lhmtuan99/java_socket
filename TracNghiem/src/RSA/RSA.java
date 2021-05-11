@@ -78,7 +78,7 @@ public class RSA {
     public static void main(String[] args)
     {
         System.out.println(p + " " + q);
-        System.out.println("public key:"+pubKey()+","+n);
+        System.out.println("public key: hi"+pubKey()+","+n);
         System.out.println("private key:"+prvKey()+","+n);
         BigInteger cypherText[] = Encrypt("Tuan &");
         for(int i=0;i<cypherText.length;i++)
