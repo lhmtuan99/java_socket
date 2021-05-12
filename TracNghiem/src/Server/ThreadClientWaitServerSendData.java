@@ -29,11 +29,15 @@ import static GUI.ThongTinNguoiDungJPanel.block2;
 import static GUI.ThongTinNguoiDungJPanel.block3;
 import static GUI.ThongTinNguoiDungJPanel.jLabel5;
 import static GUI.ThongTinNguoiDungJPanel.jTextField1;
+import RSA.RSA;
+import static Server.Client.socket;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
@@ -71,6 +75,7 @@ public class ThreadClientWaitServerSendData extends Thread{
     public String [] arrThanhTich = new String[1000]; // cái này của thằng tiếp
     public static ArrayList<DTO.CauHoi> listCauHoi = null;
     public static DefaultComboBoxModel modelCombobox = null;
+    public static String keyAes = "aesKey";
     public ThreadClientWaitServerSendData(Socket clientSocket) {
         this.socket = clientSocket;
     }
@@ -78,8 +83,8 @@ public class ThreadClientWaitServerSendData extends Thread{
     BufferedReader brinp = null;
     DataOutputStream out = null;
     
-    public String key ;
-        
+    public String Public_key_server;
+    
     public void run() {
        BufferedReader in = null;
         try {
@@ -87,8 +92,9 @@ public class ThreadClientWaitServerSendData extends Thread{
         } catch (IOException ex) {
             Logger.getLogger(ThreadClientWaitServerSendData.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
-        System.out.println(key);
+        //mã hóa key aes
+        
+        
         String res;
         try {
             while ((res = in.readLine())!=null) {
@@ -96,8 +102,8 @@ public class ThreadClientWaitServerSendData extends Thread{
                     //String res = in.readLine();
                     //System.out.println("Client received: "+ TheadClient.GiaimaData(res, zz));
                     System.out.println("Client received: "+ res);
-                    System.out.println("Client received: "+ decrypt(res,key+socket.getLocalPort()));
-                    String result = decrypt(res,key+socket.getLocalPort());
+                    System.out.println("Client received: "+ decrypt(res,keyAes+socket.getLocalPort()));
+                    String result = decrypt(res,keyAes+socket.getLocalPort());
                     XULY(result);
                     Thread.sleep(1500);
                 } catch (InterruptedException ex) {

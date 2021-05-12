@@ -15,6 +15,7 @@ import DTO.DeThiDTO;
 import DTO.DiemDTO;
 import DTO.NguoiDungDTO;
 import DTO.otpDTO;
+import RSA.RSA;
 import static Server.Server.ListUserOnline;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -60,6 +61,10 @@ public class WorkingThread extends Thread {
             return;
         }
         try {
+            String cipher_KeyAES= brinp.readLine();   
+            System.out.println("key AES đã được mã hóa:"+cipher_KeyAES);
+            key = RSA.Decrypt(cipher_KeyAES,Server.GetPrivateKey());
+            System.out.println("key AES: "+key);
             while ((line = brinp.readLine())!=null) {
                 try {
                     

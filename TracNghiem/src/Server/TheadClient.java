@@ -5,6 +5,7 @@
  */
 package Server;
 
+import RSA.RSA;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -61,17 +62,19 @@ public class TheadClient extends Thread{
             inp = socket.getInputStream();
             brinp = new BufferedReader(new InputStreamReader(inp));
             out = new DataOutputStream(socket.getOutputStream());
+            
         } catch (IOException e) {
             return;
         }
         
         
         try {
+            
+            
             out.writeBytes(key + "\n");
             out.flush();
-            out.writeBytes(initVector + "\n");
-            out.flush();
-           
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(TheadClient.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,10 +5,15 @@
  */
 package Server;
 
+import RSA.RSA;
+import static Server.Client.socket;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.KeyPair;
@@ -47,7 +52,9 @@ public class Server implements Runnable{
     public static int port = 1234;
     public static int numThread = 4;
     public static ServerSocket server = null;
-    
+    public static String publicKey;
+    public static String privateKey;
+            
     public static List<TheadClient> Clients = new ArrayList<>();
     public static ArrayList<DTO.NguoiDungDTO> ListUserOnline = new ArrayList<>();
     
@@ -64,11 +71,18 @@ public class Server implements Runnable{
                 Socket socket = server.accept();
                 
                 TheadClient newClient = new TheadClient(socket);
-                newClient.key = key;
+                
+                //tạo key rsa
+                publicKey = RSA.PublicKey();
+                privateKey = RSA.PublicKey();
+
+                
+                newClient.key = publicKey;
                 newClient.initVector = initVector;
 
                 System.out.println(newClient.key);
                 System.out.println(newClient.initVector);
+                
                 Clients.add(newClient);
                 Clients.get(Clients.size()-1).start();
                 
@@ -99,5 +113,13 @@ public class Server implements Runnable{
     }
     public void shutdown() {
         shutdown = true;
+    }
+    public static String GetPublicKey()
+    {
+        return publicKey;
+    }
+    public static String GetPrivateKey()
+    {
+        return privateKey;
     }
 }

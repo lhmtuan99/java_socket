@@ -7,6 +7,8 @@ package Server;
 
 import GUI.Login;
 import GUI.MainJFrame;
+import RSA.RSA;
+import static Server.ThreadClientWaitServerSendData.keyAes;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class Client {
         public static Socket socket = null;
 	public static void main(String args[]) throws UnknownHostException, IOException 
 	{
-            String key;
+            String keyPublicServer;
             
             int check;
             boolean isExistThreadWaitServer = false;
@@ -58,13 +60,21 @@ public class Client {
                 //MainJFrame.AlertMessageFromServer("123");
                 //
                 Scanner sc = new Scanner(System.in);
-                key= in.readLine();                
+                //lấy key rsa
+                keyPublicServer= in.readLine();               
                 
                 while(true){
                     
                     if(!isExistThreadWaitServer){
                         ThreadClientWaitServerSendData t1 = new ThreadClientWaitServerSendData(socket);
-                        t1.key=key;
+                        //mã hóa key aes bằng public key của server
+                        String cipher_keyAes = RSA.Encrypt(keyAes,keyPublicServer);
+                        System.out.println(cipher_keyAes);
+                        //gửi key aes đã được mã hóa cho server
+                        out.write(cipher_keyAes + '\n');
+                        out.flush();
+                        Thread.sleep(100);
+                        
                         t1.start();
                         isExistThreadWaitServer=true;
                     }
@@ -75,7 +85,7 @@ public class Client {
                         if(input.equals("bye"))
                             break;
                         System.out.println("send "+input+" to server");
-                        input =  encrypt(input,key+socket.getLocalPort());
+                        input =  encrypt(input,ThreadClientWaitServerSendData.keyAes+socket.getLocalPort());
                         System.out.println(input);
                         out.write(input + '\n');
                         out.flush();
@@ -110,6 +120,9 @@ public class Client {
                   Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
                   cipher.init(Cipher.ENCRYPT_MODE, secretKey);
                   return java.util.Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+                  
+                  
+                  
             } catch (Exception e) {
                   System.out.println(e.toString());
             }
