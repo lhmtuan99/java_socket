@@ -39,7 +39,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     public static int minutes = 0;
     static int interval;
     static Timer timer;
-    public static int nopbai =0;
+    public static int nopbai;
     /**
      * Creates new form ThiThuJPanel
      */
@@ -484,7 +484,8 @@ public class ThiThuJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+            nopbai=0;
+// TODO add your handling code here:
                // TODO add your handling code here:
         if(comboboxThithu.getSelectedIndex()<0){
             MainJFrame.AlertMessageFromServer("Không thể tải đề !!!");
@@ -501,6 +502,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
                // TODO add your handling code here:
         jButton3.setEnabled(false);
+        jButton5.setEnabled(false);
        tiep.setEnabled(true);
         Client.SendToServer("LOAD:CAUHOITHU1:z:");
         
@@ -531,7 +533,7 @@ public class ThiThuJPanel extends javax.swing.JPanel {
         Client.SendToServer("KETTHUCTHITHU:"+idDethi+":");
         //timer.cancel();
         jButton2.setEnabled(false);
-        
+        jButton5.setEnabled(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

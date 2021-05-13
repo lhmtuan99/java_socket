@@ -150,8 +150,8 @@ public class otpDAO {
         properties.put("mail.smtp.host","smtp.gmail.com");
         properties.put("mail.smtp.port","587");
         
-        String myAccountEmail= "vanvananhanh1122@gmail.com";
-        String password="1234Five";
+        String myAccountEmail= "vphamtiep270299@gmail.com";
+        String password="nguyentiep";
         
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
