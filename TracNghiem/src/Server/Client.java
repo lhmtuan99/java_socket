@@ -62,7 +62,7 @@ public class Client {
                 Scanner sc = new Scanner(System.in);
                 //lấy key rsa
                 keyPublicServer= in.readLine();               
-                
+                keyAes += socket.getLocalPort();
                 while(true){
                     
                     if(!isExistThreadWaitServer){
@@ -85,7 +85,7 @@ public class Client {
                         if(input.equals("bye"))
                             break;
                         System.out.println("send "+input+" to server");
-                        input =  encrypt(input,ThreadClientWaitServerSendData.keyAes+socket.getLocalPort());
+                        input =  encrypt(input,ThreadClientWaitServerSendData.keyAes);
                         System.out.println(input);
                         out.write(input + '\n');
                         out.flush();

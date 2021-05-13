@@ -95,7 +95,7 @@ public class TheadClient extends Thread{
                 
                 if(line.length()>0){
                     line= "ALERT:"+line+":";
-                    line = encrypt(line,key+socket.getPort());
+                    line = encrypt(line,key);
                     System.out.println(line);
                     System.out.println(socket.getPort());
                     out.writeBytes(line + "\n");

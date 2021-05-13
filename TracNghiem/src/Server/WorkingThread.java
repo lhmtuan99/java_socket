@@ -73,7 +73,7 @@ public class WorkingThread extends Thread {
                         return;
                     } else {
                         // excute option of client here
-                        line = decrypt(line, key+socket.getPort()); // data client send to server
+                        line = decrypt(line, key); // data client send to server
                         System.out.println(line);
                         System.out.println(socket);
                         System.out.println("port: "+socket.getPort());
