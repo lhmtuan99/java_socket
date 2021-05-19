@@ -102,11 +102,12 @@ public class RSA {
         System.out.println(p + " " + q);
         System.out.println("public key: "+PublicKey());
         System.out.println("private key:"+PrivateKey());
-        String cypherText = Encrypt("Tuan &",PublicKey());
+        String cypherText = Encrypt("Tuan",PublicKey());
 //        for(int i=0;i<cypherText.length;i++)
 //        {
 //            System.out.println("cypher["+i+"]="+cypherText[i]);
 //        }
+        System.out.println("Mã hóa:" +cypherText);
         System.out.println("Giải mã:" +Decrypt(cypherText,PrivateKey()));
     }
 }

@@ -69,7 +69,7 @@ public class Client {
                         ThreadClientWaitServerSendData t1 = new ThreadClientWaitServerSendData(socket);
                         //mã hóa key aes bằng public key của server
                         String cipher_keyAes = RSA.Encrypt(keyAes,keyPublicServer);
-                        System.out.println(cipher_keyAes);
+                        System.out.println(cipher_keyAes.replace(";", ""));
                         //gửi key aes đã được mã hóa cho server
                         out.write(cipher_keyAes + '\n');
                         out.flush();
